@@ -1,3 +1,4 @@
+import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router';
 import Footer from '../components/Footer';
 import SideNavBar from '../components/SideNavBar';
@@ -6,7 +7,7 @@ function RegistrationPage() {
   const navigate = useNavigate();
   const plinth = "w-full bg-[#e5e2dd] border-b-2 border-[#8c7071] px-4 py-3 transition-all focus:border-[#570013] focus:outline-none focus:bg-white uppercase";
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate("/verify-otp");
   };

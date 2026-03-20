@@ -1,7 +1,10 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
 
-function SideNavBar({ activePath }) {
+type SideNavBarProps = {
+  activePath: string;
+};
+
+function SideNavBar({ activePath }: SideNavBarProps) {
   const navItems = [
     { path: "/", icon: "assignment", label: "Registration Info" },
     { path: "/basic-details", icon: "person", label: "Basic Details" },

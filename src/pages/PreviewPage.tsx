@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import SideNavBar from '../components/SideNavBar';
@@ -333,4 +333,4 @@ function PreviewPage() {
   );
 }
 
-export default PreviewPage;``
+export default PreviewPage;

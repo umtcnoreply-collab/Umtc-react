@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideNavBar from '../components/SideNavBar';
 import Footer from '../components/Footer';
@@ -28,19 +29,19 @@ function BasicDetailsPage() {
     }
   }, [isSameAddress, permanentAddr]);
 
-  const handlePermChange = (e) => {
-    const { name, value } = e.target;
+const handlePermChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
     setPermanentAddr(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCorrChange = (e) => {
+  const handleCorrChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (!isSameAddress) {
       setCorrespondenceAddr(prev => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate("/documents");
   };

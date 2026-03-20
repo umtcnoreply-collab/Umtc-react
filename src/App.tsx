@@ -20,7 +20,7 @@ const BottomNav = () => {
   const location = useLocation();
   const hidePaths = ["/login"];
   if (hidePaths.includes(location.pathname)) return null;
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
   return (
     <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[#fcf9f4] flex justify-around items-center px-4 pb-safe h-20 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t-2 border-[#e5e2dd]">
       <Link to="/" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/") ? "bg-[#fed488] text-[#570013] rounded-xl" : "text-[#4e4639]"}`}>

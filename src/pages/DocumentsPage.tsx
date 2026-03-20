@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import SideNavBar from '../components/SideNavBar';
+type QualLevel = 'tenth' | 'twelfth' | 'grad' | 'other';
+type QualField = 'name' | 'board' | 'year' | 'roll' | 'marks' | 'total' | 'percentage' | 'file';
 
 function DocumentsPage() {
   const navigate = useNavigate();
@@ -12,15 +15,14 @@ function DocumentsPage() {
 
   // State for Academic Qualifications
   const [qualifications, setQualifications] = useState({
-    tenth: { board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null },
-    twelfth: { board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null },
-    grad: { board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null },
-    other: { name: '', board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null }
-  });
-
+  tenth: { name: '', board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null },
+  twelfth: { name: '', board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null },
+  grad: { name: '', board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null },
+  other: { name: '', board: '', year: '', roll: '', marks: '', total: '', percentage: '', file: null }
+});
   // Auto-calculate percentage logic
-  const handleQualChange = (level, field, value) => {
-    setQualifications((prev) => {
+const handleQualChange = (level: QualLevel, field: QualField, value: string | File | null) => {
+      setQualifications((prev) => {
       const updatedLevel = { ...prev[level], [field]: value };
 
       // Auto-calculate if marks or total changes
@@ -37,13 +39,13 @@ function DocumentsPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate("/preview");
   };
 
   // Helper for generating table rows (Desktop)
-  const renderTableRow = (level, label, isRequired) => {
+  const renderTableRow = (level: QualLevel, label: string, isRequired: boolean) => {
     const data = qualifications[level];
     return (
       <tr className="border-b border-[#8c707133] hover:bg-[#e5e2dd]/30 transition-colors">
@@ -74,7 +76,7 @@ function DocumentsPage() {
         <td className="p-2">
           <label className="flex items-center justify-center bg-white border border-[#8c7071] p-2 rounded cursor-pointer hover:bg-[#570013] hover:text-white transition-colors group">
             <span className="material-symbols-outlined text-sm">upload_file</span>
-            <input type="file" accept="application/pdf" className="hidden" onChange={(e) => handleQualChange(level, 'file', e.target.files[0])} required={isRequired} />
+            <input type="file" accept="application/pdf" className="hidden" onChange={(e) => handleQualChange(level, 'file', e.target.files ? e.target.files[0] : null)} required={isRequired} />
           </label>
         </td>
       </tr>
@@ -82,7 +84,7 @@ function DocumentsPage() {
   };
 
   // Helper for generating mobile cards
-  const renderMobileCard = (level, label, isRequired) => {
+  const renderMobileCard = (level: QualLevel, label: string, isRequired: boolean) => {
     const data = qualifications[level];
     return (
       <div className="bg-[#f0ede8] p-5 rounded-xl border border-white/50 space-y-4 shadow-sm">
@@ -112,8 +114,13 @@ function DocumentsPage() {
           <div className="pt-2">
             <label className="flex items-center justify-center gap-2 bg-white border border-[#8c7071] p-3 rounded cursor-pointer hover:bg-[#570013] hover:text-white transition-colors text-sm font-semibold">
               <span className="material-symbols-outlined text-lg">upload_file</span> Upload PDF Document (Max 2MB)
-              <input type="file" accept="application/pdf" className="hidden" onChange={(e) => handleQualChange(level, 'file', e.target.files[0])} required={isRequired} />
-            </label>
+              <input
+                type="file"
+                accept="application/pdf"
+                className="hidden"
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleQualChange(level, 'file', e.target.files ? e.target.files[0] : null)}
+                required={isRequired}
+              />            </label>
           </div>
         </div>
       </div>
@@ -203,7 +210,7 @@ function DocumentsPage() {
           <SideNavBar activePath="/documents" />
 
           <div className="flex-1 overflow-x-hidden">
-             <div className="mb-16">
+            <div className="mb-16">
               <div className="flex items-center justify-between relative">
                 <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#ebe8e3] -z-10"></div>
                 <div className="flex flex-col items-center gap-2">
