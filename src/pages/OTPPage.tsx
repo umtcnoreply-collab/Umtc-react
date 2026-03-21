@@ -60,28 +60,48 @@ function OTPPage() {
 
     // Auto-move to next input if digit entered
     if (digit && index < 5) {
+      // Use a longer timeout for mobile devices to ensure virtual keyboard dismissal
+      const delay = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 100 : 0;
       setTimeout(() => {
-        otpRefs.current[index + 1]?.focus();
-      }, 0);
+        const nextInput = otpRefs.current[index + 1];
+        if (nextInput) {
+          nextInput.focus();
+          nextInput.select?.();
+        }
+      }, delay);
     }
   };
 
   const handleOtpKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     // Move to previous input on backspace if current input is empty
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      e.preventDefault();
+      const delay = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 50 : 0;
       setTimeout(() => {
-        otpRefs.current[index - 1]?.focus();
-      }, 0);
+        const prevInput = otpRefs.current[index - 1];
+        if (prevInput) {
+          prevInput.focus();
+          prevInput.select?.();
+        }
+      }, delay);
     }
     
     // Move to next input on arrow right
     if (e.key === 'ArrowRight' && index < 5) {
-      otpRefs.current[index + 1]?.focus();
+      e.preventDefault();
+      const nextInput = otpRefs.current[index + 1];
+      if (nextInput) {
+        nextInput.focus();
+      }
     }
     
     // Move to previous input on arrow left
     if (e.key === 'ArrowLeft' && index > 0) {
-      otpRefs.current[index - 1]?.focus();
+      e.preventDefault();
+      const prevInput = otpRefs.current[index - 1];
+      if (prevInput) {
+        prevInput.focus();
+      }
     }
   };
 
@@ -287,6 +307,8 @@ function OTPPage() {
             </div>
           </div>
         </section>
+          </>
+        )}
         {isVerified && (
           <div className="mt-8 space-y-6 p-6 bg-[#f0ede8] rounded-xl border border-[#e5e2dd]">
             <h3 className="font-['Public_Sans'] font-bold text-lg text-[#570013] mb-6">
@@ -362,8 +384,6 @@ function OTPPage() {
             <p className="text-[11px] text-[#584141] leading-normal mt-1">Session protected by 256-bit institutional-grade encryption.</p>
           </div>
         </section>
-          </>
-        )}
         <Footer />
       </div>
 
