@@ -5,21 +5,66 @@ import {
   Link,
   useLocation,
 } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import type { RootState } from "./store/store";
+import { apiConfig } from "./config/apiConfig";
 import RegistrationPage from "./pages/RegistrationPage";
 import BasicDetailsPage from "./pages/BasicDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import OTPPage from "./pages/OTPPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import DocumentsPage from "./pages/DocumentsPage";
 import PreviewPage from "./pages/PreviewPage";
+import ThankYouPage from "./pages/ThankYouPage";
+import ProfilePage from "./pages/ProfilePage";
 import MobileHeader from "./components/MobileHeader";
 import TopAppBar from "./components/TopAppBar";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { initializeAuth } from "./store/authSlice";
+import { useAuth } from "./store/useAuth";
 
 
 
 const BottomNav = () => {
   const location = useLocation();
+  const { token } = useAuth();
+  const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
+  
   const hidePaths = ["/login"];
+  
+  // Fetch application status on mount and when location changes
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        if (!token) return;
+        
+        const res = await fetch(apiConfig.application.getApplication, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          console.log('Fetched application status:', data.applicationStatus);
+          setApplicationStatus(data.applicationStatus);
+        }
+      } catch (err) {
+        console.error('Error fetching application status:', err);
+      }
+    };
+
+    fetchStatus();
+  }, [token, location.pathname]);
+  
+  // Hide if on specific paths or if application is submitted
   if (hidePaths.includes(location.pathname)) return null;
+  if (applicationStatus === 'Submitted' || applicationStatus === 'approved' || applicationStatus === 'rejected') return null;
+  
   const isActive = (path: string) => location.pathname === path;
   return (
     <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[#fcf9f4] flex justify-around items-center px-4 pb-safe h-20 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t-2 border-[#e5e2dd]">
@@ -52,22 +97,122 @@ const AppHeader = () => {
   );
 };
 
+function AppContent() {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state: RootState) => state.auth);
+
+  // Initialize auth state from localStorage on app load
+  useEffect(() => {
+    dispatch(initializeAuth());
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#fcf9f4]">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#570013]"></div>
+          <p className="mt-4 text-[#584141] font-medium">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <LoginPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <LoginPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/registration"
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <RegistrationPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/otp"
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <OTPPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <ForgotPasswordPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/basic-details"
+        element={
+          <ProtectedRoute requireAuth={true}>
+            <BasicDetailsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/documents"
+        element={
+          <ProtectedRoute requireAuth={true}>
+            <DocumentsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/preview"
+        element={
+          <ProtectedRoute requireAuth={true}>
+            <PreviewPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/thank-you"
+        element={
+          <ProtectedRoute requireAuth={true}>
+            <ThankYouPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute requireAuth={true}>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+}
 
 export default function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col bg-[#fcf9f4] text-[#1c1c19] selection:bg-[#fed488]">
-        <AppHeader />
-        <Routes>
-          <Route path="/" element={<RegistrationPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/verify-otp" element={<OTPPage />} />
-          <Route path="/basic-details" element={<BasicDetailsPage />} />
-          <Route path="/documents" element={<DocumentsPage />} />
-          <Route path="/preview" element={<PreviewPage />} />
-        </Routes>
-        <BottomNav />
-      </div>
-    </Router>
+    <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
+      <Router>
+        <div className="min-h-screen flex flex-col bg-[#fcf9f4] text-[#1c1c19] selection:bg-[#fed488]">
+          <AppHeader />
+          <AppContent />
+          <BottomNav />
+        </div>
+      </Router>
+    </GoogleReCaptchaProvider>
   );
 }

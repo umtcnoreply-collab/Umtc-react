@@ -1,43 +1,144 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import SideNavBar from '../components/SideNavBar';
+import { useAuth } from '../store/useAuth';
+import { apiConfig, getFullUrl } from '../config/apiConfig';
 
 function PreviewPage() {
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [formData, setFormData] = useState<any>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const navigate = useNavigate();
+  const { token } = useAuth();
 
-  // MOCK DATA: Replace this with your actual state/context data
-  const mockFormData = {
-    registration: {
-      mobile: "9876543210",
-      candidateName: "ALEXANDER STERLING THORNE",
-      dob: "14 MAY 1992",
-      gender: "MALE",
-      nationality: "INDIAN",
-      category: "GENERAL",
-      email: "ALEXANDER@DOMAIN.COM"
-    },
-    basicDetails: {
-      motherName: "ELEANOR THORNE",
-      fatherName: "RICHARD THORNE",
-      debarred: "NO",
-      criminalCase: "NO",
-      govtEmployee: "NO"
-    },
-    address: {
-      permanentAddress: "123 HERITAGE APARTMENTS, SECTOR 45",
-      pinCode: "110001",
-      state: "DELHI"
-    },
-    documents: {
-      photo: "Passport_Photograph.jpg",
-      signature: "Digital_Signature.jpg",
-      tenthBoard: "CBSE",
-      tenthRollNo: "87654321",
-      tenthMarksheet: "10th_Marksheet.pdf"
+  // Handle application submission
+  const handleSubmitApplication = async () => {
+    setSubmitting(true);
+    setSubmitError('');
+    
+    try {
+      const res = await fetch(apiConfig.application.submitApplication, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const data = await res.json();
+
+      console.log('Submission Response:',  data);
+
+      if (!res.ok) {
+        setSubmitError(data.message || 'Failed to submit application');
+        setSubmitting(false);
+        return;
+      }
+
+      console.log('Application submitted successfully:', data);
+      
+      // Navigate to thank you page with PDF URL
+      navigate('/thank-you', { state: { pdfUrl: data.pdfUrl } });
+    } catch (err) {
+      console.error('Submission error:', err);
+      setSubmitError(err instanceof Error ? err.message : 'An error occurred while submitting');
+      setSubmitting(false);
     }
   };
+
+  // Fetch application data from API
+  useEffect(() => {
+    const fetchApplicationData = async () => {
+      try {
+        setLoading(true);
+        setError('');
+
+        const res = await fetch(apiConfig.application.getApplication, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch application data: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        console.log('Fetched Application Data:', data);
+        
+        // Check if application is already submitted
+        if (data.applicationStatus === 'Submitted' || data.applicationStatus === 'Approved' || data.applicationStatus === 'Rejected') {
+          console.log('Application already submitted, redirecting to profile');
+          navigate('/profile', { replace: true });
+          return;
+        }
+        
+        setFormData(data);
+      } catch (err) {
+        console.error('Error fetching application:', err);
+        setError(err instanceof Error ? err.message : 'An error occurred while fetching application data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token) {
+      fetchApplicationData();
+    }
+  }, [token, navigate]);
+
+  // Format date
+  const formatDate = (dateString: string) => {
+    if (!dateString) return 'N/A';
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+    } catch {
+      return dateString;
+    }
+  };
+
+  // Format boolean values
+  const formatBool = (value: any) => value ? 'Yes' : 'No';
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <div className="bg-[#fcf9f4] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block mb-4">
+            <span className="material-symbols-outlined text-5xl text-[#570013] animate-spin">hourglass_bottom</span>
+          </div>
+          <p className="text-lg font-semibold text-[#570013]">Loading your application...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle error state
+  if (error || !formData) {
+    return (
+      <div className="bg-[#fcf9f4] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <span className="material-symbols-outlined text-5xl text-[#ba1a1a] mb-4 inline-block">error</span>
+          <p className="text-lg font-semibold text-[#ba1a1a] mb-2">Unable to Load Application</p>
+          <p className="text-sm text-[#584141] mb-6">{error || 'Unable to fetch your application data. Please try again.'}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-2 bg-[#570013] text-white rounded-lg font-semibold hover:bg-[#800020] transition-all"
+          >
+            Reload Page
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#fcf9f4] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col">
@@ -68,15 +169,15 @@ function PreviewPage() {
             <div className="bg-[#f6f3ee] rounded-xl p-6 space-y-4 shadow-sm border border-[#e5e2dd]">
               <div className="grid grid-cols-1 gap-1">
                 <label className="text-[10px] font-bold text-[#584141] uppercase tracking-wider">Candidate Name</label>
-                <p className="text-[#1c1c19] font-medium">{mockFormData.registration.candidateName}</p>
+                <p className="text-[#1c1c19] font-medium">{formData?.candidateName || 'N/A'}</p>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Mobile Number</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.registration.mobile}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Email Address</label><p className="text-[#1c1c19] font-medium text-sm break-all">{mockFormData.registration.email}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Date of Birth</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.registration.dob}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Gender</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.registration.gender}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Nationality</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.registration.nationality}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Category</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.registration.category}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Mobile Number</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.mobile || 'N/A'}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Email Address</label><p className="text-[#1c1c19] font-medium text-sm break-all">{formData?.email || 'N/A'}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Date of Birth</label><p className="text-[#1c1c19] font-medium text-sm">{formatDate(formData?.dob) || 'N/A'}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Gender</label><p className="text-[#1c1c19] font-medium text-sm capitalize">{formData?.gender || 'N/A'}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Nationality</label><p className="text-[#1c1c19] font-medium text-sm capitalize">{formData?.nationality || 'N/A'}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Category</label><p className="text-[#1c1c19] font-medium text-sm uppercase">{formData?.category || 'N/A'}</p></div>
               </div>
             </div>
           </section>
@@ -86,23 +187,25 @@ function PreviewPage() {
             <h2 className="font-['Public_Sans'] font-bold text-lg text-[#570013] tracking-wide mb-4 sticky top-20 bg-[#fcf9f4] py-2 z-10">Basic Details</h2>
             <div className="bg-[#f6f3ee] rounded-xl p-6 space-y-4 shadow-sm border border-[#e5e2dd]">
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Mother Name</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.basicDetails.motherName}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Father Name</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.basicDetails.fatherName}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Mother Name</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Father Name</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
               </div>
               
               <div className="pt-2 border-t border-[#e5e2dd]">
                 <label className="text-[10px] font-bold text-[#584141] uppercase">Permanent Address</label>
-                <p className="text-[#1c1c19] font-medium text-sm">{mockFormData.address.permanentAddress}</p>
+                <p className="text-[#1c1c19] font-medium text-sm">{formData?.address?.permanentAddress?.address || 'N/A'}</p>
                 <div className="grid grid-cols-2 gap-4 mt-2">
-                  <div><label className="text-[10px] font-bold text-[#584141] uppercase">State</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.address.state}</p></div>
-                  <div><label className="text-[10px] font-bold text-[#584141] uppercase">Pin Code</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.address.pinCode}</p></div>
+                  <div><label className="text-[10px] font-bold text-[#584141] uppercase">State</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.address?.permanentAddress?.state || 'N/A'}</p></div>
+                  <div><label className="text-[10px] font-bold text-[#584141] uppercase">Pin Code</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.address?.permanentAddress?.pincode || 'N/A'}</p></div>
+                  <div><label className="text-[10px] font-bold text-[#584141] uppercase">City</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.address?.permanentAddress?.city || 'N/A'}</p></div>
+                  <div><label className="text-[10px] font-bold text-[#584141] uppercase">District</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.address?.permanentAddress?.district || 'N/A'}</p></div>
                 </div>
               </div>
 
               <div className="pt-2 border-t border-[#e5e2dd] grid grid-cols-2 gap-4">
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Debarred?</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.basicDetails.debarred}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Criminal Cases?</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.basicDetails.criminalCase}</p></div>
-                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Govt Employee?</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.basicDetails.govtEmployee}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Debarred?</label><p className="text-[#1c1c19] font-medium text-sm">{formatBool(formData?.basicDetails?.debarred)}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">FIR Cases?</label><p className="text-[#1c1c19] font-medium text-sm">{formatBool(formData?.basicDetails?.fir)}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Govt Employee?</label><p className="text-[#1c1c19] font-medium text-sm">{formatBool(formData?.basicDetails?.govt_emp)}</p></div>
               </div>
             </div>
           </section>
@@ -110,24 +213,66 @@ function PreviewPage() {
           {/* 3. Documentation */}
           <section>
             <h2 className="font-['Public_Sans'] font-bold text-lg text-[#570013] tracking-wide mb-4 sticky top-20 bg-[#fcf9f4] py-2 z-10">Uploaded Documents</h2>
-            <div className="bg-[#f6f3ee] rounded-xl p-4 space-y-3 shadow-sm border border-[#e5e2dd]">
-              {[mockFormData.documents.photo, mockFormData.documents.signature, mockFormData.documents.tenthMarksheet].map((file, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-[#fcf9f4] rounded-lg border border-[#e5e2dd]">
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="material-symbols-outlined text-[#775a19] text-sm shrink-0">{file.includes('.jpg') ? 'image' : 'file_present'}</span>
-                    <span className="text-xs font-medium truncate">{file}</span>
+            <div className="bg-[#f6f3ee] rounded-xl p-4 space-y-4 shadow-sm border border-[#e5e2dd]">
+              {/* Photo & Signature Images */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                {formData?.documents?.photoUrl && (
+                  <div className="flex flex-col items-center justify-center p-3 bg-[#fcf9f4] rounded-lg border border-[#e5e2dd]">
+                    <img src={getFullUrl(formData.documents.photoUrl)} alt="Photograph" className="w-20 h-28 object-cover rounded mb-2 border border-[#e5e2dd]" />
+                    <span className="text-xs font-medium text-[#584141] mb-1">Photograph</span>
+                    <span className="material-symbols-outlined text-[#775a19] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                   </div>
-                  <span className="material-symbols-outlined text-[#775a19] text-sm shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                )}
+                {formData?.documents?.signatureUrl && (
+                  <div className="flex flex-col items-center justify-center p-3 bg-[#fcf9f4] rounded-lg border border-[#e5e2dd]">
+                    <img src={getFullUrl(formData.documents.signatureUrl)} alt="Signature" className="w-20 h-16 object-contain rounded mb-2 border border-[#e5e2dd]" />
+                    <span className="text-xs font-medium text-[#584141] mb-1">Signature</span>
+                    <span className="material-symbols-outlined text-[#775a19] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                  </div>
+                )}
+              </div>
+              {/* Qualification Documents */}
+              <div className="border-t border-[#e5e2dd] pt-4">
+                <label className="text-[10px] font-bold text-[#584141] uppercase mb-3 block">Educational Qualifications</label>
+                <div className="space-y-2">
+                  {['tenth', 'twelfth', 'grad', 'other'].map((level: string) => formData?.qualifications?.[level]?.fileUrl && (
+                    <div key={level} className="flex items-center justify-between p-3 bg-[#fcf9f4] rounded-lg border border-[#e5e2dd]">
+                      <div className="flex items-center gap-2 overflow-hidden flex-1">
+                        <span className="material-symbols-outlined text-[#775a19] text-sm shrink-0">file_present</span>
+                        <span className="text-xs font-medium truncate">{level === 'tenth' ? '10th' : level === 'twelfth' ? '12th' : level === 'grad' ? 'Graduation' : 'Other'} Document</span>
+                      </div>
+                      <span className="material-symbols-outlined text-[#775a19] text-sm shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-              <div className="pt-2 mt-2 border-t border-[#e5e2dd] grid grid-cols-2 gap-4 px-2">
-                 <div><label className="text-[10px] font-bold text-[#584141] uppercase">10th Board</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.documents.tenthBoard}</p></div>
-                 <div><label className="text-[10px] font-bold text-[#584141] uppercase">10th Roll No</label><p className="text-[#1c1c19] font-medium text-sm">{mockFormData.documents.tenthRollNo}</p></div>
               </div>
             </div>
           </section>
 
-          {/* 4. Declarations & Rules */}
+          {/* 4. Identification & Status */}
+          <section>
+            <h2 className="font-['Public_Sans'] font-bold text-lg text-[#570013] tracking-wide mb-4 sticky top-20 bg-[#fcf9f4] py-2 z-10">Identification & Status</h2>
+            <div className="bg-[#f6f3ee] rounded-xl p-6 space-y-4 shadow-sm border border-[#e5e2dd]">
+              <div className="grid grid-cols-2 gap-4">
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Aadhar Number</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.basicDetails?.aadhar || 'N/A'}</p></div>
+                <div><label className="text-[10px] font-bold text-[#584141] uppercase">Ex-ServiceMen?</label><p className="text-[#1c1c19] font-medium text-sm">{formatBool(formData?.basicDetails?.exServicemen)}</p></div>
+              </div>
+              <div className="pt-2 border-t border-[#e5e2dd]">
+                <label className="text-[10px] font-bold text-[#584141] uppercase mb-3 block">Visible Identification Marks</label>
+                <div className="space-y-2">
+                  {formData?.basicDetails?.visibleMarks && formData.basicDetails.visibleMarks.length > 0 ? (
+                    formData.basicDetails.visibleMarks.map((mark: string, index: number) => (
+                      <p key={index} className="text-sm font-medium text-[#584141] p-2 bg-[#fcf9f4] rounded border border-[#e5e2dd]">{mark || 'N/A'}</p>
+                    ))
+                  ) : (
+                    <p className="text-sm font-medium">N/A</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 5. Declarations & Rules */}
           <section>
             <h2 className="font-['Public_Sans'] font-bold text-lg text-[#570013] tracking-wide mb-4 sticky top-20 bg-[#fcf9f4] py-2 z-10">Application Declarations</h2>
             <div className="bg-[#f6f3ee] rounded-xl p-6 space-y-6 shadow-sm border border-[#e5e2dd] text-sm text-[#584141]">
@@ -160,26 +305,46 @@ function PreviewPage() {
       <div className="hidden md:flex flex-col flex-grow">
         <div className="flex-grow flex w-full max-w-7xl mx-auto px-8 py-12">
           <SideNavBar activePath="/preview" />
-          <main className="flex-1 bg-[#fcf9f4] overflow-y-auto pl-8 pb-12 relative">
+          <main className="flex-1 bg-[#fcf9f4] pl-8 pb-12 relative">
             
             <div className="mb-16">
               <div className="flex items-center justify-between relative">
+                {/* Background line - unfilled */}
                 <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#ebe8e3] -z-10"></div>
+                {/* Filled progress line */}
+                <div 
+                  className="absolute top-1/2 left-0 h-0.5 bg-[#775a19] -z-10 transition-all duration-500"
+                  style={{ width: `${(formData?.currentStep || 1) * 33.33}%` }}
+                ></div>
+                
+                {/* Step 1: Registration */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#775a19] text-white flex items-center justify-center"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className="w-8 h-8 rounded-full bg-[#775a19] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
                   <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
                 </div>
+                
+                {/* Step 2: Basic Details */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#775a19] text-white flex items-center justify-center"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 2 ? 'bg-[#775a19]' : 'bg-[#ebe8e3] text-[#584141]'}`}>
+                    {(formData?.currentStep || 1) >= 2 ? <span className="material-symbols-outlined text-sm">check</span> : '2'}
+                  </div>
                   <span className="text-xs font-['Inter'] text-stone-500">Basic Details</span>
                 </div>
+                
+                {/* Step 3: Documents */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#775a19] text-white flex items-center justify-center"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 3 ? 'bg-[#775a19]' : 'bg-[#ebe8e3] text-[#584141]'}`}>
+                    {(formData?.currentStep || 1) >= 3 ? <span className="material-symbols-outlined text-sm">check</span> : '3'}
+                  </div>
                   <span className="text-xs font-['Inter'] text-stone-500">Documents</span>
                 </div>
+                
+                {/* Step 4: Preview */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-[#570013] text-white flex items-center justify-center font-bold shadow-md">4</div>
-                  <span className="text-sm font-['Inter'] text-[#570013] font-semibold">Preview</span>
+                  <div className={`w-10 h-10 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 4 ? 'bg-[#570013]' : 'bg-[#ebe8e3] text-[#584141]'}`}>
+                    4
+                  </div>
+                  <span className={`text-sm font-['Inter'] font-semibold ${(formData?.currentStep || 1) >= 4 ? 'text-[#570013]' : 'text-stone-500'}`}>Preview</span>
                 </div>
               </div>
             </div>
@@ -201,15 +366,15 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f6f3ee] p-8 rounded-xl border border-[#ebe8e3]">
                   <div className="grid grid-cols-2 gap-8 mb-6">
-                    <div className="col-span-2"><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Candidate Name</label><p className="text-lg font-medium">{mockFormData.registration.candidateName}</p></div>
+                    <div className="col-span-2"><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Candidate Name</label><p className="text-lg font-medium">{formData?.candidateName || 'N/A'}</p></div>
                   </div>
                   <div className="grid grid-cols-2 gap-8">
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Mobile Number</label><p className="text-base font-medium">{mockFormData.registration.mobile}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Email Address</label><p className="text-base font-medium">{mockFormData.registration.email}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Date of Birth</label><p className="text-base font-medium">{mockFormData.registration.dob}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Gender</label><p className="text-base font-medium">{mockFormData.registration.gender}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Nationality</label><p className="text-base font-medium">{mockFormData.registration.nationality}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Category</label><p className="text-base font-medium">{mockFormData.registration.category}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Mobile Number</label><p className="text-base font-medium">{formData?.mobile || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Email Address</label><p className="text-base font-medium">{formData?.email || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Date of Birth</label><p className="text-base font-medium">{formatDate(formData?.dob) || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Gender</label><p className="text-base font-medium capitalize">{formData?.gender || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Nationality</label><p className="text-base font-medium capitalize">{formData?.nationality || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Category</label><p className="text-base font-medium uppercase">{formData?.category || 'N/A'}</p></div>
                   </div>
                 </div>
               </section>
@@ -223,23 +388,36 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f6f3ee] p-8 rounded-xl border border-[#ebe8e3] space-y-8">
                   <div className="grid grid-cols-2 gap-8">
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Mother Name</label><p className="text-base font-medium">{mockFormData.basicDetails.motherName}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Father Name</label><p className="text-base font-medium">{mockFormData.basicDetails.fatherName}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Mother Name</label><p className="text-base font-medium">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Father Name</label><p className="text-base font-medium">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
                   </div>
                   
                   <div className="pt-6 border-t border-[#ebe8e3]">
                     <label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Permanent Address</label>
-                    <p className="text-base font-medium">{mockFormData.address.permanentAddress}</p>
+                    <p className="text-base font-medium">{formData?.address?.permanentAddress?.address || 'N/A'}</p>
                     <div className="grid grid-cols-2 gap-8 mt-4">
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">State</label><p className="text-base font-medium">{mockFormData.address.state}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Pin Code</label><p className="text-base font-medium">{mockFormData.address.pinCode}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">City</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.city || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">State</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.state || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">District</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.district || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Pin Code</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.pincode || 'N/A'}</p></div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-[#ebe8e3]">
+                    <label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Correspondence Address</label>
+                    <p className="text-base font-medium">{formData?.address?.correspondenceAddress?.address || 'N/A'}</p>
+                    <div className="grid grid-cols-2 gap-8 mt-4">
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">City</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.city || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">State</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.state || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">District</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.district || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Pin Code</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.pincode || 'N/A'}</p></div>
                     </div>
                   </div>
 
                   <div className="pt-6 border-t border-[#ebe8e3] grid grid-cols-3 gap-6">
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Debarred?</label><p className="text-base font-medium">{mockFormData.basicDetails.debarred}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Criminal Case?</label><p className="text-base font-medium">{mockFormData.basicDetails.criminalCase}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Govt Employee?</label><p className="text-base font-medium">{mockFormData.basicDetails.govtEmployee}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Debarred?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.debarred)}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">FIR Against?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.fir)}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Govt Employee?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.govt_emp)}</p></div>
                   </div>
                 </div>
               </section>
@@ -252,21 +430,70 @@ function PreviewPage() {
                   <p className="text-sm text-[#584141] mt-2">Media assets and academic credentials.</p>
                 </div>
                 <div className="bg-[#f6f3ee] p-8 rounded-xl border border-[#ebe8e3]">
-                   <div className="grid grid-cols-2 gap-4 mb-8">
-                     {[mockFormData.documents.photo, mockFormData.documents.signature, mockFormData.documents.tenthMarksheet].map((file, i) => (
-                        <div key={i} className="flex items-center justify-between p-4 bg-[#fcf9f4] rounded-lg border border-[#ebe8e3]">
-                          <div className="flex items-center gap-3">
-                            <span className="material-symbols-outlined text-[#775a19]">file_present</span>
-                            <span className="text-sm font-medium">{file}</span>
-                          </div>
-                          <span className="material-symbols-outlined text-green-700" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                        </div>
-                     ))}
+                   <div className="mb-8">
+                     <label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold mb-4">Recent Photograph & Signature</label>
+                     <div className="grid grid-cols-2 gap-4">
+                       {formData?.documents?.photoUrl && (
+                         <div className="flex flex-col items-center justify-center p-6 bg-[#fcf9f4] rounded-lg border border-[#ebe8e3]">
+                           <img src={getFullUrl(formData.documents.photoUrl)} alt="Photograph" className="w-32 h-40 object-cover rounded mb-3 border border-[#e5e2dd]" />
+                           <span className="text-xs font-medium text-[#584141]">Photograph</span>
+                           <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                         </div>
+                       )}
+                       {formData?.documents?.signatureUrl && (
+                         <div className="flex flex-col items-center justify-center p-6 bg-[#fcf9f4] rounded-lg border border-[#ebe8e3]">
+                           <img src={getFullUrl(formData.documents.signatureUrl)} alt="Signature" className="w-32 h-20 object-contain rounded mb-3 border border-[#e5e2dd]" />
+                           <span className="text-xs font-medium text-[#584141]">Digital Signature</span>
+                           <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                         </div>
+                       )}
+                     </div>
                    </div>
-                   <div className="pt-6 border-t border-[#ebe8e3] grid grid-cols-2 gap-8">
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">10th Board</label><p className="text-base font-medium">{mockFormData.documents.tenthBoard}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">10th Roll Number</label><p className="text-base font-medium">{mockFormData.documents.tenthRollNo}</p></div>
+                   <div className="pt-6 border-t border-[#ebe8e3]">
+                     <label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold mb-4">Educational Qualifications</label>
+                     {formData?.qualifications && (
+                       <div className="space-y-4">
+                         {Object.entries(formData.qualifications).map(([level, data]: [string, any]) => (
+                           data?.fileUrl && (
+                             <div key={level} className="p-4 bg-[#fcf9f4] rounded-lg border border-[#ebe8e3]">
+                               <p className="text-sm font-medium capitalize mb-2">{level === 'tenth' ? '10th' : level === 'twelfth' ? '12th' : level === 'grad' ? 'Graduation' : 'Other'} Qualification</p>
+                               <p className="text-sm text-[#584141]"><strong>Document:</strong> {data.fileUrl.split('/').pop() || 'Uploaded'}</p>
+                               <div className="flex items-center gap-2 mt-2">
+                                 <span className="material-symbols-outlined text-green-700 text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                                 <span className="text-xs text-green-700 font-medium">Document Uploaded</span>
+                               </div>
+                             </div>
+                           )
+                         ))}
+                       </div>
+                     )}
                    </div>
+                </div>
+              </section>
+
+              {/* Identification Section */}
+              <section className="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-8 lg:gap-16 relative">
+                <div className="sticky top-8 self-start">
+                  <h3 className="text-xl font-['Public_Sans'] font-bold text-[#570013]">Identification & Status</h3>
+                  <p className="text-sm text-[#584141] mt-2">Personal identification and service details.</p>
+                </div>
+                <div className="bg-[#f6f3ee] p-8 rounded-xl border border-[#ebe8e3] space-y-8">
+                  <div className="grid grid-cols-2 gap-8">
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Aadhar Card Number</label><p className="text-base font-medium">{formData?.basicDetails?.aadhar || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold">Ex-ServiceMen?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.exServicemen)}</p></div>
+                  </div>
+                  <div className="pt-6 border-t border-[#ebe8e3]">
+                    <label className="block text-[10px] uppercase tracking-widest text-[#775a19] font-bold mb-3">Visible Identification Marks</label>
+                    <div className="space-y-2">
+                      {formData?.basicDetails?.visibleMarks && formData.basicDetails.visibleMarks.length > 0 ? (
+                        formData.basicDetails.visibleMarks.map((mark: string, index: number) => (
+                          <p key={index} className="text-base font-medium text-[#584141] p-2 bg-[#fcf9f4] rounded border border-[#e5e2dd]">{mark || 'N/A'}</p>
+                        ))
+                      ) : (
+                        <p className="text-base font-medium">N/A</p>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </section>
 
@@ -319,11 +546,19 @@ function PreviewPage() {
             </div>
             
             <div className="space-y-4">
-              <button className="w-full py-4 rounded-xl bg-[#570013] text-white font-bold flex items-center justify-center gap-2">
-                <span className="material-symbols-outlined">download</span> Download PDF
+              <button 
+                onClick={handleSubmitApplication}
+                disabled={submitting}
+                className="w-full py-4 rounded-xl bg-[#570013] text-white font-bold flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                <span className="material-symbols-outlined">{submitting ? 'hourglass_bottom' : 'send'}</span> 
+                {submitting ? 'SUBMITTING...' : 'SUBMIT APPLICATION'}
               </button>
-              <button onClick={() => navigate("/login")} className="w-full py-3 rounded-xl text-[#775a19] font-bold">
-                Return to Login
+              {submitError && (
+                <p className="text-[#ba1a1a] text-sm font-semibold">{submitError}</p>
+              )}
+              <button onClick={() => setShowModal(false)} className="w-full py-3 rounded-xl text-[#775a19] font-bold">
+                Cancel
               </button>
             </div>
           </div>
