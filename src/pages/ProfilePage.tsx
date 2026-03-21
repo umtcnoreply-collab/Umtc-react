@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer';
-import SideNavBar from '../components/SideNavBar';
 import { useAuth } from '../store/useAuth';
 import { apiConfig } from '../config/apiConfig';
 
