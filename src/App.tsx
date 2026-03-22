@@ -33,15 +33,15 @@ const BottomNav = () => {
   const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
   const [basicDone, setBasicDone] = useState(false);
   const [docsDone, setDocsDone] = useState(false);
-  
+
   const hidePaths = ["/login"];
-  
+
   // Fetch application status on mount and when location changes
   useEffect(() => {
     const fetchStatus = async () => {
       try {
         if (!token) return;
-        
+
         const res = await fetch(apiConfig.application.getApplication, {
           method: 'GET',
           headers: {
@@ -64,7 +64,7 @@ const BottomNav = () => {
 
     fetchStatus();
   }, [token, location.pathname]);
-  
+
   // Hide if on specific paths or if application is submitted
   if (hidePaths.includes(location.pathname)) return null;
   if (applicationStatus === 'Submitted' || applicationStatus === 'approved' || applicationStatus === 'rejected') return null;
