@@ -3,6 +3,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import SideNavBar from '../components/SideNavBar';
+import ProcessTimeline from '../components/ProcessTimeline';
 import { useAuth } from '../store/useAuth';
 import { apiConfig, getFullUrl } from '../config/apiConfig';
 type QualLevel = 'tenth' | 'twelfth' | 'grad' | 'other';
@@ -56,6 +57,13 @@ function DocumentsPage() {
         if (data.applicationStatus === 'Submitted' || data.applicationStatus === 'Approved' || data.applicationStatus === 'Rejected') {
           console.log('Application already submitted, redirecting to profile');
           navigate('/profile', { replace: true });
+          return;
+        }
+
+        // Guard: Basic Details must be completed before accessing Documents
+        if (!data.basicDetails || !data.basicDetails.motherName || !data.basicDetails.fatherName) {
+          console.log('Basic details not completed, redirecting to basic-details');
+          navigate('/basic-details', { replace: true });
           return;
         }
 
@@ -560,41 +568,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
           <SideNavBar activePath="/documents" />
 
           <div className="flex-1 overflow-x-hidden">
-            <div className="mb-16">
-              <div className="flex items-center justify-between relative">
-                {/* Background line - unfilled */}
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
-                {/* Filled progress line - 66.66% for step 3 */}
-                <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-[#9fcb54] -z-10 transition-all duration-500"
-                  style={{ width: '66.66%' }}
-                ></div>
-                
-                {/* Step 1: Registration */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
-                </div>
-                
-                {/* Step 2: Basic Details */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Basic Details</span>
-                </div>
-                
-                {/* Step 3: Documents (Current) */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-[#324670] text-white flex items-center justify-center font-bold shadow-md">3</div>
-                  <span className="text-sm font-['Inter'] text-[#324670] font-semibold">Documents</span>
-                </div>
-                
-                {/* Step 4: Preview */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#e8f4ff] text-stone-400 flex items-center justify-center font-bold shadow-md">4</div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Preview</span>
-                </div>
-              </div>
-            </div>
+            <ProcessTimeline currentStep={3} />
             <header className="mb-16">
               <h1 className="font-['Public_Sans'] text-[3.5rem] leading-none font-extrabold tracking-tighter text-[#324670]">Document Uploads</h1>
               <div className="h-1 w-24 bg-[#9fcb54] mt-6"></div>
@@ -603,9 +577,9 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
             <form className="space-y-16" onSubmit={handleSubmit}>
 
               {/* 1. MEDIA UPLOADS SECTION */}
-              <section className="grid grid-cols-[1fr_2.5fr] gap-12">
-                <div className="space-y-6">
-                  <div className="sticky top-24">
+              <section className="grid grid-cols-[1fr_2.5fr] gap-12 items-start relative">
+                <div className="sticky top-24 self-start">
+                  <div>
                     <h3 className="font-['Public_Sans'] text-xl font-bold text-[#324670] mb-4">Media Uploads</h3>
                     <p className="text-[#324670] leading-relaxed text-sm">Please adhere strictly to the file dimensions and size limits to prevent system rejection.</p>
                   </div>

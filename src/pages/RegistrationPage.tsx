@@ -1,7 +1,6 @@
 import type { FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router';
 import Footer from '../components/Footer';
-import SideNavBar from '../components/SideNavBar';
 import { useState } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { apiConfig } from '../config/apiConfig';
@@ -186,77 +185,99 @@ function RegistrationPage() {
 
       {/* ══ DESKTOP LAYOUT ═══════════════════════════════════════ */}
       <div className="hidden md:flex flex-col flex-grow">
-        <main className="flex-grow flex w-full max-w-7xl mx-auto px-8 py-12">
-          <SideNavBar activePath="/" />
-          <div className="flex-1">
-            <div className="mb-16">
-              <div className="flex items-center justify-between relative">
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center"><span className="material-symbols-outlined text-sm">check</span></div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-[#324670] text-white flex items-center justify-center font-bold shadow-md">2</div>
-                  <span className="text-sm font-['Inter'] text-[#324670] font-semibold">Basic Details</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#e8f4ff] text-stone-400 flex items-center justify-center">3</div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Documents</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#e8f4ff] text-stone-400 flex items-center justify-center">4</div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Preview</span>
+        <main className="flex-grow flex items-center justify-center px-4 py-16">
+          <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-5 space-y-6 sticky top-20">
+              <div className="space-y-2">
+                <p className="text-[#9fcb54] font-semibold uppercase tracking-widest text-xs">Registration Portal</p>
+                <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#324670] leading-tight tracking-tighter">Candidate Registration</h1>
+                <div className="h-1 w-20 bg-[#9fcb54] mt-4"></div>
+              </div>
+              <p className="text-[#324670] leading-relaxed text-sm">Create your UMTC registration account to access the application portal. Provide your basic information to get started.</p>
+              <div className="p-6 bg-[#f0f8ff] rounded-lg space-y-4">
+                <div className="flex items-start gap-4">
+                  <span className="material-symbols-outlined text-[#9fcb54]">verified</span>
+                  <div>
+                    <p className="font-medium text-sm">Secure Registration</p>
+                    <p className="text-xs text-[#324670]">Protected by reCAPTCHA verification.</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <header className="mb-16">
-              <h1 className="font-['Public_Sans'] text-[3.5rem] leading-none font-extrabold tracking-tighter text-[#324670]">Basic Registration Form</h1>
-              <div className="h-1 w-24 bg-[#9fcb54] mt-6"></div>
-            </header>
-
-            <section className="grid grid-cols-[1fr_2fr] gap-16">
-              <div className="space-y-6">
-                <div className="sticky top-24">
-                  <h3 className="font-['Public_Sans'] text-xl font-bold text-[#324670] mb-4">Initial Verification</h3>
-                  <p className="text-[#324670] leading-relaxed text-sm">Please provide your primary contact information. Ensure all details match your official documents.</p>
-                </div>
-              </div>
-
-              <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50">
-                <form className="space-y-10" onSubmit={handleFormSubmit}>
-                  {/* Fields in requested order */}
-                  <div className="space-y-2">
-                    <label className="font-medium text-sm flex items-center">Mobile No. (Username)<span className="text-[#c80000] ml-1">*</span></label>
-                    <input name="mobile" value={formData.mobile} onChange={handleChange} className="w-full bg-[#e8f4ff] p-4 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors font-mono tracking-widest text-lg" maxLength={10} placeholder="10-DIGIT NUMERICAL" type="text" required />
-                    <p className="text-[10px] text-[#324670] uppercase tracking-wider">Mandatory 10 digit numerical</p>
+            <div className="lg:col-span-7 bg-white p-10 shadow-sm rounded-xl">
+              <form className="space-y-8" onSubmit={handleFormSubmit}>
+                {error && (
+                  <div className="bg-[#c80000] text-white p-4 rounded-lg text-sm font-medium">
+                    {error}
                   </div>
-
-                  <div className="space-y-2">
-                    <label className="font-medium text-sm flex items-center">Enter Candidate name as per matriculation certificate <span className="text-[#c80000] ml-1">*</span></label>
-                    <input name="candidateName" value={formData.candidateName} onChange={handleChange} className="w-full bg-[#e8f4ff] p-4 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors uppercase" placeholder="ENTER FULL NAME" type="text" required />
-                    <p className="text-[10px] text-[#324670] uppercase tracking-wider">As per Record in the Matriculation / Secondary Examination Certificate</p>
+                )}
+                <div className="space-y-6">
+                  <div className="flex flex-col gap-2">
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">MOBILE NUMBER <span className="text-[#c80000]">*</span></label>
+                    <input
+                      name="mobile"
+                      value={formData.mobile}
+                      onChange={handleChange}
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 uppercase font-bold text-[#324670] tracking-widest w-full bg-[#f0f8ff]"
+                      placeholder="ENTER 10 DIGIT NUMBER"
+                      type="tel"
+                      maxLength={10}
+                      required
+                    />
                   </div>
-
-                  <div className="grid grid-cols-2 gap-8">
-                    <div className="space-y-2">
-                      <label className="font-medium text-sm flex items-center">Nationality <span className="text-[#c80000] ml-1">*</span></label>
-                      <input name="nationality" value={formData.nationality} onChange={handleChange} className="w-full bg-[#e8f4ff] p-4 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors uppercase" placeholder="INDIAN" type="text" required />
+                  <div className="flex flex-col gap-2">
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">CANDIDATE NAME <span className="text-[#c80000]">*</span></label>
+                    <input
+                      name="candidateName"
+                      value={formData.candidateName}
+                      onChange={handleChange}
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 uppercase w-full bg-[#f0f8ff]"
+                      placeholder="AS PER MATRICULATION CERTIFICATE"
+                      type="text"
+                      required
+                    />
+                    <p className="text-[10px] text-[#324670] uppercase tracking-wider">As per your official documents</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-2">
+                      <label className="font-['Inter'] text-sm font-medium text-[#324670]">NATIONALITY <span className="text-[#c80000]">*</span></label>
+                      <input
+                        name="nationality"
+                        value={formData.nationality}
+                        onChange={handleChange}
+                        className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 uppercase w-full bg-[#f0f8ff]"
+                        placeholder="INDIAN"
+                        type="text"
+                        required
+                      />
                     </div>
-                    <div className="space-y-2">
-                      <label className="font-medium text-sm flex items-center">Gender <span className="text-[#c80000] ml-1">*</span></label>
-                      <select name="gender" value={formData.gender} onChange={handleChange} className="w-full bg-[#e8f4ff] p-4 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none appearance-none" required defaultValue="">
-                        <option disabled value="">SELECT GENDER</option>
+                    <div className="flex flex-col gap-2">
+                      <label className="font-['Inter'] text-sm font-medium text-[#324670]">GENDER <span className="text-[#c80000]">*</span></label>
+                      <select
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 w-full bg-[#f0f8ff] appearance-none"
+                        required
+                        defaultValue=""
+                      >
+                        <option disabled value="">SELECT</option>
                         <option value="male">MALE</option>
                         <option value="female">FEMALE</option>
                         <option value="transgender">TRANSGENDER</option>
                       </select>
                     </div>
                   </div>
-
-                  <div className="space-y-2">
-                    <label className="font-medium text-sm flex items-center">To which category do you belong <span className="text-[#c80000] ml-1">*</span></label>
-                    <select name="category" value={formData.category} onChange={handleChange} className="w-full bg-[#e8f4ff] p-4 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none appearance-none" required defaultValue="">
+                  <div className="flex flex-col gap-2">
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">CATEGORY <span className="text-[#c80000]">*</span></label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleChange}
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 w-full bg-[#f0f8ff] appearance-none"
+                      required
+                      defaultValue=""
+                    >
                       <option disabled value="">SELECT CATEGORY</option>
                       <option value="general">GENERAL</option>
                       <option value="ews">EWS</option>
@@ -265,58 +286,43 @@ function RegistrationPage() {
                       <option value="st">ST</option>
                     </select>
                   </div>
-
-                  <div className="pt-6 border-t border-[#32467033]">
-                    <h3 className="text-[#324670] font-['Public_Sans'] font-bold text-xl mb-8">Personal Details ⇓</h3>
-                    <div className="space-y-10">
-                      <div className="space-y-2">
-                        <label className="font-medium text-sm flex items-center">Date of Birth <span className="text-[#c80000] ml-1">*</span></label>
-                        <input name="dob" value={formData.dob} onChange={handleChange} className="w-full bg-[#e8f4ff] p-4 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none" type="date" required />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="font-medium text-sm flex items-center">Email <span className="text-[#c80000] ml-1">*</span></label>
-                        <input name="email" value={formData.email} onChange={handleChange} className="w-full bg-[#e8f4ff] p-4 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none" placeholder="active.email@domain.com" type="email" required />
-                        <p className="text-[10px] text-[#324670] uppercase tracking-wider">Enter your current and Active E-mail Address</p>
-                      </div>
-                    </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">DATE OF BIRTH <span className="text-[#c80000]">*</span></label>
+                    <input
+                      name="dob"
+                      value={formData.dob}
+                      onChange={handleChange}
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 w-full bg-[#f0f8ff]"
+                      type="date"
+                      required
+                    />
                   </div>
-
-                  <div className="p-6 bg-[#e8f4ff] rounded-xl border-l-4 border-[#9fcb54]">
-                    <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-[#324670] text-2xl flex-shrink-0">verified</span>
-                      <div>
-                        <p className="font-medium text-[#324670]">This site is protected by reCAPTCHA and the Google</p>
-                        <p className="text-xs text-[#324670]"><a href="https://policies.google.com/privacy" className="hover:underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" className="hover:underline">Terms of Service</a> apply.</p>
-                      </div>
-                    </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">EMAIL <span className="text-[#c80000]">*</span></label>
+                    <input
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 w-full bg-[#f0f8ff]"
+                      placeholder="ACTIVE EMAIL ADDRESS"
+                      type="email"
+                      required
+                    />
+                    <p className="text-[10px] text-[#324670] uppercase tracking-wider">Enter your active email address</p>
                   </div>
-
-                  {error && (
-                    <div className="p-4 bg-[#ffebee] border-l-4 border-[#c80000] rounded text-sm font-semibold text-[#c80000]">
-                      {error}
-                    </div>
-                  )}
-
-                  <div className="pt-6">
-                    <button disabled={loading} className="w-full bg-[#324670] text-white py-5 px-8 rounded-lg font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#9fcb54] transition-all flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
-                      {loading ? (
-                        <>
-                          <span className="material-symbols-outlined animate-spin">hourglass_bottom</span>
-                          Verifying...
-                        </>
-                      ) : (
-                        <>
-                          Verify Email &amp; Register <span className="material-symbols-outlined">arrow_forward</span>
-                        </>
-                      )}
-                    </button>
-                    <div className="text-center mt-6">
-                      <p className="text-sm text-[#324670]">Already have an account? <Link to="/" className="font-semibold text-[#324670] hover:underline">Login here</Link></p>
-                    </div>
-                  </div>
-                </form>
+                  <button
+                    disabled={loading}
+                    className="w-full bg-[#9fcb54] text-white py-4 font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 group shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    type="submit"
+                  >
+                    {loading ? 'REGISTERING...' : 'REGISTER'} <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </button>
+                </div>
+              </form>
+              <div className="mt-8 text-center space-y-3">
+                <p className="text-xs text-[#324670]">Already have an account? <Link className="text-[#324670] font-semibold underline underline-offset-4 hover:text-[#9fcb54]" to="/">Login here</Link></p>
               </div>
-            </section>
+            </div>
           </div>
         </main>
         <Footer />

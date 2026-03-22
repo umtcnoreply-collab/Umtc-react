@@ -16,17 +16,14 @@ function TopAppBar() {
   return (
   <nav className="hidden md:flex bg-[#f0f8ff]/80 backdrop-blur-md text-[#324670] font-['Public_Sans'] tracking-tight top-0 sticky z-50">
     <div className="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
-      <Link to={isAuthenticated ? "/basic-details" : "/login"} className="text-xl font-bold text-[#324670] uppercase tracking-wider">
-        The Sovereign Editorial
+      <Link to={isAuthenticated ? "/basic-details" : "/login"} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+        <img src="https://umtcapply.com/wp-content/uploads/2026/01/logo-new-1.png" alt="UMTC Logo" className="h-12 w-12" />
+        <div>
+          <div className="text-sm font-bold text-[#324670]">Urban Mass Transit</div>
+          <div className="text-sm font-bold text-[#324670]">Company Limited</div>
+        </div>
       </Link>
       <div className="flex items-center space-x-8">
-        {!isAuthenticated && (
-          <>
-            <Link className="text-stone-600 hover:text-[#324670] transition-colors" to="/">Dashboard</Link>
-            <a className="text-stone-600 hover:text-[#324670] transition-colors" href="#">Help Desk</a>
-            <a className="text-stone-600 hover:text-[#324670] transition-colors" href="#">Contact</a>
-          </>
-        )}
         <div className="flex items-center space-x-4 ml-4">
           <button className="material-symbols-outlined hover:bg-[#f0f8ff] p-2 rounded-full transition-all">notifications</button>
           {isAuthenticated && (

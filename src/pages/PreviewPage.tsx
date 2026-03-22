@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import SideNavBar from '../components/SideNavBar';
+import ProcessTimeline from '../components/ProcessTimeline';
 import { useAuth } from '../store/useAuth';
 import { apiConfig, getFullUrl } from '../config/apiConfig';
 
@@ -19,7 +20,7 @@ function PreviewPage() {
   const handleSubmitApplication = async () => {
     setSubmitting(true);
     setSubmitError('');
-    
+
     try {
       const res = await fetch(apiConfig.application.submitApplication, {
         method: 'POST',
@@ -31,7 +32,7 @@ function PreviewPage() {
 
       const data = await res.json();
 
-      console.log('Submission Response:',  data);
+      console.log('Submission Response:', data);
 
       if (!res.ok) {
         setSubmitError(data.message || 'Failed to submit application');
@@ -40,7 +41,7 @@ function PreviewPage() {
       }
 
       console.log('Application submitted successfully:', data);
-      
+
       // Navigate to thank you page with PDF URL
       navigate('/thank-you', { state: { pdfUrl: data.pdfUrl } });
     } catch (err) {
@@ -71,14 +72,28 @@ function PreviewPage() {
 
         const data = await res.json();
         console.log('Fetched Application Data:', data);
-        
+
         // Check if application is already submitted
         if (data.applicationStatus === 'Submitted' || data.applicationStatus === 'Approved' || data.applicationStatus === 'Rejected') {
           console.log('Application already submitted, redirecting to profile');
           navigate('/profile', { replace: true });
           return;
         }
-        
+
+        // Guard: Basic Details must be completed before accessing Preview
+        if (!data.basicDetails || !data.basicDetails.motherName || !data.basicDetails.fatherName) {
+          console.log('Basic details not completed, redirecting to basic-details');
+          navigate('/basic-details', { replace: true });
+          return;
+        }
+
+        // Guard: Documents must be completed before accessing Preview
+        if (!data.documents || !data.documents.photoUrl || !data.documents.signatureUrl) {
+          console.log('Documents not completed, redirecting to documents');
+          navigate('/documents', { replace: true });
+          return;
+        }
+
         setFormData(data);
       } catch (err) {
         console.error('Error fetching application:', err);
@@ -129,8 +144,8 @@ function PreviewPage() {
           <span className="material-symbols-outlined text-5xl text-[#c80000] mb-4 inline-block">error</span>
           <p className="text-lg font-semibold text-[#c80000] mb-2">Unable to Load Application</p>
           <p className="text-sm text-[#324670] mb-6">{error || 'Unable to fetch your application data. Please try again.'}</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="px-6 py-2 bg-[#324670] text-white rounded-lg font-semibold hover:bg-[#9fcb54] transition-all"
           >
             Reload Page
@@ -142,7 +157,7 @@ function PreviewPage() {
 
   return (
     <div className="bg-[#f0f8ff] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col">
-      
+
       {/* ══ MOBILE VIEW ══════════════════════════════════════════════ */}
       <div className="md:hidden flex-grow pt-24 pb-32 px-6 max-w-md mx-auto w-full">
         <div className="mb-10">
@@ -152,7 +167,7 @@ function PreviewPage() {
             Please verify all provided information. Once submitted, your records will enter the institutional verification queue.
           </p>
         </div>
-        
+
         <div className="mb-8 p-4 bg-[#fed488]/30 border-l-4 border-[#9fcb54] flex items-start gap-4 rounded-r-xl">
           <span className="material-symbols-outlined text-[#9fcb54] mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
           <div>
@@ -162,7 +177,7 @@ function PreviewPage() {
         </div>
 
         <div className="space-y-10">
-          
+
           {/* 1. Registration Details */}
           <section>
             <h2 className="font-['Public_Sans'] font-bold text-lg text-[#324670] tracking-wide mb-4 sticky top-20 bg-[#f0f8ff] py-2 z-10">Registration Info</h2>
@@ -190,7 +205,7 @@ function PreviewPage() {
                 <div><label className="text-[10px] font-bold text-[#324670] uppercase">Mother Name</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
                 <div><label className="text-[10px] font-bold text-[#324670] uppercase">Father Name</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
               </div>
-              
+
               <div className="pt-2 border-t border-[#e5e2dd]">
                 <label className="text-[10px] font-bold text-[#324670] uppercase">Permanent Address</label>
                 <p className="text-[#1c1c19] font-medium text-sm">{formData?.address?.permanentAddress?.address || 'N/A'}</p>
@@ -305,50 +320,8 @@ function PreviewPage() {
       <div className="hidden md:flex flex-col flex-grow">
         <div className="flex-grow flex w-full max-w-7xl mx-auto px-8 py-12">
           <SideNavBar activePath="/preview" />
-          <main className="flex-1 bg-[#f0f8ff] pl-8 pb-12 relative">
-            
-            <div className="mb-16">
-              <div className="flex items-center justify-between relative">
-                {/* Background line - unfilled */}
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
-                {/* Filled progress line */}
-                <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-[#9fcb54] -z-10 transition-all duration-500"
-                  style={{ width: `${(formData?.currentStep || 1) * 33.33}%` }}
-                ></div>
-                
-                {/* Step 1: Registration */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
-                </div>
-                
-                {/* Step 2: Basic Details */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 2 ? 'bg-[#9fcb54]' : 'bg-[#e8f4ff] text-[#324670]'}`}>
-                    {(formData?.currentStep || 1) >= 2 ? <span className="material-symbols-outlined text-sm">check</span> : '2'}
-                  </div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Basic Details</span>
-                </div>
-                
-                {/* Step 3: Documents */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 3 ? 'bg-[#9fcb54]' : 'bg-[#e8f4ff] text-[#324670]'}`}>
-                    {(formData?.currentStep || 1) >= 3 ? <span className="material-symbols-outlined text-sm">check</span> : '3'}
-                  </div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Documents</span>
-                </div>
-                
-                {/* Step 4: Preview */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className={`w-10 h-10 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 4 ? 'bg-[#324670]' : 'bg-[#e8f4ff] text-[#324670]'}`}>
-                    4
-                  </div>
-                  <span className={`text-sm font-['Inter'] font-semibold ${(formData?.currentStep || 1) >= 4 ? 'text-[#324670]' : 'text-stone-500'}`}>Preview</span>
-                </div>
-              </div>
-            </div>
-
+          <main className="flex-1 bg-[#f0f8ff]  pb-12 relative">
+            <ProcessTimeline currentStep={4} />
             <div className="mb-12">
               <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#324670] mb-2 tracking-tight">Review Your Application</h1>
               <p className="text-[#324670] max-w-2xl leading-relaxed">Please verify all information before final submission. Changes cannot be made after this point.</p>
@@ -356,11 +329,11 @@ function PreviewPage() {
             </div>
 
             <div className="space-y-12">
-              
+
               {/* Registration Grid */}
               <section className="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-8 lg:gap-16 relative">
                 {/* 📌 ADDED STICKY CLASSES HERE */}
-                <div className="sticky top-8 self-start">
+                <div className="sticky top-24 self-start">
                   <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670]">Identity & Heritage</h3>
                   <p className="text-sm text-[#324670] mt-2">Primary candidate identifiers and contact information.</p>
                 </div>
@@ -382,7 +355,7 @@ function PreviewPage() {
               {/* Basic Details & Address Grid */}
               <section className="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-8 lg:gap-16 relative">
                 {/* 📌 ADDED STICKY CLASSES HERE */}
-                <div className="sticky top-8 self-start">
+                <div className="sticky top-24 self-start">
                   <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670]">Basic Details & Address</h3>
                   <p className="text-sm text-[#324670] mt-2">Family background, location, and legal declarations.</p>
                 </div>
@@ -391,7 +364,7 @@ function PreviewPage() {
                     <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Mother Name</label><p className="text-base font-medium">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
                     <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Father Name</label><p className="text-base font-medium">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
                   </div>
-                  
+
                   <div className="pt-6 border-t border-[#e8f4ff]">
                     <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Permanent Address</label>
                     <p className="text-base font-medium">{formData?.address?.permanentAddress?.address || 'N/A'}</p>
@@ -425,55 +398,55 @@ function PreviewPage() {
               {/* Documents Grid */}
               <section className="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-8 lg:gap-16 relative">
                 {/* 📌 ADDED STICKY CLASSES HERE */}
-                <div className="sticky top-8 self-start">
+                <div className="sticky top-24 self-start">
                   <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670]">Uploaded Documents</h3>
                   <p className="text-sm text-[#324670] mt-2">Media assets and academic credentials.</p>
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff]">
-                   <div className="mb-8">
-                     <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Recent Photograph & Signature</label>
-                     <div className="grid grid-cols-2 gap-4">
-                       {formData?.documents?.photoUrl && (
-                         <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
-                           <img src={getFullUrl(formData.documents.photoUrl)} alt="Photograph" className="w-32 h-40 object-cover rounded mb-3 border border-[#e5e2dd]" />
-                           <span className="text-xs font-medium text-[#324670]">Photograph</span>
-                           <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                         </div>
-                       )}
-                       {formData?.documents?.signatureUrl && (
-                         <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
-                           <img src={getFullUrl(formData.documents.signatureUrl)} alt="Signature" className="w-32 h-20 object-contain rounded mb-3 border border-[#e5e2dd]" />
-                           <span className="text-xs font-medium text-[#324670]">Digital Signature</span>
-                           <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                         </div>
-                       )}
-                     </div>
-                   </div>
-                   <div className="pt-6 border-t border-[#e8f4ff]">
-                     <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Educational Qualifications</label>
-                     {formData?.qualifications && (
-                       <div className="space-y-4">
-                         {Object.entries(formData.qualifications).map(([level, data]: [string, any]) => (
-                           data?.fileUrl && (
-                             <div key={level} className="p-4 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
-                               <p className="text-sm font-medium capitalize mb-2">{level === 'tenth' ? '10th' : level === 'twelfth' ? '12th' : level === 'grad' ? 'Graduation' : 'Other'} Qualification</p>
-                               <p className="text-sm text-[#324670]"><strong>Document:</strong> {data.fileUrl.split('/').pop() || 'Uploaded'}</p>
-                               <div className="flex items-center gap-2 mt-2">
-                                 <span className="material-symbols-outlined text-green-700 text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                                 <span className="text-xs text-green-700 font-medium">Document Uploaded</span>
-                               </div>
-                             </div>
-                           )
-                         ))}
-                       </div>
-                     )}
-                   </div>
+                  <div className="mb-8">
+                    <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Recent Photograph & Signature</label>
+                    <div className="grid grid-cols-2 gap-4">
+                      {formData?.documents?.photoUrl && (
+                        <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
+                          <img src={getFullUrl(formData.documents.photoUrl)} alt="Photograph" className="w-32 h-40 object-cover rounded mb-3 border border-[#e5e2dd]" />
+                          <span className="text-xs font-medium text-[#324670]">Photograph</span>
+                          <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                        </div>
+                      )}
+                      {formData?.documents?.signatureUrl && (
+                        <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
+                          <img src={getFullUrl(formData.documents.signatureUrl)} alt="Signature" className="w-32 h-20 object-contain rounded mb-3 border border-[#e5e2dd]" />
+                          <span className="text-xs font-medium text-[#324670]">Digital Signature</span>
+                          <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="pt-6 border-t border-[#e8f4ff]">
+                    <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Educational Qualifications</label>
+                    {formData?.qualifications && (
+                      <div className="space-y-4">
+                        {Object.entries(formData.qualifications).map(([level, data]: [string, any]) => (
+                          data?.fileUrl && (
+                            <div key={level} className="p-4 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
+                              <p className="text-sm font-medium capitalize mb-2">{level === 'tenth' ? '10th' : level === 'twelfth' ? '12th' : level === 'grad' ? 'Graduation' : 'Other'} Qualification</p>
+                              <p className="text-sm text-[#324670]"><strong>Document:</strong> {data.fileUrl.split('/').pop() || 'Uploaded'}</p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <span className="material-symbols-outlined text-green-700 text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                                <span className="text-xs text-green-700 font-medium">Document Uploaded</span>
+                              </div>
+                            </div>
+                          )
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </section>
 
               {/* Identification Section */}
               <section className="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-8 lg:gap-16 relative">
-                <div className="sticky top-8 self-start">
+                <div className="sticky top-24 self-start">
                   <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670]">Identification & Status</h3>
                   <p className="text-sm text-[#324670] mt-2">Personal identification and service details.</p>
                 </div>
@@ -500,7 +473,7 @@ function PreviewPage() {
               {/* Declarations */}
               <section className="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-8 lg:gap-16 relative">
                 {/* 📌 ADDED STICKY CLASSES HERE */}
-                <div className="sticky top-8 self-start">
+                <div className="sticky top-24 self-start">
                   <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670]">Application Declarations & Rules</h3>
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff] text-[#324670]">
@@ -515,7 +488,9 @@ function PreviewPage() {
 
               {/* Action Buttons */}
               <div className="pt-8 border-t border-[#e8f4ff] flex flex-col md:flex-row items-center justify-end gap-6">
-                <button onClick={() => navigate("/basic-details")} className="w-full md:w-auto px-8 py-3 rounded-lg bg-[#e8f4ff] text-[#1c1c19] font-bold hover:bg-[#dcdad5] transition-all">Edit Application</button>
+                <button onClick={() => navigate("/basic-details")} className="w-full md:w-auto px-10 py-4 rounded-lg bg-[#e8f4ff] text-[#1c1c19] font-bold hover:bg-[#dcdad5] transition-all flex items-center justify-center">
+                  <span className="material-symbols-outlined mr-2">edit</span> Edit Application
+                </button>
                 <button onClick={() => setShowModal(true)} className="w-full md:w-auto px-10 py-4 rounded-lg bg-[#324670] text-white font-bold shadow-lg hover:bg-[#9fcb54] transition-all flex items-center justify-center">
                   Submit Final Application <span className="material-symbols-outlined ml-2">send</span>
                 </button>
@@ -534,24 +509,24 @@ function PreviewPage() {
             <div className="w-20 h-20 bg-[#fed488] rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="material-symbols-outlined text-[#324670] text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>task_alt</span>
             </div>
-            
+
             <div className="md:hidden">
               <h3 className="font-['Public_Sans'] font-black text-2xl text-[#324670] mb-2">Submission Received</h3>
               <p className="text-sm text-[#324670] leading-relaxed mb-8">Your application has been securely archived. A verification officer will review your records within 48 business hours.</p>
             </div>
-            
+
             <div className="hidden md:block">
               <h3 className="font-['Public_Sans'] font-extrabold text-2xl text-[#324670] mb-3">Application Submitted Successfully!</h3>
               <p className="text-[#324670] mb-10 leading-relaxed">Your candidate record for 2024 has been logged.</p>
             </div>
-            
+
             <div className="space-y-4">
-              <button 
+              <button
                 onClick={handleSubmitApplication}
                 disabled={submitting}
                 className="w-full py-4 rounded-xl bg-[#324670] text-white font-bold flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <span className="material-symbols-outlined">{submitting ? 'hourglass_bottom' : 'send'}</span> 
+                <span className="material-symbols-outlined">{submitting ? 'hourglass_bottom' : 'send'}</span>
                 {submitting ? 'SUBMITTING...' : 'SUBMIT APPLICATION'}
               </button>
               {submitError && (

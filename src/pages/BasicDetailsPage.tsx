@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
 import SideNavBar from '../components/SideNavBar';
 import Footer from '../components/Footer';
+import ProcessTimeline from '../components/ProcessTimeline';
 import { apiConfig } from '../config/apiConfig';
 
 function BasicDetailsPage() {
@@ -311,41 +312,7 @@ function BasicDetailsPage() {
           <SideNavBar activePath="/basic-details" />
           
           <div className="flex-1">
-             <div className="mb-16">
-              <div className="flex items-center justify-between relative">
-                {/* Background line - unfilled */}
-                <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
-                {/* Filled progress line - 50% for step 2 */}
-                <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-[#9fcb54] -z-10 transition-all duration-500"
-                  style={{ width: '50%' }}
-                ></div>
-                
-                {/* Step 1: Registration */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
-                </div>
-                
-                {/* Step 2: Basic Details (Current) */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-[#324670] text-white flex items-center justify-center font-bold shadow-md">2</div>
-                  <span className="text-sm font-['Inter'] text-[#324670] font-semibold">Basic Details</span>
-                </div>
-                
-                {/* Step 3: Documents */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#e8f4ff] text-stone-400 flex items-center justify-center font-bold shadow-md">3</div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Documents</span>
-                </div>
-                
-                {/* Step 4: Preview */}
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#e8f4ff] text-stone-400 flex items-center justify-center font-bold shadow-md">4</div>
-                  <span className="text-xs font-['Inter'] text-stone-500">Preview</span>
-                </div>
-              </div>
-            </div>
+            <ProcessTimeline currentStep={2} />
             <header className="mb-16">
               <h1 className="font-['Public_Sans'] text-[3.5rem] leading-none font-extrabold tracking-tighter text-[#324670]">Basic &amp; Personal Details</h1>
               <div className="h-1 w-24 bg-[#9fcb54] mt-6"></div>

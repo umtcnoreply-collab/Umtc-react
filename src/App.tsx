@@ -31,6 +31,8 @@ const BottomNav = () => {
   const location = useLocation();
   const { token } = useAuth();
   const [applicationStatus, setApplicationStatus] = useState<string | null>(null);
+  const [basicDone, setBasicDone] = useState(false);
+  const [docsDone, setDocsDone] = useState(false);
   
   const hidePaths = ["/login"];
   
@@ -52,6 +54,8 @@ const BottomNav = () => {
           const data = await res.json();
           console.log('Fetched application status:', data.applicationStatus);
           setApplicationStatus(data.applicationStatus);
+          setBasicDone(!!(data.basicDetails?.motherName && data.basicDetails?.fatherName));
+          setDocsDone(!!(data.documents?.photoUrl && data.documents?.signatureUrl));
         }
       } catch (err) {
         console.error('Error fetching application status:', err);
@@ -64,26 +68,38 @@ const BottomNav = () => {
   // Hide if on specific paths or if application is submitted
   if (hidePaths.includes(location.pathname)) return null;
   if (applicationStatus === 'Submitted' || applicationStatus === 'approved' || applicationStatus === 'rejected') return null;
-  
+
   const isActive = (path: string) => location.pathname === path;
+  const isLocked = (path: string) => {
+    if (path === '/documents') return !basicDone;
+    if (path === '/preview') return !docsDone;
+    return false;
+  };
+
+  const navItems = [
+    { path: "/", icon: "how_to_reg", label: "Register" },
+    { path: "/basic-details", icon: "person_book", label: "Details" },
+    { path: "/documents", icon: "upload_file", label: "Docs" },
+    { path: "/preview", icon: "visibility", label: "Preview" },
+  ];
+
   return (
     <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[#f0f8ff] flex justify-around items-center px-4 pb-safe h-20 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t-2 border-[#324670]">
-      <Link to="/" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/") ? "bg-[#9fcb54] text-white rounded-xl" : "text-[#324670]"}`}>
-        <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/") ? "'FILL' 1" : "" }}>how_to_reg</span>
-        <span className="font-['Inter'] text-[10px] font-medium leading-tight">Register</span>
-      </Link>
-      <Link to="/basic-details" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/basic-details") ? "bg-[#9fcb54] text-white rounded-xl" : "text-[#324670]"}`}>
-        <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/basic-details") ? "'FILL' 1" : "" }}>person_book</span>
-        <span className="font-['Inter'] text-[10px] font-medium leading-tight">Details</span>
-      </Link>
-      <Link to="/documents" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/documents") ? "bg-[#9fcb54] text-white rounded-xl" : "text-[#324670]"}`}>
-        <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/documents") ? "'FILL' 1" : "" }}>upload_file</span>
-        <span className="font-['Inter'] text-[10px] font-medium leading-tight">Docs</span>
-      </Link>
-      <Link to="/preview" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/preview") ? "bg-[#9fcb54] text-white rounded-xl" : "text-[#324670]"}`}>
-        <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/preview") ? "'FILL' 1" : "" }}>visibility</span>
-        <span className="font-['Inter'] text-[10px] font-medium leading-tight">Preview</span>
-      </Link>
+      {navItems.map((item) => {
+        const locked = isLocked(item.path);
+        const active = isActive(item.path);
+        return locked ? (
+          <div key={item.path} className="flex flex-col items-center justify-center px-3 py-1 text-stone-400 opacity-40 cursor-not-allowed">
+            <span className="material-symbols-outlined">lock</span>
+            <span className="font-['Inter'] text-[10px] font-medium leading-tight">{item.label}</span>
+          </div>
+        ) : (
+          <Link key={item.path} to={item.path} className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${active ? "bg-[#9fcb54] text-white rounded-xl" : "text-[#324670]"}`}>
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: active ? "'FILL' 1" : "" }}>{item.icon}</span>
+            <span className="font-['Inter'] text-[10px] font-medium leading-tight">{item.label}</span>
+          </Link>
+        );
+      })}
     </nav>
   );
 };
