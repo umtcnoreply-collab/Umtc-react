@@ -83,7 +83,7 @@ function RegistrationPage() {
       {/* ══ MOBILE LAYOUT ════════════════════════════════════════ */}
       <div className="md:hidden mt-16 px-4 pt-8 pb-32 flex-grow max-w-md mx-auto w-full">
         <div className="mb-10">
-          <div className="inline-block px-2 py-1 bg-[#fed488] text-[#EC5A3B] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">
+          <div className="inline-block px-2 py-1 bg-[#fed488] text-[#9fcb54] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">
             Screen 01 / Registration
           </div>
           <h2 className="text-3xl font-['Public_Sans'] font-extrabold text-[#324670] tracking-tight leading-none mb-2">Basic Registration Form</h2>
@@ -193,7 +193,7 @@ function RegistrationPage() {
               <div className="flex items-center justify-between relative">
                 <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#EC5A3B] text-white flex items-center justify-center"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center"><span className="material-symbols-outlined text-sm">check</span></div>
                   <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
@@ -212,7 +212,7 @@ function RegistrationPage() {
             </div>
             <header className="mb-16">
               <h1 className="font-['Public_Sans'] text-[3.5rem] leading-none font-extrabold tracking-tighter text-[#324670]">Basic Registration Form</h1>
-              <div className="h-1 w-24 bg-[#EC5A3B] mt-6"></div>
+              <div className="h-1 w-24 bg-[#9fcb54] mt-6"></div>
             </header>
 
             <section className="grid grid-cols-[1fr_2fr] gap-16">
@@ -281,7 +281,7 @@ function RegistrationPage() {
                     </div>
                   </div>
 
-                  <div className="p-6 bg-[#e8f4ff] rounded-xl border-l-4 border-[#EC5A3B]">
+                  <div className="p-6 bg-[#e8f4ff] rounded-xl border-l-4 border-[#9fcb54]">
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-[#324670] text-2xl flex-shrink-0">verified</span>
                       <div>
@@ -298,7 +298,7 @@ function RegistrationPage() {
                   )}
 
                   <div className="pt-6">
-                    <button disabled={loading} className="w-full bg-[#324670] text-white py-5 px-8 rounded-lg font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#EC5A3B] transition-all flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
+                    <button disabled={loading} className="w-full bg-[#324670] text-white py-5 px-8 rounded-lg font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#9fcb54] transition-all flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
                       {loading ? (
                         <>
                           <span className="material-symbols-outlined animate-spin">hourglass_bottom</span>
@@ -326,4 +326,5 @@ function RegistrationPage() {
 }
 
 export default RegistrationPage;
+
 

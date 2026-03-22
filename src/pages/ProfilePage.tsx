@@ -87,7 +87,7 @@ function ProfilePage() {
               <span className="material-symbols-outlined">logout</span>
             </button>
           </div>
-          <div className="h-1 w-12 bg-[#EC5A3B] rounded-full"></div>
+          <div className="h-1 w-12 bg-[#9fcb54] rounded-full"></div>
         </div>
 
         {error && (
@@ -99,7 +99,7 @@ function ProfilePage() {
         {profile && (
           <div className="space-y-6">
             {/* Hero Card */}
-            <div className="bg-gradient-to-br from-[#324670] to-[#EC5A3B] text-white rounded-xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-[#324670] to-[#9fcb54] text-white rounded-xl p-6 shadow-lg">
               <p className="text-xs uppercase tracking-widest opacity-80 mb-2">Candidate Name</p>
               <h2 className="text-2xl font-['Public_Sans'] font-bold mb-4">{profile.candidateName}</h2>
               <div className="space-y-2">
@@ -110,7 +110,7 @@ function ProfilePage() {
 
             {/* Status Card */}
             <div className="bg-white border-2 border-[#e8f4ff] rounded-xl p-6">
-              <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-3">Application Status</p>
+              <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold mb-3">Application Status</p>
               <div className="flex items-center gap-3">
                 <div className={`w-12 h-12 ${getStatusBadge(profile.status || 'pending').bg} rounded-full flex items-center justify-center`}>
                   <span className={`material-symbols-outlined text-xl ${getStatusBadge(profile.status || 'pending').color}`}>
@@ -127,7 +127,7 @@ function ProfilePage() {
             {/* Info Cards */}
             <div className="space-y-4">
               <div className="bg-[#e8f4ff] rounded-lg p-4 border border-[#e8f4ff]">
-                <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-2">Basic Info</p>
+                <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold mb-2">Basic Info</p>
                 <div className="space-y-2">
                   <p className="text-sm"><span className="font-semibold">DOB:</span> {profile.dob ? new Date(profile.dob).toLocaleDateString() : 'N/A'}</p>
                   <p className="text-sm"><span className="font-semibold">Gender:</span> <span className="capitalize">{profile.gender}</span></p>
@@ -136,7 +136,7 @@ function ProfilePage() {
               </div>
 
               <div className="bg-[#e8f4ff] rounded-lg p-4 border border-[#e8f4ff]">
-                <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-2">Address</p>
+                <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold mb-2">Address</p>
                 <div className="space-y-2">
                   <p className="text-sm"><span className="font-semibold">City:</span> {profile.address?.permanentAddress?.city || 'N/A'}</p>
                   <p className="text-sm"><span className="font-semibold">State:</span> {profile.address?.permanentAddress?.state || 'N/A'}</p>
@@ -178,7 +178,7 @@ function ProfilePage() {
               <div>
                 <h1 className="text-5xl font-['Public_Sans'] font-black text-[#324670] mb-2">My Profile</h1>
                 <p className="text-lg text-[#324670]">Your application details and status</p>
-                <div className="w-24 h-1 bg-[#EC5A3B] mt-4"></div>
+                <div className="w-24 h-1 bg-[#9fcb54] mt-4"></div>
               </div>
               <button
                 onClick={onLogout}
@@ -201,7 +201,7 @@ function ProfilePage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {/* Profile Card */}
                   <div className="lg:col-span-1">
-                    <div className="bg-gradient-to-br from-[#324670] to-[#EC5A3B] text-white rounded-2xl p-8 shadow-lg h-full flex flex-col justify-between">
+                    <div className="bg-gradient-to-br from-[#324670] to-[#9fcb54] text-white rounded-2xl p-8 shadow-lg h-full flex flex-col justify-between">
                       <div>
                         <p className="text-xs uppercase tracking-widest opacity-80 mb-4">Candidate Profile</p>
                         <h2 className="text-4xl font-['Public_Sans'] font-black mb-6">{profile.candidateName}</h2>
@@ -216,7 +216,7 @@ function ProfilePage() {
                   {/* Status Card */}
                   <div className="lg:col-span-2">
                     <div className="bg-white border-2 border-[#e8f4ff] rounded-2xl p-8 shadow-md h-full">
-                      <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-6">Application Status</p>
+                      <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold mb-6">Application Status</p>
                       <div className="flex items-center gap-6">
                         <div className={`w-20 h-20 ${getStatusBadge(profile.status || 'pending').bg} rounded-full flex items-center justify-center flex-shrink-0`}>
                           <span className={`material-symbols-outlined text-4xl ${getStatusBadge(profile.status || 'pending').color}`}>
@@ -226,7 +226,7 @@ function ProfilePage() {
                         <div>
                           <p className="text-3xl font-['Public_Sans'] font-bold text-[#324670] capitalize">{profile.status || 'Submitted'}</p>
                           <p className="text-sm text-[#324670] mt-2">Submitted on {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                          <p className="text-xs text-[#EC5A3B] font-semibold mt-3">✓ In Review - Expected response within 48 hours</p>
+                          <p className="text-xs text-[#9fcb54] font-semibold mt-3">✓ In Review - Expected response within 48 hours</p>
                         </div>
                       </div>
                     </div>
@@ -240,19 +240,19 @@ function ProfilePage() {
                     <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Personal Information</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Date of Birth</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Date of Birth</p>
                         <p className="text-lg font-medium">{profile.dob ? new Date(profile.dob).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Gender</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Gender</p>
                         <p className="text-lg font-medium capitalize">{profile.gender}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Nationality</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Nationality</p>
                         <p className="text-lg font-medium capitalize">{profile.nationality}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Category</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Category</p>
                         <p className="text-lg font-medium uppercase">{profile.category}</p>
                       </div>
                     </div>
@@ -263,19 +263,19 @@ function ProfilePage() {
                     <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Contact & Address</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Email</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Email</p>
                         <p className="text-lg font-medium break-all">{profile.email}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Mobile</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Mobile</p>
                         <p className="text-lg font-medium">{profile.mobile}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">City</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">City</p>
                         <p className="text-lg font-medium">{profile.address?.permanentAddress?.city || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Pin Code</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Pin Code</p>
                         <p className="text-lg font-medium">{profile.address?.permanentAddress?.pincode || 'N/A'}</p>
                       </div>
                     </div>
@@ -286,11 +286,11 @@ function ProfilePage() {
                     <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Family Information</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Father's Name</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Father's Name</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.fatherName || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Mother's Name</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Mother's Name</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.motherName || 'N/A'}</p>
                       </div>
                     </div>
@@ -301,19 +301,19 @@ function ProfilePage() {
                     <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Legal & Status</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Debarred</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Debarred</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.debarred ? 'Yes' : 'No'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">FIR Against</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">FIR Against</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.fir ? 'Yes' : 'No'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Government Employee</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Government Employee</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.govt_emp ? 'Yes' : 'No'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Aadhar Number</p>
+                        <p className="text-xs uppercase tracking-widest text-[#9fcb54] font-bold">Aadhar Number</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.aadhar || 'N/A'}</p>
                       </div>
                     </div>
@@ -324,7 +324,7 @@ function ProfilePage() {
                 <div className="flex gap-6 pt-8 border-t border-[#e8f4ff]">
                   <button
                     onClick={() => navigate('/preview')}
-                    className="px-10 py-4 bg-[#324670] text-white rounded-lg font-bold hover:bg-[#EC5A3B] transition-all flex items-center gap-2"
+                    className="px-10 py-4 bg-[#324670] text-white rounded-lg font-bold hover:bg-[#9fcb54] transition-all flex items-center gap-2"
                   >
                     <span className="material-symbols-outlined">visibility</span>
                     View Full Application
@@ -348,5 +348,6 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+
 
 

@@ -60,7 +60,7 @@ function ThankYouPage() {
         <div className="text-center max-w-sm">
           {/* Success Icon */}
           <div className="mb-8 flex justify-center">
-            <div className="w-24 h-24 bg-gradient-to-br from-[#EC5A3B] to-[#FF7A58] rounded-full flex items-center justify-center shadow-lg animate-pulse">
+            <div className="w-24 h-24 bg-gradient-to-br from-[#9fcb54] to-[#FF7A58] rounded-full flex items-center justify-center shadow-lg animate-pulse">
               <span className="material-symbols-outlined text-5xl text-white" style={{ fontVariationSettings: "'FILL' 1" }}>
                 task_alt
               </span>
@@ -77,8 +77,8 @@ function ThankYouPage() {
 
           {/* Info Boxes */}
           <div className="space-y-4 mb-12">
-            <div className="bg-[#EC5A3B]/20 border border-[#EC5A3B] rounded-lg p-4">
-              <p className="text-sm text-[#EC5A3B] font-semibold">
+            <div className="bg-[#9fcb54]/20 border border-[#9fcb54] rounded-lg p-4">
+              <p className="text-sm text-[#9fcb54] font-semibold">
                 <span className="material-symbols-outlined text-base align-middle mr-2">mail_outline</span>
                 Check your email for the PDF and submission confirmation.
               </p>
@@ -96,7 +96,7 @@ function ThankYouPage() {
             <button
               onClick={handleDownloadPDF}
               disabled={downloading}
-              className="w-full py-5 rounded-xl bg-[#EC5A3B] text-white font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg active:scale-95 transition-all"
+              className="w-full py-5 rounded-xl bg-[#9fcb54] text-white font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg active:scale-95 transition-all"
             >
               <span className="material-symbols-outlined">
                 {downloading ? 'hourglass_bottom' : 'download'}
@@ -126,7 +126,7 @@ function ThankYouPage() {
         <div className="text-center max-w-2xl">
           {/* Success Icon */}
           <div className="mb-12 flex justify-center">
-            <div className="w-32 h-32 bg-gradient-to-br from-[#EC5A3B] to-[#FF7A58] rounded-full flex items-center justify-center shadow-2xl">
+            <div className="w-32 h-32 bg-gradient-to-br from-[#9fcb54] to-[#FF7A58] rounded-full flex items-center justify-center shadow-2xl">
               <span className="material-symbols-outlined text-7xl text-white" style={{ fontVariationSettings: "'FILL' 1" }}>
                 task_alt
               </span>
@@ -143,12 +143,12 @@ function ThankYouPage() {
 
           {/* Info Boxes */}
           <div className="grid grid-cols-2 gap-6 mb-16">
-            <div className="bg-[#EC5A3B]/20 border-2 border-[#EC5A3B] rounded-xl p-6 text-left">
+            <div className="bg-[#9fcb54]/20 border-2 border-[#9fcb54] rounded-xl p-6 text-left">
               <div className="flex items-start gap-4">
-                <span className="material-symbols-outlined text-2xl text-[#EC5A3B] flex-shrink-0">mail</span>
+                <span className="material-symbols-outlined text-2xl text-[#9fcb54] flex-shrink-0">mail</span>
                 <div>
-                  <h3 className="font-bold text-[#EC5A3B] mb-2 text-lg">Email Confirmation</h3>
-                  <p className="text-sm text-[#EC5A3B] opacity-90">Your application PDF and submission confirmation have been sent to your registered email address.</p>
+                  <h3 className="font-bold text-[#9fcb54] mb-2 text-lg">Email Confirmation</h3>
+                  <p className="text-sm text-[#9fcb54] opacity-90">Your application PDF and submission confirmation have been sent to your registered email address.</p>
                 </div>
               </div>
             </div>
@@ -163,12 +163,12 @@ function ThankYouPage() {
               </div>
             </div>
 
-            <div className="bg-[#EC5A3B]/10 border-2 border-[#EC5A3B] rounded-xl p-6 text-left">
+            <div className="bg-[#9fcb54]/10 border-2 border-[#9fcb54] rounded-xl p-6 text-left">
               <div className="flex items-start gap-4">
-                <span className="material-symbols-outlined text-2xl text-[#EC5A3B] flex-shrink-0">schedule</span>
+                <span className="material-symbols-outlined text-2xl text-[#9fcb54] flex-shrink-0">schedule</span>
                 <div>
-                  <h3 className="font-bold text-[#EC5A3B] mb-2 text-lg">Timeline</h3>
-                  <p className="text-sm text-[#EC5A3B] opacity-90">Review period: 48 business hours from submission date.</p>
+                  <h3 className="font-bold text-[#9fcb54] mb-2 text-lg">Timeline</h3>
+                  <p className="text-sm text-[#9fcb54] opacity-90">Review period: 48 business hours from submission date.</p>
                 </div>
               </div>
             </div>
@@ -189,7 +189,7 @@ function ThankYouPage() {
             <button
               onClick={handleDownloadPDF}
               disabled={downloading}
-              className="px-12 py-4 rounded-xl bg-[#324670] text-white font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:bg-[#EC5A3B] transition-all"
+              className="px-12 py-4 rounded-xl bg-[#324670] text-white font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:bg-[#9fcb54] transition-all"
             >
               <span className="material-symbols-outlined text-xl">
                 {downloading ? 'hourglass_bottom' : 'download'}
@@ -217,5 +217,6 @@ function ThankYouPage() {
 }
 
 export default ThankYouPage;
+
 
 

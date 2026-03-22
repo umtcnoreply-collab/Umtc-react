@@ -7,10 +7,10 @@ function Footer() {
       <div className="w-full px-8 py-12 flex flex-col md:flex-row justify-between items-center gap-4 max-w-7xl mx-auto">
         <div className="font-semibold text-stone-900">© 2024 The Sovereign Editorial. All Rights Reserved.</div>
         <div className="flex gap-8">
-          <a className="text-stone-500 hover:text-[#EC5A3B] transition-colors" href="#">Privacy Policy</a>
-          <a className="text-stone-500 hover:text-[#EC5A3B] transition-colors" href="#">Terms of Service</a>
-          <a className="text-stone-500 hover:text-[#EC5A3B] transition-colors" href="#">Accessibility</a>
-          <a className="text-stone-500 hover:text-[#EC5A3B] transition-colors" href="#">Support</a>
+          <a className="text-stone-500 hover:text-[#9fcb54] transition-colors" href="#">Privacy Policy</a>
+          <a className="text-stone-500 hover:text-[#9fcb54] transition-colors" href="#">Terms of Service</a>
+          <a className="text-stone-500 hover:text-[#9fcb54] transition-colors" href="#">Accessibility</a>
+          <a className="text-stone-500 hover:text-[#9fcb54] transition-colors" href="#">Support</a>
         </div>
       </div>
     </footer>
@@ -30,5 +30,6 @@ function Footer() {
 }
 
 export default Footer
+
 
 

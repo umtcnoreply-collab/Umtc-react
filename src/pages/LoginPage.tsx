@@ -96,7 +96,7 @@ function LoginPage() {
         <div className="w-full space-y-10">
           <div className="space-y-2">
             <h1 className="font-['Public_Sans'] text-[2rem] font-extrabold text-[#324670] tracking-tight leading-none">Candidate Login</h1>
-            <div className="w-12 h-1 bg-[#EC5A3B]"></div>
+            <div className="w-12 h-1 bg-[#9fcb54]"></div>
             <p className="text-[#324670] text-sm mt-4 font-medium italic">Access your editorial portal with institutional credentials.</p>
           </div>
           <section className="bg-[#f0f8ff] p-8 rounded-xl space-y-8">
@@ -144,11 +144,11 @@ function LoginPage() {
               </button>
             </form>
             <div className="flex justify-center items-center gap-4 pt-2">
-              <Link to="/registration" className="text-xs font-bold text-[#0172b9] border-b border-[#EC5A3B] hover:text-[#324670] transition-colors">
+              <Link to="/registration" className="text-xs font-bold text-[#0172b9] border-b border-[#9fcb54] hover:text-[#324670] transition-colors">
                 BACK TO REGISTRATION
               </Link>
               <span className="text-[#324670]">•</span>
-              <Link to="/forgot-password" className="text-xs font-bold text-[#0172b9] border-b border-[#EC5A3B] hover:text-[#324670] transition-colors">
+              <Link to="/forgot-password" className="text-xs font-bold text-[#0172b9] border-b border-[#9fcb54] hover:text-[#324670] transition-colors">
                 FORGOT PASSWORD?
               </Link>
             </div>
@@ -163,14 +163,14 @@ function LoginPage() {
           <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-6">
               <div className="space-y-2">
-                <p className="text-[#EC5A3B] font-semibold uppercase tracking-widest text-xs">Access Portal</p>
+                <p className="text-[#9fcb54] font-semibold uppercase tracking-widest text-xs">Access Portal</p>
                 <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#324670] leading-tight tracking-tighter">Candidate Login</h1>
-                <div className="h-1 w-20 bg-[#EC5A3B] mt-4"></div>
+                <div className="h-1 w-20 bg-[#9fcb54] mt-4"></div>
               </div>
               <p className="text-[#324670] leading-relaxed text-sm">Secure access to your national examination dashboard.</p>
               <div className="p-6 bg-[#f0f8ff] rounded-lg space-y-4">
                 <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-[#EC5A3B]">security</span>
+                  <span className="material-symbols-outlined text-[#9fcb54]">security</span>
                   <div>
                     <p className="font-medium text-sm">Secure Authentication</p>
                     <p className="text-xs text-[#324670]">Multi-factor authentication enabled.</p>
@@ -213,7 +213,7 @@ function LoginPage() {
                   </div>
                   <button
                     disabled={loading}
-                    className="w-full bg-[#EC5A3B] text-white py-4 font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 group shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#9fcb54] text-white py-4 font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 group shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     type="submit"
                   >
                     {loading ? 'LOGGING IN...' : 'LOGIN'} <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
@@ -221,7 +221,7 @@ function LoginPage() {
                 </div>
               </form>
               <div className="mt-8 text-center space-y-3">
-                <p className="text-xs text-[#324670]">Don't have an account? <Link className="text-[#324670] font-semibold underline underline-offset-4 hover:text-[#EC5A3B]" to="/registration">Register as New Candidate</Link></p>
+                <p className="text-xs text-[#324670]">Don't have an account? <Link className="text-[#324670] font-semibold underline underline-offset-4 hover:text-[#9fcb54]" to="/registration">Register as New Candidate</Link></p>
                 <p className="text-xs text-[#324670]"><Link className="text-[#0172b9] font-semibold underline underline-offset-4 hover:text-[#324670]" to="/forgot-password">Forgot Password?</Link></p>
               </div>
             </div>
@@ -235,5 +235,6 @@ function LoginPage() {
 
 
 export default LoginPage
+
 
 

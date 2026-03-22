@@ -131,7 +131,7 @@ function PreviewPage() {
           <p className="text-sm text-[#324670] mb-6">{error || 'Unable to fetch your application data. Please try again.'}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="px-6 py-2 bg-[#324670] text-white rounded-lg font-semibold hover:bg-[#EC5A3B] transition-all"
+            className="px-6 py-2 bg-[#324670] text-white rounded-lg font-semibold hover:bg-[#9fcb54] transition-all"
           >
             Reload Page
           </button>
@@ -147,14 +147,14 @@ function PreviewPage() {
       <div className="md:hidden flex-grow pt-24 pb-32 px-6 max-w-md mx-auto w-full">
         <div className="mb-10">
           <h1 className="text-[2.5rem] leading-tight font-['Public_Sans'] font-black text-[#324670] tracking-tight mb-2">Final Review</h1>
-          <div className="h-1 w-12 bg-[#EC5A3B] rounded-full mb-4"></div>
+          <div className="h-1 w-12 bg-[#9fcb54] rounded-full mb-4"></div>
           <p className="text-[#324670] text-sm leading-relaxed">
             Please verify all provided information. Once submitted, your records will enter the institutional verification queue.
           </p>
         </div>
         
-        <div className="mb-8 p-4 bg-[#fed488]/30 border-l-4 border-[#EC5A3B] flex items-start gap-4 rounded-r-xl">
-          <span className="material-symbols-outlined text-[#EC5A3B] mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
+        <div className="mb-8 p-4 bg-[#fed488]/30 border-l-4 border-[#9fcb54] flex items-start gap-4 rounded-r-xl">
+          <span className="material-symbols-outlined text-[#9fcb54] mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
           <div>
             <p className="text-sm font-bold text-[#785a1a]">Ready for submission</p>
             <p className="text-xs text-[#785a1a]/80 mt-1">All mandatory fields have been validated.</p>
@@ -220,14 +220,14 @@ function PreviewPage() {
                   <div className="flex flex-col items-center justify-center p-3 bg-[#f0f8ff] rounded-lg border border-[#e5e2dd]">
                     <img src={getFullUrl(formData.documents.photoUrl)} alt="Photograph" className="w-20 h-28 object-cover rounded mb-2 border border-[#e5e2dd]" />
                     <span className="text-xs font-medium text-[#324670] mb-1">Photograph</span>
-                    <span className="material-symbols-outlined text-[#EC5A3B] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    <span className="material-symbols-outlined text-[#9fcb54] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                   </div>
                 )}
                 {formData?.documents?.signatureUrl && (
                   <div className="flex flex-col items-center justify-center p-3 bg-[#f0f8ff] rounded-lg border border-[#e5e2dd]">
                     <img src={getFullUrl(formData.documents.signatureUrl)} alt="Signature" className="w-20 h-16 object-contain rounded mb-2 border border-[#e5e2dd]" />
                     <span className="text-xs font-medium text-[#324670] mb-1">Signature</span>
-                    <span className="material-symbols-outlined text-[#EC5A3B] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    <span className="material-symbols-outlined text-[#9fcb54] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                   </div>
                 )}
               </div>
@@ -238,10 +238,10 @@ function PreviewPage() {
                   {['tenth', 'twelfth', 'grad', 'other'].map((level: string) => formData?.qualifications?.[level]?.fileUrl && (
                     <div key={level} className="flex items-center justify-between p-3 bg-[#f0f8ff] rounded-lg border border-[#e5e2dd]">
                       <div className="flex items-center gap-2 overflow-hidden flex-1">
-                        <span className="material-symbols-outlined text-[#EC5A3B] text-sm shrink-0">file_present</span>
+                        <span className="material-symbols-outlined text-[#9fcb54] text-sm shrink-0">file_present</span>
                         <span className="text-xs font-medium truncate">{level === 'tenth' ? '10th' : level === 'twelfth' ? '12th' : level === 'grad' ? 'Graduation' : 'Other'} Document</span>
                       </div>
-                      <span className="material-symbols-outlined text-[#EC5A3B] text-sm shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                      <span className="material-symbols-outlined text-[#9fcb54] text-sm shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                     </div>
                   ))}
                 </div>
@@ -313,19 +313,19 @@ function PreviewPage() {
                 <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
                 {/* Filled progress line */}
                 <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-[#EC5A3B] -z-10 transition-all duration-500"
+                  className="absolute top-1/2 left-0 h-0.5 bg-[#9fcb54] -z-10 transition-all duration-500"
                   style={{ width: `${(formData?.currentStep || 1) * 33.33}%` }}
                 ></div>
                 
                 {/* Step 1: Registration */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#EC5A3B] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
                   <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
                 </div>
                 
                 {/* Step 2: Basic Details */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 2 ? 'bg-[#EC5A3B]' : 'bg-[#e8f4ff] text-[#324670]'}`}>
+                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 2 ? 'bg-[#9fcb54]' : 'bg-[#e8f4ff] text-[#324670]'}`}>
                     {(formData?.currentStep || 1) >= 2 ? <span className="material-symbols-outlined text-sm">check</span> : '2'}
                   </div>
                   <span className="text-xs font-['Inter'] text-stone-500">Basic Details</span>
@@ -333,7 +333,7 @@ function PreviewPage() {
                 
                 {/* Step 3: Documents */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 3 ? 'bg-[#EC5A3B]' : 'bg-[#e8f4ff] text-[#324670]'}`}>
+                  <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center font-bold shadow-md ${(formData?.currentStep || 1) >= 3 ? 'bg-[#9fcb54]' : 'bg-[#e8f4ff] text-[#324670]'}`}>
                     {(formData?.currentStep || 1) >= 3 ? <span className="material-symbols-outlined text-sm">check</span> : '3'}
                   </div>
                   <span className="text-xs font-['Inter'] text-stone-500">Documents</span>
@@ -352,7 +352,7 @@ function PreviewPage() {
             <div className="mb-12">
               <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#324670] mb-2 tracking-tight">Review Your Application</h1>
               <p className="text-[#324670] max-w-2xl leading-relaxed">Please verify all information before final submission. Changes cannot be made after this point.</p>
-              <div className="w-24 h-1 bg-[#EC5A3B] mt-4"></div>
+              <div className="w-24 h-1 bg-[#9fcb54] mt-4"></div>
             </div>
 
             <div className="space-y-12">
@@ -366,15 +366,15 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff]">
                   <div className="grid grid-cols-2 gap-8 mb-6">
-                    <div className="col-span-2"><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Candidate Name</label><p className="text-lg font-medium">{formData?.candidateName || 'N/A'}</p></div>
+                    <div className="col-span-2"><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Candidate Name</label><p className="text-lg font-medium">{formData?.candidateName || 'N/A'}</p></div>
                   </div>
                   <div className="grid grid-cols-2 gap-8">
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Mobile Number</label><p className="text-base font-medium">{formData?.mobile || 'N/A'}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Email Address</label><p className="text-base font-medium">{formData?.email || 'N/A'}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Date of Birth</label><p className="text-base font-medium">{formatDate(formData?.dob) || 'N/A'}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Gender</label><p className="text-base font-medium capitalize">{formData?.gender || 'N/A'}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Nationality</label><p className="text-base font-medium capitalize">{formData?.nationality || 'N/A'}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Category</label><p className="text-base font-medium uppercase">{formData?.category || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Mobile Number</label><p className="text-base font-medium">{formData?.mobile || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Email Address</label><p className="text-base font-medium">{formData?.email || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Date of Birth</label><p className="text-base font-medium">{formatDate(formData?.dob) || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Gender</label><p className="text-base font-medium capitalize">{formData?.gender || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Nationality</label><p className="text-base font-medium capitalize">{formData?.nationality || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Category</label><p className="text-base font-medium uppercase">{formData?.category || 'N/A'}</p></div>
                   </div>
                 </div>
               </section>
@@ -388,36 +388,36 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff] space-y-8">
                   <div className="grid grid-cols-2 gap-8">
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Mother Name</label><p className="text-base font-medium">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Father Name</label><p className="text-base font-medium">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Mother Name</label><p className="text-base font-medium">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Father Name</label><p className="text-base font-medium">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
                   </div>
                   
                   <div className="pt-6 border-t border-[#e8f4ff]">
-                    <label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Permanent Address</label>
+                    <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Permanent Address</label>
                     <p className="text-base font-medium">{formData?.address?.permanentAddress?.address || 'N/A'}</p>
                     <div className="grid grid-cols-2 gap-8 mt-4">
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">City</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.city || 'N/A'}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">State</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.state || 'N/A'}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">District</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.district || 'N/A'}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Pin Code</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.pincode || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">City</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.city || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">State</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.state || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">District</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.district || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Pin Code</label><p className="text-base font-medium">{formData?.address?.permanentAddress?.pincode || 'N/A'}</p></div>
                     </div>
                   </div>
 
                   <div className="pt-6 border-t border-[#e8f4ff]">
-                    <label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Correspondence Address</label>
+                    <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Correspondence Address</label>
                     <p className="text-base font-medium">{formData?.address?.correspondenceAddress?.address || 'N/A'}</p>
                     <div className="grid grid-cols-2 gap-8 mt-4">
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">City</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.city || 'N/A'}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">State</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.state || 'N/A'}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">District</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.district || 'N/A'}</p></div>
-                      <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Pin Code</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.pincode || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">City</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.city || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">State</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.state || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">District</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.district || 'N/A'}</p></div>
+                      <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Pin Code</label><p className="text-base font-medium">{formData?.address?.correspondenceAddress?.pincode || 'N/A'}</p></div>
                     </div>
                   </div>
 
                   <div className="pt-6 border-t border-[#e8f4ff] grid grid-cols-3 gap-6">
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Debarred?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.debarred)}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">FIR Against?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.fir)}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Govt Employee?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.govt_emp)}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Debarred?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.debarred)}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">FIR Against?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.fir)}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Govt Employee?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.govt_emp)}</p></div>
                   </div>
                 </div>
               </section>
@@ -431,7 +431,7 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff]">
                    <div className="mb-8">
-                     <label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold mb-4">Recent Photograph & Signature</label>
+                     <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Recent Photograph & Signature</label>
                      <div className="grid grid-cols-2 gap-4">
                        {formData?.documents?.photoUrl && (
                          <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
@@ -450,7 +450,7 @@ function PreviewPage() {
                      </div>
                    </div>
                    <div className="pt-6 border-t border-[#e8f4ff]">
-                     <label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold mb-4">Educational Qualifications</label>
+                     <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Educational Qualifications</label>
                      {formData?.qualifications && (
                        <div className="space-y-4">
                          {Object.entries(formData.qualifications).map(([level, data]: [string, any]) => (
@@ -479,11 +479,11 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff] space-y-8">
                   <div className="grid grid-cols-2 gap-8">
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Aadhar Card Number</label><p className="text-base font-medium">{formData?.basicDetails?.aadhar || 'N/A'}</p></div>
-                    <div><label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold">Ex-ServiceMen?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.exServicemen)}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Aadhar Card Number</label><p className="text-base font-medium">{formData?.basicDetails?.aadhar || 'N/A'}</p></div>
+                    <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Ex-ServiceMen?</label><p className="text-base font-medium">{formatBool(formData?.basicDetails?.exServicemen)}</p></div>
                   </div>
                   <div className="pt-6 border-t border-[#e8f4ff]">
-                    <label className="block text-[10px] uppercase tracking-widest text-[#EC5A3B] font-bold mb-3">Visible Identification Marks</label>
+                    <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-3">Visible Identification Marks</label>
                     <div className="space-y-2">
                       {formData?.basicDetails?.visibleMarks && formData.basicDetails.visibleMarks.length > 0 ? (
                         formData.basicDetails.visibleMarks.map((mark: string, index: number) => (
@@ -516,7 +516,7 @@ function PreviewPage() {
               {/* Action Buttons */}
               <div className="pt-8 border-t border-[#e8f4ff] flex flex-col md:flex-row items-center justify-end gap-6">
                 <button onClick={() => navigate("/basic-details")} className="w-full md:w-auto px-8 py-3 rounded-lg bg-[#e8f4ff] text-[#1c1c19] font-bold hover:bg-[#dcdad5] transition-all">Edit Application</button>
-                <button onClick={() => setShowModal(true)} className="w-full md:w-auto px-10 py-4 rounded-lg bg-[#324670] text-white font-bold shadow-lg hover:bg-[#EC5A3B] transition-all flex items-center justify-center">
+                <button onClick={() => setShowModal(true)} className="w-full md:w-auto px-10 py-4 rounded-lg bg-[#324670] text-white font-bold shadow-lg hover:bg-[#9fcb54] transition-all flex items-center justify-center">
                   Submit Final Application <span className="material-symbols-outlined ml-2">send</span>
                 </button>
               </div>
@@ -557,7 +557,7 @@ function PreviewPage() {
               {submitError && (
                 <p className="text-[#c80000] text-sm font-semibold">{submitError}</p>
               )}
-              <button onClick={() => setShowModal(false)} className="w-full py-3 rounded-xl text-[#EC5A3B] font-bold">
+              <button onClick={() => setShowModal(false)} className="w-full py-3 rounded-xl text-[#9fcb54] font-bold">
                 Cancel
               </button>
             </div>
@@ -569,4 +569,5 @@ function PreviewPage() {
 }
 
 export default PreviewPage;
+
 

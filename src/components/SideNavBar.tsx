@@ -24,7 +24,7 @@ function SideNavBar({ activePath }: SideNavBarProps) {
             to={item.path}
             className={`flex items-center gap-3 p-3 rounded-lg transition-all cursor-pointer ${
               activePath === item.path
-                ? "bg-[#EC5A3B] text-white shadow-sm font-medium"
+                ? "bg-[#9fcb54] text-white shadow-sm font-medium"
                 : "text-stone-600 hover:bg-stone-200 hover:translate-x-1"
             }`}
           >
@@ -41,5 +41,6 @@ function SideNavBar({ activePath }: SideNavBarProps) {
 };
 
 export default SideNavBar
+
 
 

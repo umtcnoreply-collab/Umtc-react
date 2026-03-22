@@ -218,11 +218,11 @@ function BasicDetailsPage() {
       {/* ══ MOBILE LAYOUT ════════════════════════════════════════ */}
       <div className="md:hidden pt-20 px-4 pb-32 max-w-md mx-auto w-full">
         <div className="mb-10">
-          <div className="inline-block px-2 py-1 bg-[#fed488] text-[#EC5A3B] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">
+          <div className="inline-block px-2 py-1 bg-[#fed488] text-[#9fcb54] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">
             Step 02 / Basic Details
           </div>
           <h2 className="text-3xl font-['Public_Sans'] font-extrabold text-[#324670] tracking-tight leading-none mb-2">Basic & Personal Details</h2>
-          <div className="h-1 w-12 bg-[#EC5A3B] rounded-full"></div>
+          <div className="h-1 w-12 bg-[#9fcb54] rounded-full"></div>
         </div>
 
         <form className="space-y-10" onSubmit={handleSubmit}>
@@ -317,13 +317,13 @@ function BasicDetailsPage() {
                 <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
                 {/* Filled progress line - 50% for step 2 */}
                 <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-[#EC5A3B] -z-10 transition-all duration-500"
+                  className="absolute top-1/2 left-0 h-0.5 bg-[#9fcb54] -z-10 transition-all duration-500"
                   style={{ width: '50%' }}
                 ></div>
                 
                 {/* Step 1: Registration */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#EC5A3B] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
                   <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
                 </div>
                 
@@ -348,7 +348,7 @@ function BasicDetailsPage() {
             </div>
             <header className="mb-16">
               <h1 className="font-['Public_Sans'] text-[3.5rem] leading-none font-extrabold tracking-tighter text-[#324670]">Basic &amp; Personal Details</h1>
-              <div className="h-1 w-24 bg-[#EC5A3B] mt-6"></div>
+              <div className="h-1 w-24 bg-[#9fcb54] mt-6"></div>
             </header>
 
             <form className="space-y-16" onSubmit={handleSubmit}>
@@ -550,7 +550,7 @@ function BasicDetailsPage() {
               <div className="pt-6 border-t border-[#32467033] flex justify-end">
                 <button 
                   disabled={loading}
-                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#EC5A3B] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed" 
+                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#9fcb54] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed" 
                   type="submit"
                 >
                   {loading ? 'Saving...' : 'Save & Next'} <span className="material-symbols-outlined">arrow_forward</span>
@@ -566,4 +566,5 @@ function BasicDetailsPage() {
 }
 
 export default BasicDetailsPage;
+
 

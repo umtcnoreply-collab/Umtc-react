@@ -435,16 +435,16 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
       {/* ══ MOBILE LAYOUT ════════════════════════════════════════ */}
       <div className="md:hidden flex-grow pt-20 px-4 pb-32 max-w-md mx-auto w-full">
         <div className="mb-10">
-          <div className="inline-block px-2 py-1 bg-[#fed488] text-[#EC5A3B] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">Step 03 / Documents</div>
+          <div className="inline-block px-2 py-1 bg-[#fed488] text-[#9fcb54] text-[10px] font-bold tracking-widest uppercase mb-3 rounded-sm">Step 03 / Documents</div>
           <h2 className="text-3xl font-['Public_Sans'] font-extrabold text-[#324670] tracking-tight leading-none mb-2">Media & Credentials</h2>
-          <div className="h-1 w-12 bg-[#EC5A3B] rounded-full"></div>
+          <div className="h-1 w-12 bg-[#9fcb54] rounded-full"></div>
         </div>
 
         <form className="space-y-10" onSubmit={handleSubmit}>
 
           {/* MEDIA UPLOADS */}
           <section className="space-y-6">
-            <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] border-l-4 border-[#EC5A3B] pl-3">Media Uploads</h3>
+            <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] border-l-4 border-[#9fcb54] pl-3">Media Uploads</h3>
             <div className="bg-[#e8f4ff] p-6 rounded-2xl shadow-sm border border-white/50 space-y-6">
               <div className="space-y-3">
                 <label className="text-sm font-bold text-[#1c1c19] block">Recent Photograph <span className="text-[#c80000]">*</span></label>
@@ -483,8 +483,8 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
 
               <div className="space-y-3">
                 <label className="text-sm font-bold text-[#1c1c19] block">Signature <span className="text-[#c80000]">*</span></label>
-                <div className="bg-[#fed488]/30 border-l-2 border-[#EC5A3B] p-2 mb-2 rounded-r">
-                  <p className="text-[10px] text-[#EC5A3B] font-bold uppercase tracking-wider">Warning: Signature must not be in block/capital letters.</p>
+                <div className="bg-[#fed488]/30 border-l-2 border-[#9fcb54] p-2 mb-2 rounded-r">
+                  <p className="text-[10px] text-[#9fcb54] font-bold uppercase tracking-wider">Warning: Signature must not be in block/capital letters.</p>
                 </div>
                 {signaturePreview ? (
                   <div className="w-full relative">
@@ -521,7 +521,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
 
           {/* ACADEMIC CREDENTIALS */}
           <section className="space-y-6">
-            <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] border-l-4 border-[#EC5A3B] pl-3">Educational Qualifications</h3>
+            <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] border-l-4 border-[#9fcb54] pl-3">Educational Qualifications</h3>
             <div className="bg-[#324670] p-4 rounded-xl text-white shadow-md">
               <div className="flex items-start gap-3">
                 <span className="material-symbols-outlined text-[#fed488]">info</span>
@@ -566,19 +566,19 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                 <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#e8f4ff] -z-10"></div>
                 {/* Filled progress line - 66.66% for step 3 */}
                 <div 
-                  className="absolute top-1/2 left-0 h-0.5 bg-[#EC5A3B] -z-10 transition-all duration-500"
+                  className="absolute top-1/2 left-0 h-0.5 bg-[#9fcb54] -z-10 transition-all duration-500"
                   style={{ width: '66.66%' }}
                 ></div>
                 
                 {/* Step 1: Registration */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#EC5A3B] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
                   <span className="text-xs font-['Inter'] text-stone-500">Registration</span>
                 </div>
                 
                 {/* Step 2: Basic Details */}
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#EC5A3B] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
+                  <div className="w-8 h-8 rounded-full bg-[#9fcb54] text-white flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-sm">check</span></div>
                   <span className="text-xs font-['Inter'] text-stone-500">Basic Details</span>
                 </div>
                 
@@ -597,7 +597,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
             </div>
             <header className="mb-16">
               <h1 className="font-['Public_Sans'] text-[3.5rem] leading-none font-extrabold tracking-tighter text-[#324670]">Document Uploads</h1>
-              <div className="h-1 w-24 bg-[#EC5A3B] mt-6"></div>
+              <div className="h-1 w-24 bg-[#9fcb54] mt-6"></div>
             </header>
 
             <form className="space-y-16" onSubmit={handleSubmit}>
@@ -644,9 +644,9 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                     )}
                     <div className="bg-[#e8f4ff] p-4 rounded-lg">
                       <ul className="text-xs text-[#324670] font-medium uppercase tracking-wider space-y-2">
-                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#EC5A3B]">check_circle</span> Allow only JPG, JPEG, PNG</li>
-                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#EC5A3B]">check_circle</span> Size: Less than 500 KB</li>
-                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#EC5A3B]">check_circle</span> Dims: 132x170px to 160x204px</li>
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Allow only JPG, JPEG, PNG</li>
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Size: Less than 500 KB</li>
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Dims: 132x170px to 160x204px</li>
                       </ul>
                     </div>
                   </div>
@@ -681,14 +681,14 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                       </label>
                     )}
                     <div className="bg-[#fed488]/20 border border-[#fed488] p-3 rounded-lg flex items-start gap-2">
-                      <span className="material-symbols-outlined text-[#EC5A3B] text-base mt-0.5">warning</span>
-                      <p className="text-xs text-[#EC5A3B] font-bold uppercase tracking-wider">Warning: Signature must not be in capital letters.</p>
+                      <span className="material-symbols-outlined text-[#9fcb54] text-base mt-0.5">warning</span>
+                      <p className="text-xs text-[#9fcb54] font-bold uppercase tracking-wider">Warning: Signature must not be in capital letters.</p>
                     </div>
                     <div className="bg-[#e8f4ff] p-4 rounded-lg">
                       <ul className="text-xs text-[#324670] font-medium uppercase tracking-wider space-y-2">
-                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#EC5A3B]">check_circle</span> Allow only JPG, JPEG, PNG</li>
-                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#EC5A3B]">check_circle</span> Size: Less than 500 KB</li>
-                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#EC5A3B]">check_circle</span> Dims: 132x57px to 160x68px</li>
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Allow only JPG, JPEG, PNG</li>
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Size: Less than 500 KB</li>
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Dims: 132x57px to 160x68px</li>
                       </ul>
                     </div>
                   </div>
@@ -743,7 +743,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                   </div>
                 )}
                 <button 
-                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#EC5A3B] transition-all flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed" 
+                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#9fcb54] transition-all flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed" 
                   type="submit"
                   disabled={loading}
                 >
@@ -761,4 +761,5 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
 }
 
 export default DocumentsPage;
+
 
