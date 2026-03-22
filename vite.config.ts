@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/',
+  // YOU FORGOT THIS LINE:
+  base: '/career/registration/', 
   plugins: [
     react(),
     tailwindcss(),
