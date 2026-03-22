@@ -25,6 +25,12 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { initializeAuth } from "./store/authSlice";
 import { useAuth } from "./store/useAuth";
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+};
+
 
 
 const BottomNav = () => {
@@ -223,6 +229,7 @@ export default function App() {
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
       <Router basename="/career/registration">
+        <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-[#f0f8ff] text-[#324670] selection:bg-[#9fcb54] selection:text-white">
           <AppHeader />
           <AppContent />

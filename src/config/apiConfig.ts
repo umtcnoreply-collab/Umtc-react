@@ -3,7 +3,7 @@
  * Centralized API endpoint configuration
  */
 
-const API_BASE_URL = 'https://api.umtcapply.com';
+const API_BASE_URL = import.meta.env.DEV ? 'https://api.umtcapply.com' : 'https://api.umtcapply.com';
 
 export const apiConfig = {
   // Base URL for all API calls

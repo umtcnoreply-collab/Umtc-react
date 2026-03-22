@@ -6,6 +6,7 @@ import type { RootState } from '../store/store';
 import SideNavBar from '../components/SideNavBar';
 import Footer from '../components/Footer';
 import ProcessTimeline from '../components/ProcessTimeline';
+import Toast from '../components/Toast';
 import { apiConfig } from '../config/apiConfig';
 
 function BasicDetailsPage() {
@@ -41,6 +42,7 @@ function BasicDetailsPage() {
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showToast, setShowToast] = useState(false);
 
   // Fetch existing application data on component mount
   useEffect(() => {
@@ -202,7 +204,9 @@ function BasicDetailsPage() {
         return;
       }
 
-      // Navigate to next step on success
+      // Show toast and navigate after delay
+      setShowToast(true);
+      await new Promise(resolve => setTimeout(resolve, 1000));
       navigate('/documents');
 
     } catch (err) {
@@ -215,6 +219,7 @@ function BasicDetailsPage() {
 
   return (
     <div className="bg-[#f0f8ff] font-['Inter'] text-[#1c1c19] min-h-screen flex flex-col">
+      <Toast message="Saved successfully!" visible={showToast} onClose={() => setShowToast(false)} />
       
       {/* ══ MOBILE LAYOUT ════════════════════════════════════════ */}
       <div className="md:hidden pt-20 px-4 pb-32 max-w-md mx-auto w-full">

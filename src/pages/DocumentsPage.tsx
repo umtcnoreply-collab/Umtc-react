@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import SideNavBar from '../components/SideNavBar';
 import ProcessTimeline from '../components/ProcessTimeline';
+import Toast from '../components/Toast';
 import { useAuth } from '../store/useAuth';
 import { apiConfig, getFullUrl } from '../config/apiConfig';
 type QualLevel = 'tenth' | 'twelfth' | 'grad' | 'other';
@@ -24,6 +25,7 @@ function DocumentsPage() {
   const [signaturePreview, setSignaturePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showToast, setShowToast] = useState(false);
 
   // State for Academic Qualifications
   const [qualifications, setQualifications] = useState({
@@ -289,7 +291,9 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
       }
 
       console.log('Documents uploaded successfully:', data);
-      // Navigate to preview page on success
+      // Show toast and navigate after delay
+      setShowToast(true);
+      await new Promise(resolve => setTimeout(resolve, 1000));
       navigate('/preview');
     } catch (err) {
       console.error('Upload error:', err);
@@ -439,6 +443,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
 
   return (
     <div className="bg-[#f0f8ff] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col">
+      <Toast message="Saved successfully!" visible={showToast} onClose={() => setShowToast(false)} />
 
       {/* ══ MOBILE LAYOUT ════════════════════════════════════════ */}
       <div className="md:hidden flex-grow pt-20 px-4 pb-32 max-w-md mx-auto w-full">
