@@ -53,18 +53,18 @@ function ForgotPasswordPage() {
   };
 
   return (
-    <div className="bg-[#fcf9f4] font-['Inter'] text-[#1c1c19] min-h-screen flex flex-col">
+    <div className="bg-[#f0f8ff] font-['Inter'] text-[#1c1c19] min-h-screen flex flex-col">
       {/* ══ MOBILE ══════════════════════════════════════════════ */}
       <div className="md:hidden flex-grow pt-24 pb-12 px-6 flex flex-col items-center justify-center max-w-md mx-auto w-full">
         <div className="w-full space-y-10">
           <div className="space-y-2">
-            <h1 className="font-['Public_Sans'] text-[2rem] font-extrabold text-[#570013] tracking-tight leading-none">Reset Password</h1>
-            <div className="w-12 h-1 bg-[#775a19]"></div>
-            <p className="text-[#584141] text-sm mt-4 font-medium italic">Enter your email to receive an OTP for password reset.</p>
+            <h1 className="font-['Public_Sans'] text-[2rem] font-extrabold text-[#324670] tracking-tight leading-none">Reset Password</h1>
+            <div className="w-12 h-1 bg-[#EC5A3B]"></div>
+            <p className="text-[#324670] text-sm mt-4 font-medium italic">Enter your email to receive an OTP for password reset.</p>
           </div>
-          <section className="bg-[#f6f3ee] p-8 rounded-xl space-y-8">
+          <section className="bg-[#f0f8ff] p-8 rounded-xl space-y-8">
             {error && (
-              <div className="bg-[#ba1a1a] text-white p-4 rounded-lg text-sm font-medium">
+              <div className="bg-[#c80000] text-white p-4 rounded-lg text-sm font-medium">
                 {error}
               </div>
             )}
@@ -76,8 +76,8 @@ function ForgotPasswordPage() {
             )}
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-1.5">
-                <label className="font-['Inter'] text-xs font-semibold text-[#584141] tracking-wider uppercase flex items-center">
-                  Email Address <span className="text-[#ba1a1a] ml-1">*</span>
+                <label className="font-['Inter'] text-xs font-semibold text-[#324670] tracking-wider uppercase flex items-center">
+                  Email Address <span className="text-[#c80000] ml-1">*</span>
                 </label>
                 <input
                   value={email}
@@ -85,7 +85,7 @@ function ForgotPasswordPage() {
                     setEmail(e.target.value);
                     setError('');
                   }}
-                  className="w-full bg-[#e5e2dd] border-b-2 border-[#8c7071] px-4 py-3 transition-all focus:border-[#570013] focus:outline-none focus:bg-white uppercase"
+                  className="w-full bg-[#e5e2dd] border-b-2 border-[#324670] px-4 py-3 transition-all focus:border-[#324670] focus:outline-none focus:bg-white uppercase"
                   placeholder="ENTER YOUR REGISTERED EMAIL"
                   type="email"
                   required
@@ -94,14 +94,14 @@ function ForgotPasswordPage() {
               </div>
               <button 
                 disabled={loading || submitted}
-                className="w-full bg-[#570013] text-white py-5 rounded-lg font-['Public_Sans'] font-bold text-sm tracking-widest shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#324670] text-white py-5 rounded-lg font-['Public_Sans'] font-bold text-sm tracking-widest shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
               >
                 {loading ? 'SENDING OTP...' : 'SEND OTP'}
               </button>
             </form>
             <div className="flex justify-center pt-2">
-              <Link to="/login" className="text-xs font-bold text-[#8e0f28] border-b border-[#775a19] hover:text-[#570013] transition-colors">
+              <Link to="/login" className="text-xs font-bold text-[#0172b9] border-b border-[#EC5A3B] hover:text-[#324670] transition-colors">
                 BACK TO LOGIN
               </Link>
             </div>
@@ -116,17 +116,17 @@ function ForgotPasswordPage() {
           <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-6">
               <div className="space-y-2">
-                <p className="text-[#775a19] font-semibold uppercase tracking-widest text-xs">Password Recovery</p>
-                <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#570013] leading-tight tracking-tighter">Reset Password</h1>
-                <div className="h-1 w-20 bg-[#775a19] mt-4"></div>
+                <p className="text-[#EC5A3B] font-semibold uppercase tracking-widest text-xs">Password Recovery</p>
+                <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#324670] leading-tight tracking-tighter">Reset Password</h1>
+                <div className="h-1 w-20 bg-[#EC5A3B] mt-4"></div>
               </div>
-              <p className="text-[#584141] leading-relaxed text-sm">Enter your registered email address and we'll send you an OTP to reset your password securely.</p>
-              <div className="p-6 bg-[#f6f3ee] rounded-lg space-y-4">
+              <p className="text-[#324670] leading-relaxed text-sm">Enter your registered email address and we'll send you an OTP to reset your password securely.</p>
+              <div className="p-6 bg-[#f0f8ff] rounded-lg space-y-4">
                 <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-[#775a19]">mail_lock</span>
+                  <span className="material-symbols-outlined text-[#EC5A3B]">mail_lock</span>
                   <div>
                     <p className="font-medium text-sm">Secure Recovery</p>
-                    <p className="text-xs text-[#584141]">OTP-based authentication for your security.</p>
+                    <p className="text-xs text-[#324670]">OTP-based authentication for your security.</p>
                   </div>
                 </div>
               </div>
@@ -134,7 +134,7 @@ function ForgotPasswordPage() {
             <div className="lg:col-span-7 bg-white p-10 shadow-sm rounded-xl">
               <form className="space-y-8" onSubmit={handleSubmit}>
                 {error && (
-                  <div className="bg-[#ba1a1a] text-white p-4 rounded-lg text-sm font-medium">
+                  <div className="bg-[#c80000] text-white p-4 rounded-lg text-sm font-medium">
                     {error}
                   </div>
                 )}
@@ -146,14 +146,14 @@ function ForgotPasswordPage() {
                 )}
                 <div className="space-y-6">
                   <div className="flex flex-col gap-2">
-                    <label className="font-['Inter'] text-sm font-medium text-[#584141]">EMAIL ADDRESS <span className="text-[#ba1a1a]">*</span></label>
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">EMAIL ADDRESS <span className="text-[#c80000]">*</span></label>
                     <input
                       value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
                         setError('');
                       }}
-                      className="border-b-2 border-[#8c707133] focus:border-[#570013] focus:outline-none transition-colors py-3 px-4 lowercase w-full bg-[#ebe8e3]"
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 lowercase w-full bg-[#e8f4ff]"
                       placeholder="ENTER YOUR REGISTERED EMAIL"
                       type="email"
                       required
@@ -170,8 +170,8 @@ function ForgotPasswordPage() {
                 </div>
               </form>
               <div className="mt-8 text-center space-y-3">
-                <p className="text-xs text-[#584141]"><Link className="text-[#570013] font-semibold underline underline-offset-4 hover:text-[#775a19]" to="/login">Back to Login</Link></p>
-                <p className="text-xs text-[#584141]">Don't have an account? <Link className="text-[#570013] font-semibold underline underline-offset-4 hover:text-[#775a19]" to="/registration">Register as New Candidate</Link></p>
+                <p className="text-xs text-[#324670]"><Link className="text-[#324670] font-semibold underline underline-offset-4 hover:text-[#EC5A3B]" to="/login">Back to Login</Link></p>
+                <p className="text-xs text-[#324670]">Don't have an account? <Link className="text-[#324670] font-semibold underline underline-offset-4 hover:text-[#EC5A3B]" to="/registration">Register as New Candidate</Link></p>
               </div>
             </div>
           </div>
@@ -183,3 +183,4 @@ function ForgotPasswordPage() {
 }
 
 export default ForgotPasswordPage;
+

@@ -12,9 +12,9 @@ function SideNavBar({ activePath }: SideNavBarProps) {
     { path: "/preview", icon: "visibility", label: "Preview" },
   ];
   return (
-    <aside className="hidden md:flex flex-col h-full w-64 p-6 space-y-4 bg-[#f6f3ee] rounded-xl mr-12 min-h-[calc(100vh-120px)] sticky top-24">
+    <aside className="hidden md:flex flex-col h-full w-64 p-6 space-y-4 bg-[#f0f8ff] rounded-xl mr-12 min-h-[calc(100vh-120px)] sticky top-24">
       <div className="mb-8">
-        <h2 className="text-lg font-bold text-[#570013]">Candidate Portal</h2>
+        <h2 className="text-lg font-bold text-[#324670]">Candidate Portal</h2>
         <p className="text-xs text-stone-500 uppercase tracking-widest mt-1">Examination 2024</p>
       </div>
       <nav className="space-y-2">
@@ -33,7 +33,7 @@ function SideNavBar({ activePath }: SideNavBarProps) {
           </Link>
         ))}
       </nav>
-      <button className="mt-auto py-3 px-4 bg-[#ebe8e3] text-[#1c1c19] text-sm font-semibold rounded-lg hover:bg-[#dcdad5] transition-colors">
+      <button className="mt-auto py-3 px-4 bg-[#e8f4ff] text-[#1c1c19] text-sm font-semibold rounded-lg hover:bg-[#dcdad5] transition-colors">
         Save &amp; Exit
       </button>
     </aside>
@@ -41,3 +41,4 @@ function SideNavBar({ activePath }: SideNavBarProps) {
 };
 
 export default SideNavBar
+

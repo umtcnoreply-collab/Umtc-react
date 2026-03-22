@@ -67,20 +67,20 @@ const BottomNav = () => {
   
   const isActive = (path: string) => location.pathname === path;
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[#fcf9f4] flex justify-around items-center px-4 pb-safe h-20 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t-2 border-[#e5e2dd]">
-      <Link to="/" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/") ? "bg-[#fed488] text-[#570013] rounded-xl" : "text-[#4e4639]"}`}>
+    <nav className="md:hidden fixed bottom-0 left-0 w-full bg-[#f0f8ff] flex justify-around items-center px-4 pb-safe h-20 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] border-t-2 border-[#324670]">
+      <Link to="/" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/") ? "bg-[#EC5A3B] text-white rounded-xl" : "text-[#324670]"}`}>
         <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/") ? "'FILL' 1" : "" }}>how_to_reg</span>
         <span className="font-['Inter'] text-[10px] font-medium leading-tight">Register</span>
       </Link>
-      <Link to="/basic-details" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/basic-details") ? "bg-[#fed488] text-[#570013] rounded-xl" : "text-[#4e4639]"}`}>
+      <Link to="/basic-details" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/basic-details") ? "bg-[#EC5A3B] text-white rounded-xl" : "text-[#324670]"}`}>
         <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/basic-details") ? "'FILL' 1" : "" }}>person_book</span>
         <span className="font-['Inter'] text-[10px] font-medium leading-tight">Details</span>
       </Link>
-      <Link to="/documents" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/documents") ? "bg-[#fed488] text-[#570013] rounded-xl" : "text-[#4e4639]"}`}>
+      <Link to="/documents" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/documents") ? "bg-[#EC5A3B] text-white rounded-xl" : "text-[#324670]"}`}>
         <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/documents") ? "'FILL' 1" : "" }}>upload_file</span>
         <span className="font-['Inter'] text-[10px] font-medium leading-tight">Docs</span>
       </Link>
-      <Link to="/preview" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/preview") ? "bg-[#fed488] text-[#570013] rounded-xl" : "text-[#4e4639]"}`}>
+      <Link to="/preview" className={`flex flex-col items-center justify-center px-3 py-1 transition-all duration-300 ${isActive("/preview") ? "bg-[#EC5A3B] text-white rounded-xl" : "text-[#324670]"}`}>
         <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/preview") ? "'FILL' 1" : "" }}>visibility</span>
         <span className="font-['Inter'] text-[10px] font-medium leading-tight">Preview</span>
       </Link>
@@ -108,10 +108,10 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#fcf9f4]">
+      <div className="flex items-center justify-center min-h-screen bg-[#f0f8ff]">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#570013]"></div>
-          <p className="mt-4 text-[#584141] font-medium">Loading...</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#EC5A3B]"></div>
+          <p className="mt-4 text-[#324670] font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -207,7 +207,7 @@ export default function App() {
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
       <Router basename="/career/registration">
-        <div className="min-h-screen flex flex-col bg-[#fcf9f4] text-[#1c1c19] selection:bg-[#fed488]">
+        <div className="min-h-screen flex flex-col bg-[#f0f8ff] text-[#324670] selection:bg-[#EC5A3B] selection:text-white">
           <AppHeader />
           <AppContent />
           <BottomNav />
@@ -216,3 +216,4 @@ export default function App() {
     </GoogleReCaptchaProvider>
   );
 }
+

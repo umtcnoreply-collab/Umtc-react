@@ -241,29 +241,29 @@ function OTPPage() {
   };
 
   return (
-    <div className="bg-[#fcf9f4] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col">
+    <div className="bg-[#f0f8ff] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col">
       {/* ══ MOBILE ══════════════════════════════════════════════ */}
       <div className="md:hidden pt-24 pb-32 px-6 min-h-screen flex flex-col max-w-md mx-auto w-full">
         {!isVerified && (
           <>
         <header className="mb-12">
-          <div className="inline-block px-3 py-1 bg-[#fed488] text-[#775a19] font-['Inter'] text-[10px] uppercase tracking-widest rounded-full mb-4">
+          <div className="inline-block px-3 py-1 bg-[#fed488] text-[#EC5A3B] font-['Inter'] text-[10px] uppercase tracking-widest rounded-full mb-4">
             {resetMode ? 'Password Recovery' : 'Identity Verification'}
           </div>
-          <h1 className="font-['Public_Sans'] font-extrabold text-3xl text-[#570013] leading-tight tracking-tight mb-4">
+          <h1 className="font-['Public_Sans'] font-extrabold text-3xl text-[#324670] leading-tight tracking-tight mb-4">
             {resetMode ? 'Reset Your Password' : 'Verify Your Sovereignty'}
           </h1>
-          <p className="text-[#584141] leading-relaxed text-sm">
+          <p className="text-[#324670] leading-relaxed text-sm">
             {resetMode 
               ? 'Enter the 6-digit code sent to your registered email address to reset your password.'
               : 'A unique 6-digit code has been dispatched to your registered email address.'}
           </p>
         </header>
-        <section className="bg-[#f6f3ee] p-8 rounded-xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-[#570013]"></div>
+        <section className="bg-[#f0f8ff] p-8 rounded-xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#324670]"></div>
           <div className="flex flex-col gap-8">
             <div>
-              <label className="block font-['Public_Sans'] font-bold text-sm text-[#570013] uppercase tracking-widest mb-6">Enter Security Code</label>
+              <label className="block font-['Public_Sans'] font-bold text-sm text-[#324670] uppercase tracking-widest mb-6">Enter Security Code</label>
               <div className="flex justify-between gap-2">
                 {otp.map((digit, i) => (
                   <input
@@ -276,8 +276,8 @@ function OTPPage() {
                     onKeyDown={(e) => handleOtpKeyDown(e, i)}
                     maxLength={1}
                     className={`w-full h-16 text-center text-2xl font-bold 
-    ${isVerified ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#ebe8e3]'} 
-    border-b-2 border-[#8c7071] focus:border-[#570013] focus:outline-none transition-colors`}
+    ${isVerified ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#e8f4ff]'} 
+    border-b-2 border-[#324670] focus:border-[#324670] focus:outline-none transition-colors`}
                     inputMode="numeric"
                     type="tel"
                     disabled={isVerified}
@@ -286,7 +286,7 @@ function OTPPage() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <button onClick={handleVerifyOtp} className="w-full bg-[#570013] hover:bg-[#800020] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-sm active:scale-[0.98] transition-all">
+              <button onClick={handleVerifyOtp} className="w-full bg-[#324670] hover:bg-[#800020] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-sm active:scale-[0.98] transition-all">
                 {resetMode ? 'Submit OTP & Reset Password' : 'Submit OTP & Finalize Registration'}
               </button>
               <button 
@@ -311,12 +311,12 @@ function OTPPage() {
         )}
         {isVerified && (
           <div className="mt-8 space-y-6 p-6 bg-[#f0ede8] rounded-xl border border-[#e5e2dd]">
-            <h3 className="font-['Public_Sans'] font-bold text-lg text-[#570013] mb-6">
+            <h3 className="font-['Public_Sans'] font-bold text-lg text-[#324670] mb-6">
               {resetMode ? 'Set New Password' : 'Create Your Password'}
             </h3>
             
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1c1c19]">Password <span className="text-[#ba1a1a]">*</span></label>
+              <label className="block text-sm font-semibold text-[#1c1c19]">Password <span className="text-[#c80000]">*</span></label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -324,23 +324,23 @@ function OTPPage() {
                   placeholder="Enter a strong password"
                   value={passwordData.password}
                   onChange={handlePasswordChange}
-                  className="w-full bg-[#ebe8e3] p-3 pr-10 border-b-2 border-[#8c7071] focus:border-[#570013] focus:outline-none transition-colors"
+                  className="w-full bg-[#e8f4ff] p-3 pr-10 border-b-2 border-[#324670] focus:border-[#324670] focus:outline-none transition-colors"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8c7071] hover:text-[#570013] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#324670] hover:text-[#324670] transition-colors"
                 >
                   <span className="material-symbols-outlined text-sm">
                     {showPassword ? 'visibility_off' : 'visibility'}
                   </span>
                 </button>
               </div>
-              <p className="text-[10px] text-[#584141] uppercase tracking-wider">Minimum 6 characters recommended</p>
+              <p className="text-[10px] text-[#324670] uppercase tracking-wider">Minimum 6 characters recommended</p>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-[#1c1c19]">Confirm Password <span className="text-[#ba1a1a]">*</span></label>
+              <label className="block text-sm font-semibold text-[#1c1c19]">Confirm Password <span className="text-[#c80000]">*</span></label>
               <div className="relative">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
@@ -348,12 +348,12 @@ function OTPPage() {
                   placeholder="Re-enter your password"
                   value={passwordData.confirmPassword}
                   onChange={handlePasswordChange}
-                  className="w-full bg-[#ebe8e3] p-3 pr-10 border-b-2 border-[#8c7071] focus:border-[#570013] focus:outline-none transition-colors"
+                  className="w-full bg-[#e8f4ff] p-3 pr-10 border-b-2 border-[#324670] focus:border-[#324670] focus:outline-none transition-colors"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8c7071] hover:text-[#570013] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#324670] hover:text-[#324670] transition-colors"
                 >
                   <span className="material-symbols-outlined text-sm">
                     {showConfirmPassword ? 'visibility_off' : 'visibility'}
@@ -364,13 +364,13 @@ function OTPPage() {
                 <p className="text-[10px] text-green-700 font-semibold flex items-center gap-1"><span className="material-symbols-outlined text-sm">check_circle</span> Passwords match</p>
               )}
               {passwordData.password && passwordData.confirmPassword && passwordData.password !== passwordData.confirmPassword && (
-                <p className="text-[10px] text-[#ba1a1a] font-semibold flex items-center gap-1"><span className="material-symbols-outlined text-sm">error</span> Passwords don't match</p>
+                <p className="text-[10px] text-[#c80000] font-semibold flex items-center gap-1"><span className="material-symbols-outlined text-sm">error</span> Passwords don't match</p>
               )}
             </div>
 
             <button
               onClick={handleSetPassword}
-              className="w-full bg-[#570013] hover:bg-[#800020] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full bg-[#324670] hover:bg-[#800020] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined text-sm">lock</span>
               Set Password & Continue
@@ -378,10 +378,10 @@ function OTPPage() {
           </div>
         )}
         <section className="mt-8 flex gap-4 items-start p-4 bg-white/50 rounded-lg">
-          <span className="material-symbols-outlined text-[#775a19]" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
+          <span className="material-symbols-outlined text-[#EC5A3B]" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
           <div>
-            <h4 className="font-['Public_Sans'] font-bold text-xs text-[#570013] uppercase tracking-tighter">Encrypted Handshake</h4>
-            <p className="text-[11px] text-[#584141] leading-normal mt-1">Session protected by 256-bit institutional-grade encryption.</p>
+            <h4 className="font-['Public_Sans'] font-bold text-xs text-[#324670] uppercase tracking-tighter">Encrypted Handshake</h4>
+            <p className="text-[11px] text-[#324670] leading-normal mt-1">Session protected by 256-bit institutional-grade encryption.</p>
           </div>
         </section>
         <Footer />
@@ -406,14 +406,14 @@ function OTPPage() {
                 </p>
               </div>
             </div>
-            <div className="md:col-span-7 p-10 md:p-16 flex flex-col justify-center bg-[#fcf9f4]">
+            <div className="md:col-span-7 p-10 md:p-16 flex flex-col justify-center bg-[#f0f8ff]">
               {!isVerified && (
                 <>
               <div className="mb-10">
-                <h2 className="font-['Public_Sans'] text-2xl font-bold text-[#570013] mb-2">
+                <h2 className="font-['Public_Sans'] text-2xl font-bold text-[#324670] mb-2">
                   {resetMode ? 'Verify Your Identity' : 'Enter Verification Code'}
                 </h2>
-                <p className="text-[#584141]">
+                <p className="text-[#324670]">
                   {resetMode 
                     ? 'Enter the code sent to'
                     : 'A 6-digit code was sent to'} <span className="font-semibold text-[#1c1c19]"> {maskEmail(localStorage.getItem('email'))}</span>
@@ -432,8 +432,8 @@ function OTPPage() {
                       onKeyDown={(e) => handleOtpKeyDown(e, i)}
                       maxLength={1}
                       className={`w-full h-16 text-center text-2xl font-bold 
-    ${isVerified ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#ebe8e3]'} 
-    border-b-2 border-[#8c7071] focus:border-[#570013] focus:outline-none transition-colors`}
+    ${isVerified ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#e8f4ff]'} 
+    border-b-2 border-[#324670] focus:border-[#324670] focus:outline-none transition-colors`}
                       inputMode="numeric"
                       type="tel"
                       disabled={isVerified}
@@ -443,7 +443,7 @@ function OTPPage() {
                 <button onClick={handleVerifyOtp}   className={`w-full py-4 px-6 rounded-xl font-bold text-sm transition-all
     ${isVerified 
       ? 'hidden' 
-      : 'bg-[#570013] hover:bg-[#800020] text-white'}`} type="submit">
+      : 'bg-[#324670] hover:bg-[#800020] text-white'}`} type="submit">
                   {resetMode ? 'Submit OTP & Reset Password' : 'Submit OTP & Finalize Registration'}
                 </button>
                 {!isVerified && (
@@ -472,10 +472,10 @@ function OTPPage() {
               {isVerified && (
           <div className="space-y-8 p-10 bg-white">
             <div>
-              <h2 className="font-['Public_Sans'] text-2xl font-bold text-[#570013] mb-2">
+              <h2 className="font-['Public_Sans'] text-2xl font-bold text-[#324670] mb-2">
                 {resetMode ? 'Set New Password' : 'Create Your Password'}
               </h2>
-              <p className="text-[#584141] text-sm">
+              <p className="text-[#324670] text-sm">
                 {resetMode 
                   ? 'Enter a new secure password for your account'
                   : 'Set a secure password to protect your account'}
@@ -484,7 +484,7 @@ function OTPPage() {
             
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="font-medium text-sm flex items-center">Password <span className="text-[#ba1a1a] ml-1">*</span></label>
+                <label className="font-medium text-sm flex items-center">Password <span className="text-[#c80000] ml-1">*</span></label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -492,23 +492,23 @@ function OTPPage() {
                     placeholder="Enter a strong password"
                     value={passwordData.password}
                     onChange={handlePasswordChange}
-                    className="w-full bg-[#ebe8e3] p-4 pr-12 border-b-2 border-[#8c707133] focus:border-[#570013] focus:outline-none transition-colors"
+                    className="w-full bg-[#e8f4ff] p-4 pr-12 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8c7071] hover:text-[#570013] transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#324670] hover:text-[#324670] transition-colors"
                   >
                     <span className="material-symbols-outlined">
                       {showPassword ? 'visibility_off' : 'visibility'}
                     </span>
                   </button>
                 </div>
-                <p className="text-[10px] text-[#584141] uppercase tracking-wider">Minimum 6 characters recommended</p>
+                <p className="text-[10px] text-[#324670] uppercase tracking-wider">Minimum 6 characters recommended</p>
               </div>
 
               <div className="space-y-2">
-                <label className="font-medium text-sm flex items-center">Confirm Password <span className="text-[#ba1a1a] ml-1">*</span></label>
+                <label className="font-medium text-sm flex items-center">Confirm Password <span className="text-[#c80000] ml-1">*</span></label>
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
@@ -516,12 +516,12 @@ function OTPPage() {
                     placeholder="Re-enter your password"
                     value={passwordData.confirmPassword}
                     onChange={handlePasswordChange}
-                    className="w-full bg-[#ebe8e3] p-4 pr-12 border-b-2 border-[#8c707133] focus:border-[#570013] focus:outline-none transition-colors"
+                    className="w-full bg-[#e8f4ff] p-4 pr-12 border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8c7071] hover:text-[#570013] transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#324670] hover:text-[#324670] transition-colors"
                   >
                     <span className="material-symbols-outlined">
                       {showConfirmPassword ? 'visibility_off' : 'visibility'}
@@ -532,14 +532,14 @@ function OTPPage() {
                   <p className="text-[10px] text-green-700 font-semibold flex items-center gap-1"><span className="material-symbols-outlined text-sm">check_circle</span> Passwords match</p>
                 )}
                 {passwordData.password && passwordData.confirmPassword && passwordData.password !== passwordData.confirmPassword && (
-                  <p className="text-[10px] text-[#ba1a1a] font-semibold flex items-center gap-1"><span className="material-symbols-outlined text-sm">error</span> Passwords don't match</p>
+                  <p className="text-[10px] text-[#c80000] font-semibold flex items-center gap-1"><span className="material-symbols-outlined text-sm">error</span> Passwords don't match</p>
                 )}
               </div>
             </div>
 
             <button
               onClick={handleSetPassword}
-              className="w-full bg-[#570013] hover:bg-[#800020] text-white py-5 px-8 rounded-lg font-bold text-sm uppercase tracking-widest shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full bg-[#324670] hover:bg-[#800020] text-white py-5 px-8 rounded-lg font-bold text-sm uppercase tracking-widest shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined">lock</span>
               Set Password & Continue
@@ -556,3 +556,4 @@ function OTPPage() {
   );
 };
 export default OTPPage
+

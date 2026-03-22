@@ -60,24 +60,24 @@ function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="bg-[#fcf9f4] text-[#1c1c19] font-['Inter'] min-h-screen flex items-center justify-center">
+      <div className="bg-[#f0f8ff] text-[#1c1c19] font-['Inter'] min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <span className="material-symbols-outlined text-5xl text-[#570013] animate-spin mb-4 inline-block">hourglass_bottom</span>
-          <p className="text-lg font-semibold text-[#570013]">Loading your profile...</p>
+          <span className="material-symbols-outlined text-5xl text-[#324670] animate-spin mb-4 inline-block">hourglass_bottom</span>
+          <p className="text-lg font-semibold text-[#324670]">Loading your profile...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#fcf9f4] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col">
+    <div className="bg-[#f0f8ff] text-[#1c1c19] font-['Inter'] min-h-screen flex flex-col">
       {/* Mobile View */}
       <div className="md:hidden flex flex-col flex-grow pt-20 px-4 pb-20">
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-['Public_Sans'] font-black text-[#570013]">My Profile</h1>
-              <p className="text-sm text-[#584141] mt-2">Your application details and status</p>
+              <h1 className="text-3xl font-['Public_Sans'] font-black text-[#324670]">My Profile</h1>
+              <p className="text-sm text-[#324670] mt-2">Your application details and status</p>
             </div>
             <button
               onClick={onLogout}
@@ -87,11 +87,11 @@ function ProfilePage() {
               <span className="material-symbols-outlined">logout</span>
             </button>
           </div>
-          <div className="h-1 w-12 bg-[#775a19] rounded-full"></div>
+          <div className="h-1 w-12 bg-[#EC5A3B] rounded-full"></div>
         </div>
 
         {error && (
-          <div className="bg-[#ffebee] border border-[#ba1a1a] text-[#ba1a1a] p-4 rounded-lg text-sm font-semibold mb-6">
+          <div className="bg-[#ffebee] border border-[#c80000] text-[#c80000] p-4 rounded-lg text-sm font-semibold mb-6">
             {error}
           </div>
         )}
@@ -99,7 +99,7 @@ function ProfilePage() {
         {profile && (
           <div className="space-y-6">
             {/* Hero Card */}
-            <div className="bg-gradient-to-br from-[#570013] to-[#800020] text-white rounded-xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-[#324670] to-[#800020] text-white rounded-xl p-6 shadow-lg">
               <p className="text-xs uppercase tracking-widest opacity-80 mb-2">Candidate Name</p>
               <h2 className="text-2xl font-['Public_Sans'] font-bold mb-4">{profile.candidateName}</h2>
               <div className="space-y-2">
@@ -109,8 +109,8 @@ function ProfilePage() {
             </div>
 
             {/* Status Card */}
-            <div className="bg-white border-2 border-[#ebe8e3] rounded-xl p-6">
-              <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold mb-3">Application Status</p>
+            <div className="bg-white border-2 border-[#e8f4ff] rounded-xl p-6">
+              <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-3">Application Status</p>
               <div className="flex items-center gap-3">
                 <div className={`w-12 h-12 ${getStatusBadge(profile.status || 'pending').bg} rounded-full flex items-center justify-center`}>
                   <span className={`material-symbols-outlined text-xl ${getStatusBadge(profile.status || 'pending').color}`}>
@@ -118,16 +118,16 @@ function ProfilePage() {
                   </span>
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-[#570013] capitalize">{profile.status || 'Submitted'}</p>
-                  <p className="text-xs text-[#584141]">Submitted on {new Date().toLocaleDateString()}</p>
+                  <p className="text-lg font-bold text-[#324670] capitalize">{profile.status || 'Submitted'}</p>
+                  <p className="text-xs text-[#324670]">Submitted on {new Date().toLocaleDateString()}</p>
                 </div>
               </div>
             </div>
 
             {/* Info Cards */}
             <div className="space-y-4">
-              <div className="bg-[#f0ede8] rounded-lg p-4 border border-[#ebe8e3]">
-                <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold mb-2">Basic Info</p>
+              <div className="bg-[#f0ede8] rounded-lg p-4 border border-[#e8f4ff]">
+                <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-2">Basic Info</p>
                 <div className="space-y-2">
                   <p className="text-sm"><span className="font-semibold">DOB:</span> {profile.dob ? new Date(profile.dob).toLocaleDateString() : 'N/A'}</p>
                   <p className="text-sm"><span className="font-semibold">Gender:</span> <span className="capitalize">{profile.gender}</span></p>
@@ -135,8 +135,8 @@ function ProfilePage() {
                 </div>
               </div>
 
-              <div className="bg-[#f0ede8] rounded-lg p-4 border border-[#ebe8e3]">
-                <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold mb-2">Address</p>
+              <div className="bg-[#f0ede8] rounded-lg p-4 border border-[#e8f4ff]">
+                <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-2">Address</p>
                 <div className="space-y-2">
                   <p className="text-sm"><span className="font-semibold">City:</span> {profile.address?.permanentAddress?.city || 'N/A'}</p>
                   <p className="text-sm"><span className="font-semibold">State:</span> {profile.address?.permanentAddress?.state || 'N/A'}</p>
@@ -146,17 +146,17 @@ function ProfilePage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="space-y-3 pt-4 border-t border-[#ebe8e3]">
+            <div className="space-y-3 pt-4 border-t border-[#e8f4ff]">
               <button
                 onClick={() => navigate('/preview')}
-                className="w-full py-3 bg-[#570013] text-white rounded-lg font-bold flex items-center justify-center gap-2"
+                className="w-full py-3 bg-[#324670] text-white rounded-lg font-bold flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">visibility</span>
                 View Application
               </button>
               <button
                 onClick={onLogout}
-                className="w-full py-3 bg-[#ebe8e3] text-[#1c1c19] rounded-lg font-bold flex items-center justify-center gap-2"
+                className="w-full py-3 bg-[#e8f4ff] text-[#1c1c19] rounded-lg font-bold flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined">logout</span>
                 Logout
@@ -176,13 +176,13 @@ function ProfilePage() {
           <main className="flex-1">
             <div className="flex items-center justify-between mb-12">
               <div>
-                <h1 className="text-5xl font-['Public_Sans'] font-black text-[#570013] mb-2">My Profile</h1>
-                <p className="text-lg text-[#584141]">Your application details and status</p>
-                <div className="w-24 h-1 bg-[#775a19] mt-4"></div>
+                <h1 className="text-5xl font-['Public_Sans'] font-black text-[#324670] mb-2">My Profile</h1>
+                <p className="text-lg text-[#324670]">Your application details and status</p>
+                <div className="w-24 h-1 bg-[#EC5A3B] mt-4"></div>
               </div>
               <button
                 onClick={onLogout}
-                className="px-6 py-3 bg-[#ba1a1a] text-white rounded-lg font-bold hover:bg-[#d32f2f] transition-all flex items-center gap-2"
+                className="px-6 py-3 bg-[#c80000] text-white rounded-lg font-bold hover:bg-[#d32f2f] transition-all flex items-center gap-2"
               >
                 <span className="material-symbols-outlined">logout</span>
                 Logout
@@ -190,7 +190,7 @@ function ProfilePage() {
             </div>
 
             {error && (
-              <div className="bg-[#ffebee] border-2 border-[#ba1a1a] text-[#ba1a1a] p-6 rounded-lg text-base font-semibold mb-8">
+              <div className="bg-[#ffebee] border-2 border-[#c80000] text-[#c80000] p-6 rounded-lg text-base font-semibold mb-8">
                 {error}
               </div>
             )}
@@ -201,7 +201,7 @@ function ProfilePage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {/* Profile Card */}
                   <div className="lg:col-span-1">
-                    <div className="bg-gradient-to-br from-[#570013] to-[#800020] text-white rounded-2xl p-8 shadow-lg h-full flex flex-col justify-between">
+                    <div className="bg-gradient-to-br from-[#324670] to-[#800020] text-white rounded-2xl p-8 shadow-lg h-full flex flex-col justify-between">
                       <div>
                         <p className="text-xs uppercase tracking-widest opacity-80 mb-4">Candidate Profile</p>
                         <h2 className="text-4xl font-['Public_Sans'] font-black mb-6">{profile.candidateName}</h2>
@@ -215,8 +215,8 @@ function ProfilePage() {
 
                   {/* Status Card */}
                   <div className="lg:col-span-2">
-                    <div className="bg-white border-2 border-[#ebe8e3] rounded-2xl p-8 shadow-md h-full">
-                      <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold mb-6">Application Status</p>
+                    <div className="bg-white border-2 border-[#e8f4ff] rounded-2xl p-8 shadow-md h-full">
+                      <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-6">Application Status</p>
                       <div className="flex items-center gap-6">
                         <div className={`w-20 h-20 ${getStatusBadge(profile.status || 'pending').bg} rounded-full flex items-center justify-center flex-shrink-0`}>
                           <span className={`material-symbols-outlined text-4xl ${getStatusBadge(profile.status || 'pending').color}`}>
@@ -224,9 +224,9 @@ function ProfilePage() {
                           </span>
                         </div>
                         <div>
-                          <p className="text-3xl font-['Public_Sans'] font-bold text-[#570013] capitalize">{profile.status || 'Submitted'}</p>
-                          <p className="text-sm text-[#584141] mt-2">Submitted on {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                          <p className="text-xs text-[#775a19] font-semibold mt-3">✓ In Review - Expected response within 48 hours</p>
+                          <p className="text-3xl font-['Public_Sans'] font-bold text-[#324670] capitalize">{profile.status || 'Submitted'}</p>
+                          <p className="text-sm text-[#324670] mt-2">Submitted on {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                          <p className="text-xs text-[#EC5A3B] font-semibold mt-3">✓ In Review - Expected response within 48 hours</p>
                         </div>
                       </div>
                     </div>
@@ -236,84 +236,84 @@ function ProfilePage() {
                 {/* Details Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Personal Information */}
-                  <div className="bg-[#f6f3ee] rounded-2xl p-8 border border-[#ebe8e3]">
-                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#570013] mb-6 border-b border-[#ebe8e3] pb-4">Personal Information</h3>
+                  <div className="bg-[#f0f8ff] rounded-2xl p-8 border border-[#e8f4ff]">
+                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Personal Information</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Date of Birth</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Date of Birth</p>
                         <p className="text-lg font-medium">{profile.dob ? new Date(profile.dob).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Gender</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Gender</p>
                         <p className="text-lg font-medium capitalize">{profile.gender}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Nationality</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Nationality</p>
                         <p className="text-lg font-medium capitalize">{profile.nationality}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Category</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Category</p>
                         <p className="text-lg font-medium uppercase">{profile.category}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Contact & Address */}
-                  <div className="bg-[#f6f3ee] rounded-2xl p-8 border border-[#ebe8e3]">
-                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#570013] mb-6 border-b border-[#ebe8e3] pb-4">Contact & Address</h3>
+                  <div className="bg-[#f0f8ff] rounded-2xl p-8 border border-[#e8f4ff]">
+                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Contact & Address</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Email</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Email</p>
                         <p className="text-lg font-medium break-all">{profile.email}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Mobile</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Mobile</p>
                         <p className="text-lg font-medium">{profile.mobile}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">City</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">City</p>
                         <p className="text-lg font-medium">{profile.address?.permanentAddress?.city || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Pin Code</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Pin Code</p>
                         <p className="text-lg font-medium">{profile.address?.permanentAddress?.pincode || 'N/A'}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Family Information */}
-                  <div className="bg-[#f6f3ee] rounded-2xl p-8 border border-[#ebe8e3]">
-                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#570013] mb-6 border-b border-[#ebe8e3] pb-4">Family Information</h3>
+                  <div className="bg-[#f0f8ff] rounded-2xl p-8 border border-[#e8f4ff]">
+                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Family Information</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Father's Name</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Father's Name</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.fatherName || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Mother's Name</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Mother's Name</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.motherName || 'N/A'}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Legal & Status */}
-                  <div className="bg-[#f6f3ee] rounded-2xl p-8 border border-[#ebe8e3]">
-                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#570013] mb-6 border-b border-[#ebe8e3] pb-4">Legal & Status</h3>
+                  <div className="bg-[#f0f8ff] rounded-2xl p-8 border border-[#e8f4ff]">
+                    <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] mb-6 border-b border-[#e8f4ff] pb-4">Legal & Status</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Debarred</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Debarred</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.debarred ? 'Yes' : 'No'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">FIR Against</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">FIR Against</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.fir ? 'Yes' : 'No'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Government Employee</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Government Employee</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.govt_emp ? 'Yes' : 'No'}</p>
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-widest text-[#775a19] font-bold">Aadhar Number</p>
+                        <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold">Aadhar Number</p>
                         <p className="text-lg font-medium">{profile.basicDetails?.aadhar || 'N/A'}</p>
                       </div>
                     </div>
@@ -321,17 +321,17 @@ function ProfilePage() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-6 pt-8 border-t border-[#ebe8e3]">
+                <div className="flex gap-6 pt-8 border-t border-[#e8f4ff]">
                   <button
                     onClick={() => navigate('/preview')}
-                    className="px-10 py-4 bg-[#570013] text-white rounded-lg font-bold hover:bg-[#800020] transition-all flex items-center gap-2"
+                    className="px-10 py-4 bg-[#324670] text-white rounded-lg font-bold hover:bg-[#800020] transition-all flex items-center gap-2"
                   >
                     <span className="material-symbols-outlined">visibility</span>
                     View Full Application
                   </button>
                   <button
                     onClick={() => window.print()}
-                    className="px-10 py-4 bg-[#ebe8e3] text-[#1c1c19] rounded-lg font-bold hover:bg-[#dcdad5] transition-all flex items-center gap-2"
+                    className="px-10 py-4 bg-[#e8f4ff] text-[#1c1c19] rounded-lg font-bold hover:bg-[#dcdad5] transition-all flex items-center gap-2"
                   >
                     <span className="material-symbols-outlined">print</span>
                     Print Profile
@@ -348,3 +348,4 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+

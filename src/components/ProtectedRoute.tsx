@@ -22,10 +22,10 @@ export default function ProtectedRoute({
   // Show loading while initializing auth state
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#fcf9f4]">
+      <div className="flex items-center justify-center min-h-screen bg-[#f0f8ff]">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#570013]"></div>
-          <p className="mt-4 text-[#584141] font-medium">Loading...</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#EC5A3B]"></div>
+          <p className="mt-4 text-[#324670] font-medium">Loading...</p>
         </div>
       </div>
     );
@@ -44,3 +44,4 @@ export default function ProtectedRoute({
 
   return <>{children}</>;
 }
+

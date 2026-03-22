@@ -11,7 +11,7 @@ import { apiConfig } from '../config/apiConfig';
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const plinth = "w-full bg-[#e5e2dd] border-b-2 border-[#8c7071] px-4 py-3 transition-all focus:border-[#570013] focus:outline-none focus:bg-white uppercase";
+  const plinth = "w-full bg-[#e5e2dd] border-b-2 border-[#324670] px-4 py-3 transition-all focus:border-[#324670] focus:outline-none focus:bg-white uppercase";
 
   const [formData, setFormData] = useState({
     mobile: '',
@@ -90,25 +90,25 @@ function LoginPage() {
   };
 
   return (
-    <div className="bg-[#fcf9f4] font-['Inter'] text-[#1c1c19] min-h-screen flex flex-col">
+    <div className="bg-[#f0f8ff] font-['Inter'] text-[#1c1c19] min-h-screen flex flex-col">
       {/* ══ MOBILE ══════════════════════════════════════════════ */}
       <div className="md:hidden flex-grow pt-24 pb-12 px-6 flex flex-col items-center justify-center max-w-md mx-auto w-full">
         <div className="w-full space-y-10">
           <div className="space-y-2">
-            <h1 className="font-['Public_Sans'] text-[2rem] font-extrabold text-[#570013] tracking-tight leading-none">Candidate Login</h1>
-            <div className="w-12 h-1 bg-[#775a19]"></div>
-            <p className="text-[#584141] text-sm mt-4 font-medium italic">Access your editorial portal with institutional credentials.</p>
+            <h1 className="font-['Public_Sans'] text-[2rem] font-extrabold text-[#324670] tracking-tight leading-none">Candidate Login</h1>
+            <div className="w-12 h-1 bg-[#EC5A3B]"></div>
+            <p className="text-[#324670] text-sm mt-4 font-medium italic">Access your editorial portal with institutional credentials.</p>
           </div>
-          <section className="bg-[#f6f3ee] p-8 rounded-xl space-y-8">
+          <section className="bg-[#f0f8ff] p-8 rounded-xl space-y-8">
             {error && (
-              <div className="bg-[#ba1a1a] text-white p-4 rounded-lg text-sm font-medium">
+              <div className="bg-[#c80000] text-white p-4 rounded-lg text-sm font-medium">
                 {error}
               </div>
             )}
             <form className="space-y-6" onSubmit={handleLogin}>
               <div className="space-y-1.5">
-                <label className="font-['Inter'] text-xs font-semibold text-[#584141] tracking-wider uppercase flex items-center">
-                  Mobile Number <span className="text-[#ba1a1a] ml-1">*</span>
+                <label className="font-['Inter'] text-xs font-semibold text-[#324670] tracking-wider uppercase flex items-center">
+                  Mobile Number <span className="text-[#c80000] ml-1">*</span>
                 </label>
                 <input
                   name="mobile"
@@ -122,8 +122,8 @@ function LoginPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="font-['Inter'] text-xs font-semibold text-[#584141] tracking-wider uppercase flex items-center">
-                  Password <span className="text-[#ba1a1a] ml-1">*</span>
+                <label className="font-['Inter'] text-xs font-semibold text-[#324670] tracking-wider uppercase flex items-center">
+                  Password <span className="text-[#c80000] ml-1">*</span>
                 </label>
                 <input
                   name="password"
@@ -137,18 +137,18 @@ function LoginPage() {
               </div>
               <button 
                 disabled={loading}
-                className="w-full bg-[#570013] text-white py-5 rounded-lg font-['Public_Sans'] font-bold text-sm tracking-widest shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#324670] text-white py-5 rounded-lg font-['Public_Sans'] font-bold text-sm tracking-widest shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
               >
                 {loading ? 'LOGGING IN...' : 'LOGIN'}
               </button>
             </form>
             <div className="flex justify-center items-center gap-4 pt-2">
-              <Link to="/registration" className="text-xs font-bold text-[#8e0f28] border-b border-[#775a19] hover:text-[#570013] transition-colors">
+              <Link to="/registration" className="text-xs font-bold text-[#0172b9] border-b border-[#EC5A3B] hover:text-[#324670] transition-colors">
                 BACK TO REGISTRATION
               </Link>
-              <span className="text-[#8c7071]">•</span>
-              <Link to="/forgot-password" className="text-xs font-bold text-[#8e0f28] border-b border-[#775a19] hover:text-[#570013] transition-colors">
+              <span className="text-[#324670]">•</span>
+              <Link to="/forgot-password" className="text-xs font-bold text-[#0172b9] border-b border-[#EC5A3B] hover:text-[#324670] transition-colors">
                 FORGOT PASSWORD?
               </Link>
             </div>
@@ -163,17 +163,17 @@ function LoginPage() {
           <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-6">
               <div className="space-y-2">
-                <p className="text-[#775a19] font-semibold uppercase tracking-widest text-xs">Access Portal</p>
-                <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#570013] leading-tight tracking-tighter">Candidate Login</h1>
-                <div className="h-1 w-20 bg-[#775a19] mt-4"></div>
+                <p className="text-[#EC5A3B] font-semibold uppercase tracking-widest text-xs">Access Portal</p>
+                <h1 className="text-5xl font-['Public_Sans'] font-extrabold text-[#324670] leading-tight tracking-tighter">Candidate Login</h1>
+                <div className="h-1 w-20 bg-[#EC5A3B] mt-4"></div>
               </div>
-              <p className="text-[#584141] leading-relaxed text-sm">Secure access to your national examination dashboard.</p>
-              <div className="p-6 bg-[#f6f3ee] rounded-lg space-y-4">
+              <p className="text-[#324670] leading-relaxed text-sm">Secure access to your national examination dashboard.</p>
+              <div className="p-6 bg-[#f0f8ff] rounded-lg space-y-4">
                 <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-[#775a19]">security</span>
+                  <span className="material-symbols-outlined text-[#EC5A3B]">security</span>
                   <div>
                     <p className="font-medium text-sm">Secure Authentication</p>
-                    <p className="text-xs text-[#584141]">Multi-factor authentication enabled.</p>
+                    <p className="text-xs text-[#324670]">Multi-factor authentication enabled.</p>
                   </div>
                 </div>
               </div>
@@ -181,18 +181,18 @@ function LoginPage() {
             <div className="lg:col-span-7 bg-white p-10 shadow-sm rounded-xl">
               <form className="space-y-8" onSubmit={handleLogin}>
                 {error && (
-                  <div className="bg-[#ba1a1a] text-white p-4 rounded-lg text-sm font-medium">
+                  <div className="bg-[#c80000] text-white p-4 rounded-lg text-sm font-medium">
                     {error}
                   </div>
                 )}
                 <div className="space-y-6">
                   <div className="flex flex-col gap-2">
-                    <label className="font-['Inter'] text-sm font-medium text-[#584141]">MOBILE NUMBER <span className="text-[#ba1a1a]">*</span></label>
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">MOBILE NUMBER <span className="text-[#c80000]">*</span></label>
                     <input
                       name="mobile"
                       value={formData.mobile}
                       onChange={handleChange}
-                      className="border-b-2 border-[#8c707133] focus:border-[#570013] focus:outline-none transition-colors py-3 px-4 uppercase font-bold text-[#570013] tracking-widest w-full bg-[#ebe8e3]"
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 uppercase font-bold text-[#324670] tracking-widest w-full bg-[#e8f4ff]"
                       placeholder="ENTER 10 DIGIT NUMBER"
                       type="tel"
                       maxLength={10}
@@ -200,12 +200,12 @@ function LoginPage() {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="font-['Inter'] text-sm font-medium text-[#584141]">PASSWORD <span className="text-[#ba1a1a]">*</span></label>
+                    <label className="font-['Inter'] text-sm font-medium text-[#324670]">PASSWORD <span className="text-[#c80000]">*</span></label>
                     <input
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="border-b-2 border-[#8c707133] focus:border-[#570013] focus:outline-none transition-colors py-3 px-4 w-full bg-[#ebe8e3]"
+                      className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 w-full bg-[#e8f4ff]"
                       placeholder="ENTER YOUR PASSWORD"
                       type="password"
                       required
@@ -221,8 +221,8 @@ function LoginPage() {
                 </div>
               </form>
               <div className="mt-8 text-center space-y-3">
-                <p className="text-xs text-[#584141]">Don't have an account? <Link className="text-[#570013] font-semibold underline underline-offset-4 hover:text-[#775a19]" to="/registration">Register as New Candidate</Link></p>
-                <p className="text-xs text-[#584141]"><Link className="text-[#8e0f28] font-semibold underline underline-offset-4 hover:text-[#570013]" to="/forgot-password">Forgot Password?</Link></p>
+                <p className="text-xs text-[#324670]">Don't have an account? <Link className="text-[#324670] font-semibold underline underline-offset-4 hover:text-[#EC5A3B]" to="/registration">Register as New Candidate</Link></p>
+                <p className="text-xs text-[#324670]"><Link className="text-[#0172b9] font-semibold underline underline-offset-4 hover:text-[#324670]" to="/forgot-password">Forgot Password?</Link></p>
               </div>
             </div>
           </div>
@@ -235,3 +235,4 @@ function LoginPage() {
 
 
 export default LoginPage
+
