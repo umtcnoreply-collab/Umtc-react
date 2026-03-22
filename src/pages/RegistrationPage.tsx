@@ -219,7 +219,7 @@ function RegistrationPage() {
                       value={formData.mobile}
                       onChange={handleChange}
                       className="border-b-2 border-[#32467033] focus:border-[#324670] focus:outline-none transition-colors py-3 px-4 uppercase font-bold text-[#324670] tracking-widest w-full bg-[#f0f8ff]"
-                      placeholder="ENTER 10 DIGIT NUMBER"
+                      placeholder="ENTER MOBILE NUMBER"
                       type="tel"
                       maxLength={10}
                       required

@@ -201,6 +201,10 @@ function PreviewPage() {
           <section>
             <h2 className="font-['Public_Sans'] font-bold text-lg text-[#324670] tracking-wide mb-4 sticky top-20 bg-[#f0f8ff] py-2 z-10">Basic Details</h2>
             <div className="bg-[#f0f8ff] rounded-xl p-6 space-y-4 shadow-sm border border-[#e5e2dd]">
+              <div className="grid grid-cols-1 gap-1">
+                <label className="text-[10px] font-bold text-[#324670] uppercase tracking-wider">Post Applied For</label>
+                <p className="text-[#1c1c19] font-medium">{formData?.basicDetails?.postAppliedFor || 'N/A'}</p>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="text-[10px] font-bold text-[#324670] uppercase">Mother Name</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
                 <div><label className="text-[10px] font-bold text-[#324670] uppercase">Father Name</label><p className="text-[#1c1c19] font-medium text-sm">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
@@ -361,6 +365,7 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff] space-y-8">
                   <div className="grid grid-cols-2 gap-8">
+                    <div className="col-span-2"><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Post Applied For</label><p className="text-lg font-medium">{formData?.basicDetails?.postAppliedFor || 'N/A'}</p></div>
                     <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Mother Name</label><p className="text-base font-medium">{formData?.basicDetails?.motherName || 'N/A'}</p></div>
                     <div><label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold">Father Name</label><p className="text-base font-medium">{formData?.basicDetails?.fatherName || 'N/A'}</p></div>
                   </div>

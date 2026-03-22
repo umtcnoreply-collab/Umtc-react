@@ -201,7 +201,20 @@ function DocumentsPage() {
   // Auto-calculate percentage logic
 const handleQualChange = (level: QualLevel, field: QualField, value: string | File | null) => {
       setQualifications((prev) => {
-      const updatedLevel = { ...prev[level], [field]: value };
+      let processedValue = value;
+
+      // Enforce numeric-only for year and roll
+      if ((field === 'year' || field === 'roll') && typeof value === 'string') {
+        processedValue = value.replace(/\D/g, '');
+      }
+
+      // Cap passing year at 2026
+      if (field === 'year' && typeof processedValue === 'string' && processedValue.length === 4) {
+        const yearNum = parseInt(processedValue, 10);
+        if (yearNum > 2026) processedValue = '2026';
+      }
+
+      const updatedLevel = { ...prev[level], [field]: processedValue };
 
       // Auto-calculate if marks or total changes
       if (field === 'marks' || field === 'total') {
@@ -317,7 +330,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
         <td className="p-2">
           {level === 'tenth' || level === 'twelfth' ? (
             <select className={`${inputClass} appearance-none`} value={data.board} onChange={(e) => handleQualChange(level, 'board', e.target.value)} required={isRequired}>
-              <option value="">Select {level === 'tenth' ? 'Board' : 'University'}</option>
+              <option value="">Select {level === 'tenth' ? 'Board' : 'Board'}</option>
               {level === 'tenth' ? (
                 <>
                   <option value="CBSE">CBSE</option>
@@ -326,9 +339,9 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                 </>
               ) : (
                 <>
-                  <option value="Delhi University">Delhi University</option>
-                  <option value="JNU">JNU</option>
-                  <option value="Other Universities">Other Universities</option>
+                  <option value="CBSE">CBSE</option>
+                  <option value="ICSE">ICSE</option>
+                  <option value="State Board">State Board</option>
                 </>
               )}
             </select>
@@ -336,8 +349,8 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
             <input className={inputClass} type="text" placeholder="Institution/Board" value={data.board} onChange={(e) => handleQualChange(level, 'board', e.target.value)} required={isRequired} />
           )}
         </td>
-        <td className="p-2 w-[17%]"><input className={inputClass} type="text" placeholder="YYYY" maxLength={4} value={data.year} onChange={(e) => handleQualChange(level, 'year', e.target.value)} required={isRequired} /></td>
-        <td className="p-2 w-[15%]"><input className={inputClass} type="text" placeholder="Roll No" value={data.roll} onChange={(e) => handleQualChange(level, 'roll', e.target.value)} required={isRequired} /></td>
+        <td className="p-2 w-[17%]"><input className={inputClass} type="text" placeholder="YYYY" maxLength={4} inputMode="numeric" pattern="\d{4}" max={2026} value={data.year} onChange={(e) => handleQualChange(level, 'year', e.target.value)} required={isRequired} /></td>
+        <td className="p-2 w-[15%]"><input className={inputClass} type="text" placeholder="Roll No" inputMode="numeric" value={data.roll} onChange={(e) => handleQualChange(level, 'roll', e.target.value)} required={isRequired} /></td>
         <td className="p-2 w-[11%]"><input className={inputClass} type="number" placeholder="0" value={data.marks} onChange={(e) => handleQualChange(level, 'marks', e.target.value)} required={isRequired} /></td>
         <td className="p-2 w-[11%]"><input className={inputClass} type="number" placeholder="0" value={data.total} onChange={(e) => handleQualChange(level, 'total', e.target.value)} required={isRequired} /></td>
         <td className="p-2 w-[11%]"><input className={`${inputClass} bg-stone-200 cursor-not-allowed font-bold text-center`} type="text" placeholder="%" value={data.percentage} readOnly /></td>
@@ -400,8 +413,8 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
             )}
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div><label className={labelClass}>Passing Year</label><input className={inputClass} type="text" maxLength={4} value={data.year} onChange={(e) => handleQualChange(level, 'year', e.target.value)} required={isRequired} /></div>
-            <div><label className={labelClass}>Roll Number</label><input className={inputClass} type="text" value={data.roll} onChange={(e) => handleQualChange(level, 'roll', e.target.value)} required={isRequired} /></div>
+            <div><label className={labelClass}>Passing Year</label><input className={inputClass} type="text" maxLength={4} inputMode="numeric" pattern="\d{4}" max={2026} value={data.year} onChange={(e) => handleQualChange(level, 'year', e.target.value)} required={isRequired} /></div>
+            <div><label className={labelClass}>Roll Number</label><input className={inputClass} type="text" inputMode="numeric" value={data.roll} onChange={(e) => handleQualChange(level, 'roll', e.target.value)} required={isRequired} /></div>
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div><label className={labelClass}>Obtained</label><input className={inputClass} type="number" value={data.marks} onChange={(e) => handleQualChange(level, 'marks', e.target.value)} required={isRequired} /></div>

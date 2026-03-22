@@ -227,7 +227,7 @@ function AppContent() {
 
 export default function App() {
   return (
-    <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
+    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}>
       <Router basename="/career/registration">
         <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-[#f0f8ff] text-[#324670] selection:bg-[#9fcb54] selection:text-white">

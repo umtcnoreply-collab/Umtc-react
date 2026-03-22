@@ -19,6 +19,17 @@ function BasicDetailsPage() {
   const radioLabelClass = "flex items-center gap-2 cursor-pointer text-sm font-medium text-[#1c1c19]";
   const radioInputClass = "w-4 h-4 accent-[#324670]";
 
+  const indianStates = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
+    "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+    "Uttar Pradesh", "Uttarakhand", "West Bengal",
+    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+  ];
+
   // State for Address Auto-fill Logic
   const [isSameAddress, setIsSameAddress] = useState(false);
   const [permanentAddr, setPermanentAddr] = useState({
@@ -30,6 +41,7 @@ function BasicDetailsPage() {
 
   // State for form data
   const [formData, setFormData] = useState({
+    postAppliedFor: '',
     motherName: '',
     fatherName: '',
     debarred: '',
@@ -75,6 +87,7 @@ function BasicDetailsPage() {
         // Pre-fill form data
         if (data.basicDetails) {
           setFormData({
+            postAppliedFor: data.basicDetails.postAppliedFor || '',
             motherName: data.basicDetails.motherName || '',
             fatherName: data.basicDetails.fatherName || '',
             debarred: data.basicDetails.debarred ? 'yes' : 'no',
@@ -137,18 +150,34 @@ function BasicDetailsPage() {
 
   const handlePermChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    if (name === 'pincode') {
+      const numericValue = value.replace(/\D/g, '');
+      setPermanentAddr(prev => ({ ...prev, [name]: numericValue }));
+      return;
+    }
     setPermanentAddr(prev => ({ ...prev, [name]: value }));
   };
 
   const handleCorrChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (!isSameAddress) {
+      if (name === 'pincode') {
+        const numericValue = value.replace(/\D/g, '');
+        setCorrespondenceAddr(prev => ({ ...prev, [name]: numericValue }));
+        return;
+      }
       setCorrespondenceAddr(prev => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFormChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    if (name === 'aadhar') {
+      const numericValue = value.replace(/\D/g, '');
+      setFormData(prev => ({ ...prev, [name]: numericValue }));
+      setError('');
+      return;
+    }
     setFormData(prev => ({ ...prev, [name]: value }));
     setError('');
   };
@@ -160,6 +189,7 @@ function BasicDetailsPage() {
 
     try {
       const payload = {
+        postAppliedFor: formData.postAppliedFor,
         motherName: formData.motherName,
         fatherName: formData.fatherName,
         debarred: formData.debarred === 'yes',
@@ -239,7 +269,20 @@ function BasicDetailsPage() {
                 {error}
               </div>
             )}
-            <h3 className="text-lg font-['Public_Sans'] font-bold text-[#324670] border-b border-[#32467033] pb-2">Family Details</h3>
+            <h3 className="text-lg font-['Public_Sans'] font-bold text-[#324670] border-b border-[#32467033] pb-2">Post Details</h3>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className={labelClass}>Post Applied For <span className="text-[#c80000] ml-1">**</span></label>
+                <select name="postAppliedFor" value={formData.postAppliedFor} onChange={handleFormChange} className={`${inputClass} appearance-none`} required>
+                  <option value="">Select Post</option>
+                  <option value="UDC">UDC</option>
+                  <option value="Office Assistant">Office Assistant</option>
+                  <option value="MTS">MTS</option>
+                </select>
+              </div>
+            </div>
+
+            <h3 className="text-lg font-['Public_Sans'] font-bold text-[#324670] border-b border-[#32467033] pb-2 pt-4">Family Details</h3>
             <div className="space-y-6">
               <div className="space-y-2"><label className={labelClass}>Mother Name <span className="text-[#c80000] ml-1">**</span></label><input name="motherName" value={formData.motherName} onChange={handleFormChange} className={inputClass} type="text" placeholder="Enter full name" required /></div>
               <div className="space-y-2"><label className={labelClass}>Father Name <span className="text-[#c80000] ml-1">**</span></label><input name="fatherName" value={formData.fatherName} onChange={handleFormChange} className={inputClass} type="text" placeholder="Enter full name" required /></div>
@@ -258,8 +301,8 @@ function BasicDetailsPage() {
             <div className="space-y-6">
               <div className="space-y-2"><label className={labelClass}>Address <span className="text-[#c80000] ml-1">**</span></label><input name="address" value={permanentAddr.address} className={inputClass} placeholder="Enter full address" onChange={handlePermChange} required /></div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2"><label className={labelClass}>Pin code <span className="text-[#c80000] ml-1">*</span></label><input name="pincode" value={permanentAddr.pincode} className={inputClass} placeholder="6-Digits" maxLength={6} pattern="\d{6}" onChange={handlePermChange} required /></div>
-                <div className="space-y-2"><label className={labelClass}>State <span className="text-[#c80000] ml-1">*</span></label><select name="state" value={permanentAddr.state} className={`${inputClass} appearance-none`} onChange={handlePermChange} required><option value="">Select</option><option value="Delhi">Delhi</option></select></div>
+                <div className="space-y-2"><label className={labelClass}>Pin code <span className="text-[#c80000] ml-1">*</span></label><input name="pincode" value={permanentAddr.pincode} className={inputClass} placeholder="6-Digits" maxLength={6} pattern="\d{6}" inputMode="numeric" onChange={handlePermChange} required /></div>
+                <div className="space-y-2"><label className={labelClass}>State <span className="text-[#c80000] ml-1">*</span></label><select name="state" value={permanentAddr.state} className={`${inputClass} appearance-none`} onChange={handlePermChange} required><option value="">Select</option>{indianStates.map(s => <option key={s} value={s}>{s}</option>)}</select></div>
               </div>
               <div className="space-y-2"><label className={labelClass}>District <span className="text-[#c80000] ml-1">*</span></label><input name="district" value={permanentAddr.district} className={inputClass} placeholder="Enter District" onChange={handlePermChange} required /></div>
               <div className="grid grid-cols-2 gap-4">
@@ -278,8 +321,8 @@ function BasicDetailsPage() {
                 <div className="space-y-6">
                   <input name="address" placeholder="Address" className={inputClass} value={correspondenceAddr.address} onChange={handleCorrChange} required />
                   <div className="grid grid-cols-2 gap-4">
-                    <input name="pincode" placeholder="Pin code" className={inputClass} value={correspondenceAddr.pincode} onChange={handleCorrChange} required />
-                    <input name="state" placeholder="State" className={inputClass} value={correspondenceAddr.state} onChange={handleCorrChange} required />
+                    <input name="pincode" placeholder="Pin code" className={inputClass} value={correspondenceAddr.pincode} inputMode="numeric" maxLength={6} pattern="\d{6}" onChange={handleCorrChange} required />
+                    <select name="state" className={`${inputClass} appearance-none`} value={correspondenceAddr.state} onChange={handleCorrChange} required><option value="">Select</option>{indianStates.map(s => <option key={s} value={s}>{s}</option>)}</select>
                   </div>
                 </div>
               )}
@@ -289,7 +332,7 @@ function BasicDetailsPage() {
           <div className="bg-[#e8f4ff] p-6 rounded-2xl shadow-sm border border-white/50 space-y-8">
             <h3 className="text-lg font-['Public_Sans'] font-bold text-[#324670] border-b border-[#32467033] pb-2">Identification</h3>
             <div className="space-y-6">
-              <div className="space-y-2"><label className={labelClass}>Aadhar Card Number</label><input name="aadhar" value={formData.aadhar} onChange={handleFormChange} className={inputClass} placeholder="12-Digits (Optional)" maxLength={12} pattern="\d{12}" /></div>
+              <div className="space-y-2"><label className={labelClass}>Aadhar Card Number</label><input name="aadhar" value={formData.aadhar} onChange={handleFormChange} className={inputClass} placeholder="Enter Aadhar Number" maxLength={12} pattern="\d{12}" inputMode="numeric" /></div>
               <div className="space-y-4">
                 <label className={labelClass}>Visible Identification Marks</label>
                 <input name="mark1" value={formData.mark1} onChange={handleFormChange} className={inputClass} placeholder="Mark 1" />
@@ -325,6 +368,28 @@ function BasicDetailsPage() {
 
             <form className="space-y-16" onSubmit={handleSubmit}>
               
+              {/* 0. POST APPLIED FOR SECTION */}
+              <section className="grid grid-cols-[1fr_2fr] gap-16">
+                <div className="space-y-6">
+                  <div className="sticky top-24">
+                    <h3 className="font-['Public_Sans'] text-xl font-bold text-[#324670] mb-4">Post Details</h3>
+                    <p className="text-[#324670] leading-relaxed text-sm">Select the post you are applying for.</p>
+                  </div>
+                </div>
+                
+                <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
+                  <div className="space-y-2">
+                    <label className={labelClass}>Post Applied For <span className="text-[#c80000] ml-1">**</span></label>
+                    <select name="postAppliedFor" value={formData.postAppliedFor} onChange={handleFormChange} className={`${inputClass} appearance-none`} required>
+                      <option value="">SELECT POST</option>
+                      <option value="UDC">UDC</option>
+                      <option value="Office Assistant">OFFICE ASSISTANT</option>
+                      <option value="MTS">MTS</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+
               {/* 1. FAMILY & BACKGROUND SECTION */}
               <section className="grid grid-cols-[1fr_2fr] gap-16">
                 <div className="space-y-6">
@@ -399,14 +464,13 @@ function BasicDetailsPage() {
                   <div className="grid grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className={labelClass}>Pin code <span className="text-[#c80000] ml-1">*</span></label>
-                      <input name="pincode" value={permanentAddr.pincode} className={inputClass} placeholder="6-DIGIT NUMERICAL" type="text" maxLength={6} pattern="\d{6}" onChange={handlePermChange} required />
+                      <input name="pincode" value={permanentAddr.pincode} className={inputClass} placeholder="ENTER PIN CODE" type="text" maxLength={6} pattern="\d{6}" inputMode="numeric" onChange={handlePermChange} required />
                     </div>
                     <div className="space-y-2">
                       <label className={labelClass}>State <span className="text-[#c80000] ml-1">*</span></label>
                       <select name="state" value={permanentAddr.state} className={`${inputClass} appearance-none`} onChange={handlePermChange} required>
                         <option value="">SELECT STATE</option>
-                        <option value="Delhi">DELHI</option>
-                        <option value="Maharashtra">MAHARASHTRA</option>
+                        {indianStates.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
                       </select>
                     </div>
                   </div>
@@ -442,11 +506,14 @@ function BasicDetailsPage() {
                       <div className="grid grid-cols-2 gap-8">
                         <div className="space-y-2">
                           <label className={labelClass}>Pin code <span className="text-[#c80000] ml-1">*</span></label>
-                          <input name="pincode" className={inputClass} placeholder="6-DIGIT NUMERICAL" value={correspondenceAddr.pincode} onChange={handleCorrChange} required={!isSameAddress} />
+                          <input name="pincode" className={inputClass} placeholder="ENTER PIN CODE" inputMode="numeric" maxLength={6} pattern="\d{6}" value={correspondenceAddr.pincode} onChange={handleCorrChange} required={!isSameAddress} />
                         </div>
                         <div className="space-y-2">
                           <label className={labelClass}>State <span className="text-[#c80000] ml-1">*</span></label>
-                          <input name="state" className={inputClass} placeholder="STATE" value={correspondenceAddr.state} onChange={handleCorrChange} required={!isSameAddress} />
+                          <select name="state" className={`${inputClass} appearance-none`} value={correspondenceAddr.state} onChange={handleCorrChange} required={!isSameAddress}>
+                            <option value="">SELECT STATE</option>
+                            {indianStates.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -466,7 +533,7 @@ function BasicDetailsPage() {
                 <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
                   <div className="space-y-2">
                     <label className={labelClass}>Aadhar Card Number</label>
-                    <input name="aadhar" value={formData.aadhar} onChange={handleFormChange} className={inputClass} type="text" maxLength={12} pattern="\d{12}" placeholder="12-DIGIT NUMERICAL" />
+                    <input name="aadhar" value={formData.aadhar} onChange={handleFormChange} className={inputClass} type="text" maxLength={12} pattern="\d{12}" inputMode="numeric" placeholder="ENTER AADHAR NUMBER" />
                   </div>
 
                   <div className="space-y-2">
