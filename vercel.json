@@ -3,7 +3,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/career/registration/(.*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
