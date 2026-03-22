@@ -131,7 +131,7 @@ function PreviewPage() {
           <p className="text-sm text-[#324670] mb-6">{error || 'Unable to fetch your application data. Please try again.'}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="px-6 py-2 bg-[#324670] text-white rounded-lg font-semibold hover:bg-[#800020] transition-all"
+            className="px-6 py-2 bg-[#324670] text-white rounded-lg font-semibold hover:bg-[#EC5A3B] transition-all"
           >
             Reload Page
           </button>
@@ -516,7 +516,7 @@ function PreviewPage() {
               {/* Action Buttons */}
               <div className="pt-8 border-t border-[#e8f4ff] flex flex-col md:flex-row items-center justify-end gap-6">
                 <button onClick={() => navigate("/basic-details")} className="w-full md:w-auto px-8 py-3 rounded-lg bg-[#e8f4ff] text-[#1c1c19] font-bold hover:bg-[#dcdad5] transition-all">Edit Application</button>
-                <button onClick={() => setShowModal(true)} className="w-full md:w-auto px-10 py-4 rounded-lg bg-[#324670] text-white font-bold shadow-lg hover:bg-[#800020] transition-all flex items-center justify-center">
+                <button onClick={() => setShowModal(true)} className="w-full md:w-auto px-10 py-4 rounded-lg bg-[#324670] text-white font-bold shadow-lg hover:bg-[#EC5A3B] transition-all flex items-center justify-center">
                   Submit Final Application <span className="material-symbols-outlined ml-2">send</span>
                 </button>
               </div>
@@ -569,3 +569,4 @@ function PreviewPage() {
 }
 
 export default PreviewPage;
+

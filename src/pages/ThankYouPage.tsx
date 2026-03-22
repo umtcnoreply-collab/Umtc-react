@@ -189,7 +189,7 @@ function ThankYouPage() {
             <button
               onClick={handleDownloadPDF}
               disabled={downloading}
-              className="px-12 py-4 rounded-xl bg-[#324670] text-white font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:bg-[#800020] transition-all"
+              className="px-12 py-4 rounded-xl bg-[#324670] text-white font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:bg-[#EC5A3B] transition-all"
             >
               <span className="material-symbols-outlined text-xl">
                 {downloading ? 'hourglass_bottom' : 'download'}
@@ -217,4 +217,5 @@ function ThankYouPage() {
 }
 
 export default ThankYouPage;
+
 

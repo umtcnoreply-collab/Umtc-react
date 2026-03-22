@@ -213,7 +213,7 @@ function LoginPage() {
                   </div>
                   <button
                     disabled={loading}
-                    className="w-full bg-[#800020] text-white py-4 font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 group shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#EC5A3B] text-white py-4 font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 group shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     type="submit"
                   >
                     {loading ? 'LOGGING IN...' : 'LOGIN'} <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
@@ -235,4 +235,5 @@ function LoginPage() {
 
 
 export default LoginPage
+
 

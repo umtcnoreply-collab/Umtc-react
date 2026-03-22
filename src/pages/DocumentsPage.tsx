@@ -359,7 +359,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
   const renderMobileCard = (level: QualLevel, label: string, isRequired: boolean) => {
     const data = qualifications[level];
     return (
-      <div className="bg-[#f0ede8] p-5 rounded-xl border border-white/50 space-y-4 shadow-sm">
+      <div className="bg-[#e8f4ff] p-5 rounded-xl border border-white/50 space-y-4 shadow-sm">
         <h4 className="font-['Public_Sans'] font-bold text-[#324670] border-b border-[#32467033] pb-2 mb-4">
           {level === 'other' ? <input className={inputClass} placeholder="Other Qualification (Optional)" value={data.name} onChange={(e) => handleQualChange(level, 'name', e.target.value)} /> : <>{label} {isRequired && <span className="text-[#c80000]">*</span>}</>}
         </h4>
@@ -445,7 +445,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
           {/* MEDIA UPLOADS */}
           <section className="space-y-6">
             <h3 className="text-xl font-['Public_Sans'] font-bold text-[#324670] border-l-4 border-[#EC5A3B] pl-3">Media Uploads</h3>
-            <div className="bg-[#f0ede8] p-6 rounded-2xl shadow-sm border border-white/50 space-y-6">
+            <div className="bg-[#e8f4ff] p-6 rounded-2xl shadow-sm border border-white/50 space-y-6">
               <div className="space-y-3">
                 <label className="text-sm font-bold text-[#1c1c19] block">Recent Photograph <span className="text-[#c80000]">*</span></label>
                 {photoPreview ? (
@@ -611,7 +611,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                   </div>
                 </div>
 
-                <div className="bg-[#f0ede8] p-10 rounded-2xl shadow-sm border border-white/50 flex gap-12">
+                <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50 flex gap-12">
 
                   {/* Photo Upload */}
                   <div className="flex-1 space-y-4">
@@ -711,7 +711,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                   </div>
                 </div>
 
-                <div className="bg-[#f0ede8] p-6 rounded-2xl shadow-sm border border-white/50 overflow-x-auto">
+                <div className="bg-[#e8f4ff] p-6 rounded-2xl shadow-sm border border-white/50 overflow-x-auto">
                   <table className="w-full text-left border-collapse min-w-[1000px]">
                     <thead>
                       <tr className="bg-[#e5e2dd] border-b-2 border-[#324670]">
@@ -743,7 +743,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                   </div>
                 )}
                 <button 
-                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#800020] transition-all flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed" 
+                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#EC5A3B] transition-all flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed" 
                   type="submit"
                   disabled={loading}
                 >
@@ -761,3 +761,4 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
 }
 
 export default DocumentsPage;
+

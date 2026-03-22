@@ -99,7 +99,7 @@ function ProfilePage() {
         {profile && (
           <div className="space-y-6">
             {/* Hero Card */}
-            <div className="bg-gradient-to-br from-[#324670] to-[#800020] text-white rounded-xl p-6 shadow-lg">
+            <div className="bg-gradient-to-br from-[#324670] to-[#EC5A3B] text-white rounded-xl p-6 shadow-lg">
               <p className="text-xs uppercase tracking-widest opacity-80 mb-2">Candidate Name</p>
               <h2 className="text-2xl font-['Public_Sans'] font-bold mb-4">{profile.candidateName}</h2>
               <div className="space-y-2">
@@ -126,7 +126,7 @@ function ProfilePage() {
 
             {/* Info Cards */}
             <div className="space-y-4">
-              <div className="bg-[#f0ede8] rounded-lg p-4 border border-[#e8f4ff]">
+              <div className="bg-[#e8f4ff] rounded-lg p-4 border border-[#e8f4ff]">
                 <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-2">Basic Info</p>
                 <div className="space-y-2">
                   <p className="text-sm"><span className="font-semibold">DOB:</span> {profile.dob ? new Date(profile.dob).toLocaleDateString() : 'N/A'}</p>
@@ -135,7 +135,7 @@ function ProfilePage() {
                 </div>
               </div>
 
-              <div className="bg-[#f0ede8] rounded-lg p-4 border border-[#e8f4ff]">
+              <div className="bg-[#e8f4ff] rounded-lg p-4 border border-[#e8f4ff]">
                 <p className="text-xs uppercase tracking-widest text-[#EC5A3B] font-bold mb-2">Address</p>
                 <div className="space-y-2">
                   <p className="text-sm"><span className="font-semibold">City:</span> {profile.address?.permanentAddress?.city || 'N/A'}</p>
@@ -201,7 +201,7 @@ function ProfilePage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {/* Profile Card */}
                   <div className="lg:col-span-1">
-                    <div className="bg-gradient-to-br from-[#324670] to-[#800020] text-white rounded-2xl p-8 shadow-lg h-full flex flex-col justify-between">
+                    <div className="bg-gradient-to-br from-[#324670] to-[#EC5A3B] text-white rounded-2xl p-8 shadow-lg h-full flex flex-col justify-between">
                       <div>
                         <p className="text-xs uppercase tracking-widest opacity-80 mb-4">Candidate Profile</p>
                         <h2 className="text-4xl font-['Public_Sans'] font-black mb-6">{profile.candidateName}</h2>
@@ -324,7 +324,7 @@ function ProfilePage() {
                 <div className="flex gap-6 pt-8 border-t border-[#e8f4ff]">
                   <button
                     onClick={() => navigate('/preview')}
-                    className="px-10 py-4 bg-[#324670] text-white rounded-lg font-bold hover:bg-[#800020] transition-all flex items-center gap-2"
+                    className="px-10 py-4 bg-[#324670] text-white rounded-lg font-bold hover:bg-[#EC5A3B] transition-all flex items-center gap-2"
                   >
                     <span className="material-symbols-outlined">visibility</span>
                     View Full Application
@@ -348,4 +348,5 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+
 

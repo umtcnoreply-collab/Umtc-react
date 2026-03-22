@@ -223,7 +223,7 @@ function RegistrationPage() {
                 </div>
               </div>
 
-              <div className="bg-[#f0ede8] p-10 rounded-2xl shadow-sm border border-white/50">
+              <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50">
                 <form className="space-y-10" onSubmit={handleFormSubmit}>
                   {/* Fields in requested order */}
                   <div className="space-y-2">
@@ -281,7 +281,7 @@ function RegistrationPage() {
                     </div>
                   </div>
 
-                  <div className="p-6 bg-[#f0ede8] rounded-xl border-l-4 border-[#EC5A3B]">
+                  <div className="p-6 bg-[#e8f4ff] rounded-xl border-l-4 border-[#EC5A3B]">
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-[#324670] text-2xl flex-shrink-0">verified</span>
                       <div>
@@ -298,7 +298,7 @@ function RegistrationPage() {
                   )}
 
                   <div className="pt-6">
-                    <button disabled={loading} className="w-full bg-[#324670] text-white py-5 px-8 rounded-lg font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#800020] transition-all flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
+                    <button disabled={loading} className="w-full bg-[#324670] text-white py-5 px-8 rounded-lg font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#EC5A3B] transition-all flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
                       {loading ? (
                         <>
                           <span className="material-symbols-outlined animate-spin">hourglass_bottom</span>
@@ -326,3 +326,4 @@ function RegistrationPage() {
 }
 
 export default RegistrationPage;
+

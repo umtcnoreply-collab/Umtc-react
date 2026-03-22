@@ -286,7 +286,7 @@ function OTPPage() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <button onClick={handleVerifyOtp} className="w-full bg-[#324670] hover:bg-[#800020] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-sm active:scale-[0.98] transition-all">
+              <button onClick={handleVerifyOtp} className="w-full bg-[#324670] hover:bg-[#EC5A3B] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-sm active:scale-[0.98] transition-all">
                 {resetMode ? 'Submit OTP & Reset Password' : 'Submit OTP & Finalize Registration'}
               </button>
               <button 
@@ -310,7 +310,7 @@ function OTPPage() {
           </>
         )}
         {isVerified && (
-          <div className="mt-8 space-y-6 p-6 bg-[#f0ede8] rounded-xl border border-[#e5e2dd]">
+          <div className="mt-8 space-y-6 p-6 bg-[#e8f4ff] rounded-xl border border-[#e5e2dd]">
             <h3 className="font-['Public_Sans'] font-bold text-lg text-[#324670] mb-6">
               {resetMode ? 'Set New Password' : 'Create Your Password'}
             </h3>
@@ -370,7 +370,7 @@ function OTPPage() {
 
             <button
               onClick={handleSetPassword}
-              className="w-full bg-[#324670] hover:bg-[#800020] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full bg-[#324670] hover:bg-[#EC5A3B] text-white py-4 px-6 rounded-xl font-['Public_Sans'] font-bold text-sm tracking-wide shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined text-sm">lock</span>
               Set Password & Continue
@@ -391,7 +391,7 @@ function OTPPage() {
       <div className="hidden md:flex flex-col flex-grow">
         <main className="flex-grow flex items-center justify-center px-4 py-12 bg-stone-100">
           <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-12 gap-0 bg-white overflow-hidden shadow-2xl rounded-xl">
-            <div className="md:col-span-5 bg-[#800020] p-10 text-white flex flex-col justify-between relative overflow-hidden">
+            <div className="md:col-span-5 bg-[#EC5A3B] p-10 text-white flex flex-col justify-between relative overflow-hidden">
               <div className="z-10">
                 <span className="text-[#fed488] font-['Public_Sans'] font-bold tracking-widest uppercase text-xs">
                   {resetMode ? 'Password Recovery' : 'Security Protocol'}
@@ -443,7 +443,7 @@ function OTPPage() {
                 <button onClick={handleVerifyOtp}   className={`w-full py-4 px-6 rounded-xl font-bold text-sm transition-all
     ${isVerified 
       ? 'hidden' 
-      : 'bg-[#324670] hover:bg-[#800020] text-white'}`} type="submit">
+      : 'bg-[#324670] hover:bg-[#EC5A3B] text-white'}`} type="submit">
                   {resetMode ? 'Submit OTP & Reset Password' : 'Submit OTP & Finalize Registration'}
                 </button>
                 {!isVerified && (
@@ -539,7 +539,7 @@ function OTPPage() {
 
             <button
               onClick={handleSetPassword}
-              className="w-full bg-[#324670] hover:bg-[#800020] text-white py-5 px-8 rounded-lg font-bold text-sm uppercase tracking-widest shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full bg-[#324670] hover:bg-[#EC5A3B] text-white py-5 px-8 rounded-lg font-bold text-sm uppercase tracking-widest shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined">lock</span>
               Set Password & Continue
@@ -556,4 +556,5 @@ function OTPPage() {
   );
 };
 export default OTPPage
+
 

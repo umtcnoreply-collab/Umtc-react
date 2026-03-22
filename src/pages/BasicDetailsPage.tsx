@@ -227,7 +227,7 @@ function BasicDetailsPage() {
 
         <form className="space-y-10" onSubmit={handleSubmit}>
           
-          <div className="bg-[#f0ede8] p-6 rounded-2xl shadow-sm border border-white/50 space-y-8">
+          <div className="bg-[#e8f4ff] p-6 rounded-2xl shadow-sm border border-white/50 space-y-8">
             {error && (
               <div className="bg-[#c80000] text-white p-4 rounded-lg text-sm font-medium">
                 {error}
@@ -247,7 +247,7 @@ function BasicDetailsPage() {
             </div>
           </div>
 
-          <div className="bg-[#f0ede8] p-6 rounded-2xl shadow-sm border border-white/50 space-y-8">
+          <div className="bg-[#e8f4ff] p-6 rounded-2xl shadow-sm border border-white/50 space-y-8">
             <h3 className="text-lg font-['Public_Sans'] font-bold text-[#324670] border-b border-[#32467033] pb-2">Permanent Address</h3>
             <div className="space-y-6">
               <div className="space-y-2"><label className={labelClass}>Address <span className="text-[#c80000] ml-1">**</span></label><input name="address" value={permanentAddr.address} className={inputClass} placeholder="Enter full address" onChange={handlePermChange} required /></div>
@@ -280,7 +280,7 @@ function BasicDetailsPage() {
             </div>
           </div>
 
-          <div className="bg-[#f0ede8] p-6 rounded-2xl shadow-sm border border-white/50 space-y-8">
+          <div className="bg-[#e8f4ff] p-6 rounded-2xl shadow-sm border border-white/50 space-y-8">
             <h3 className="text-lg font-['Public_Sans'] font-bold text-[#324670] border-b border-[#32467033] pb-2">Identification</h3>
             <div className="space-y-6">
               <div className="space-y-2"><label className={labelClass}>Aadhar Card Number</label><input name="aadhar" value={formData.aadhar} onChange={handleFormChange} className={inputClass} placeholder="12-Digits (Optional)" maxLength={12} pattern="\d{12}" /></div>
@@ -362,7 +362,7 @@ function BasicDetailsPage() {
                   </div>
                 </div>
                 
-                <div className="bg-[#f0ede8] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
+                <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
                   {error && (
                     <div className="bg-[#c80000] text-white p-4 rounded-lg text-sm font-medium mb-6">
                       {error}
@@ -418,7 +418,7 @@ function BasicDetailsPage() {
                   </div>
                 </div>
                 
-                <div className="bg-[#f0ede8] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
+                <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
                   <div className="space-y-2">
                     <label className={labelClass}>Permanent Address <span className="text-[#c80000] ml-1">**</span></label>
                     <input name="address" value={permanentAddr.address} className={inputClass} placeholder="Enter full address" type="text" onChange={handlePermChange} required />
@@ -491,7 +491,7 @@ function BasicDetailsPage() {
                   </div>
                 </div>
                 
-                <div className="bg-[#f0ede8] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
+                <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
                   <div className="space-y-2">
                     <label className={labelClass}>Aadhar Card Number</label>
                     <input name="aadhar" value={formData.aadhar} onChange={handleFormChange} className={inputClass} type="text" maxLength={12} pattern="\d{12}" placeholder="12-DIGIT NUMERICAL" />
@@ -532,7 +532,7 @@ function BasicDetailsPage() {
                   </div>
                 </div>
                 
-                <div className="bg-[#f0ede8] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
+                <div className="bg-[#e8f4ff] p-10 rounded-2xl shadow-sm border border-white/50 space-y-10">
                   <div className="grid grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className={labelClass}>Confirm Mobile Number <span className="text-[#c80000] ml-1">*</span></label>
@@ -550,7 +550,7 @@ function BasicDetailsPage() {
               <div className="pt-6 border-t border-[#32467033] flex justify-end">
                 <button 
                   disabled={loading}
-                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#800020] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed" 
+                  className="bg-[#324670] text-white py-5 px-10 rounded-lg font-['Public_Sans'] font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-[#EC5A3B] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed" 
                   type="submit"
                 >
                   {loading ? 'Saving...' : 'Save & Next'} <span className="material-symbols-outlined">arrow_forward</span>
@@ -566,3 +566,4 @@ function BasicDetailsPage() {
 }
 
 export default BasicDetailsPage;
+
