@@ -206,7 +206,7 @@ function AppContent() {
 export default function App() {
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
-      <Router>
+      <Router basename="/career/registration">
         <div className="min-h-screen flex flex-col bg-[#fcf9f4] text-[#1c1c19] selection:bg-[#fed488]">
           <AppHeader />
           <AppContent />

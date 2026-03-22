@@ -1,8 +1,10 @@
 {
+  "buildCommand": "tsc -b && vite build",
+  "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "source": "/career/registration/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
