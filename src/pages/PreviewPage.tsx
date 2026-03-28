@@ -88,7 +88,7 @@ function PreviewPage() {
         }
 
         // Guard: Documents must be completed before accessing Preview
-        if (!data.documents || !data.documents.photoUrl || !data.documents.signatureUrl) {
+        if (!data.documents || !data.documents.photoUrl || !data.documents.signatureUrl || !data.documents.thumbUrl) {
           console.log('Documents not completed, redirecting to documents');
           navigate('/documents', { replace: true });
           return;
@@ -233,8 +233,8 @@ function PreviewPage() {
           <section>
             <h2 className="font-['Public_Sans'] font-bold text-lg text-[#324670] tracking-wide mb-4 sticky top-20 bg-[#f0f8ff] py-2 z-10">Uploaded Documents</h2>
             <div className="bg-[#f0f8ff] rounded-xl p-4 space-y-4 shadow-sm border border-[#e5e2dd]">
-              {/* Photo & Signature Images */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
+              {/* Photo, Signature & Thumb Images */}
+              <div className="grid grid-cols-3 gap-3 mb-4">
                 {formData?.documents?.photoUrl && (
                   <div className="flex flex-col items-center justify-center p-3 bg-[#f0f8ff] rounded-lg border border-[#e5e2dd]">
                     <img src={getFullUrl(formData.documents.photoUrl)} alt="Photograph" className="w-20 h-28 object-cover rounded mb-2 border border-[#e5e2dd]" />
@@ -246,6 +246,13 @@ function PreviewPage() {
                   <div className="flex flex-col items-center justify-center p-3 bg-[#f0f8ff] rounded-lg border border-[#e5e2dd]">
                     <img src={getFullUrl(formData.documents.signatureUrl)} alt="Signature" className="w-20 h-16 object-contain rounded mb-2 border border-[#e5e2dd]" />
                     <span className="text-xs font-medium text-[#324670] mb-1">Signature</span>
+                    <span className="material-symbols-outlined text-[#9fcb54] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                  </div>
+                )}
+                {formData?.documents?.thumbUrl && (
+                  <div className="flex flex-col items-center justify-center p-3 bg-[#f0f8ff] rounded-lg border border-[#e5e2dd]">
+                    <img src={getFullUrl(formData.documents.thumbUrl)} alt="Thumb Impression" className="w-20 h-16 object-contain rounded mb-2 border border-[#e5e2dd]" />
+                    <span className="text-xs font-medium text-[#324670] mb-1 text-center leading-tight">Thumb<br/>Impression</span>
                     <span className="material-symbols-outlined text-[#9fcb54] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                   </div>
                 )}
@@ -409,8 +416,8 @@ function PreviewPage() {
                 </div>
                 <div className="bg-[#f0f8ff] p-8 rounded-xl border border-[#e8f4ff]">
                   <div className="mb-8">
-                    <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Recent Photograph & Signature</label>
-                    <div className="grid grid-cols-2 gap-4">
+                    <label className="block text-[10px] uppercase tracking-widest text-[#9fcb54] font-bold mb-4">Recent Photograph, Signature & Thumb Impression</label>
+                    <div className="grid grid-cols-3 gap-4">
                       {formData?.documents?.photoUrl && (
                         <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
                           <img src={getFullUrl(formData.documents.photoUrl)} alt="Photograph" className="w-32 h-40 object-cover rounded mb-3 border border-[#e5e2dd]" />
@@ -422,6 +429,13 @@ function PreviewPage() {
                         <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
                           <img src={getFullUrl(formData.documents.signatureUrl)} alt="Signature" className="w-32 h-20 object-contain rounded mb-3 border border-[#e5e2dd]" />
                           <span className="text-xs font-medium text-[#324670]">Digital Signature</span>
+                          <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                        </div>
+                      )}
+                      {formData?.documents?.thumbUrl && (
+                        <div className="flex flex-col items-center justify-center p-6 bg-[#f0f8ff] rounded-lg border border-[#e8f4ff]">
+                          <img src={getFullUrl(formData.documents.thumbUrl)} alt="Thumb Impression" className="w-32 h-20 object-contain rounded mb-3 border border-[#e5e2dd]" />
+                          <span className="text-xs font-medium text-[#324670]">Thumb Impression</span>
                           <span className="material-symbols-outlined text-green-700 text-sm mt-1" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                         </div>
                       )}

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+// import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import type { RootState } from "./store/store";
 import { apiConfig } from "./config/apiConfig";
 import RegistrationPage from "./pages/RegistrationPage";

@@ -2,12 +2,10 @@ import type { FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router';
 import Footer from '../components/Footer';
 import { useState } from 'react';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { apiConfig } from '../config/apiConfig';
 
 function RegistrationPage() {
   const navigate = useNavigate();
-  const { executeRecaptcha } = useGoogleReCaptcha();
   const plinth = "w-full bg-[#e5e2dd] border-b-2 border-[#324670] px-4 py-3 transition-all focus:border-[#324670] focus:outline-none focus:bg-white uppercase";
 
   const [formData, setFormData] = useState({
@@ -36,14 +34,8 @@ function RegistrationPage() {
     setLoading(true);
 
     try {
-      // Get reCAPTCHA token
-      if (!executeRecaptcha) {
-        setError('reCAPTCHA is not available. Please refresh the page.');
-        setLoading(false);
-        return;
-      }
-
-      const token = await executeRecaptcha('register');
+      // const token = await executeRecaptcha('register');
+      const token = 'dummy_token'; // No longer required by backend
 
       const res = await fetch(apiConfig.auth.register, {
         method: 'POST',
@@ -151,12 +143,7 @@ function RegistrationPage() {
             </div>
           </section>
 
-          <section className="bg-[#f0f8ff] p-6 rounded-xl space-y-4">
-            <div className="flex items-center gap-3 text-sm">
-              <span className="material-symbols-outlined text-[#324670] text-xl flex-shrink-0">verified</span>
-              <p className="text-[#324670]"><strong>Protected by reCAPTCHA</strong> - This registration is verified to prevent automated abuse.</p>
-            </div>
-          </section>
+          {/* reCAPTCHA UI removed */}
 
           {error && (
             <div className="bg-[#ffebee] border-l-4 border-[#c80000] p-4 rounded text-sm font-semibold text-[#c80000]">
@@ -194,15 +181,7 @@ function RegistrationPage() {
                 <div className="h-1 w-20 bg-[#9fcb54] mt-4"></div>
               </div>
               <p className="text-[#324670] leading-relaxed text-sm">Create your UMTC registration account to access the application portal. Provide your basic information to get started.</p>
-              <div className="p-6 bg-[#f0f8ff] rounded-lg space-y-4">
-                <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-[#9fcb54]">verified</span>
-                  <div>
-                    <p className="font-medium text-sm">Secure Registration</p>
-                    <p className="text-xs text-[#324670]">Protected by reCAPTCHA.</p>
-                  </div>
-                </div>
-              </div>
+                {/* reCAPTCHA Info removed */}
             </div>
             <div className="lg:col-span-7 bg-white p-10 shadow-sm rounded-xl">
               <form className="space-y-8" onSubmit={handleFormSubmit}>

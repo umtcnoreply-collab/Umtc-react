@@ -23,9 +23,12 @@ function DocumentsPage() {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [signature, setSignature] = useState<File | null>(null);
   const [signaturePreview, setSignaturePreview] = useState<string | null>(null);
+  const [thumbImpression, setThumbImpression] = useState<File | null>(null);
+  const [thumbPreview, setThumbPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showToast, setShowToast] = useState(false);
+  const [postAppliedFor, setPostAppliedFor] = useState('');
 
   // State for Academic Qualifications
   const [qualifications, setQualifications] = useState({
@@ -69,6 +72,8 @@ function DocumentsPage() {
           return;
         }
 
+        setPostAppliedFor(data.basicDetails.postAppliedFor || '');
+
         // Pre-fill photo and signature from URLs
         if (data.documents?.photoUrl) {
           // Fetch the image and convert to preview
@@ -98,6 +103,19 @@ function DocumentsPage() {
             setSignaturePreview(reader.result as string);
           };
           reader.readAsDataURL(sigBlob);
+        }
+
+        if (data.documents?.thumbUrl) {
+          const thumbRes = await fetch(getFullUrl(data.documents.thumbUrl));
+          const thumbBlob = await thumbRes.blob();
+          const thumbFile = new File([thumbBlob], 'thumb.png', { type: 'image/png' });
+          setThumbImpression(thumbFile);
+          
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setThumbPreview(reader.result as string);
+          };
+          reader.readAsDataURL(thumbBlob);
         }
 
         // Pre-fill qualifications
@@ -176,6 +194,19 @@ function DocumentsPage() {
     }
   };
 
+  // Handle thumb upload with preview
+  const handleThumbChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setThumbImpression(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setThumbPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   // Clear photo and preview
   const clearPhoto = () => {
     setPhoto(null);
@@ -186,6 +217,12 @@ function DocumentsPage() {
   const clearSignature = () => {
     setSignature(null);
     setSignaturePreview(null);
+  };
+
+  // Clear thumb and preview
+  const clearThumb = () => {
+    setThumbImpression(null);
+    setThumbPreview(null);
   };
 
   // Truncate filename to 8 characters
@@ -230,6 +267,17 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
     });
   };
 
+  const isQualificationRequired = (level: QualLevel) => {
+    if (level === 'tenth') return true;
+    if (level === 'twelfth') {
+      return postAppliedFor === 'UDC' || postAppliedFor === 'Office Assistant';
+    }
+    if (level === 'grad') {
+      return postAppliedFor === 'UDC';
+    }
+    return false;
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -247,6 +295,28 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
         setLoading(false);
         return;
       }
+      if (!thumbImpression) {
+        setError('Please upload a Left Thumb Impression');
+        setLoading(false);
+        return;
+      }
+
+      // Role-specific education validation
+      if (isQualificationRequired('tenth') && (!qualifications.tenth.file || !qualifications.tenth.board || !qualifications.tenth.year || !qualifications.tenth.roll)) {
+        setError('10th Qualification is mandatory for this post (Board, Year, Roll No, and Document are required)');
+        setLoading(false);
+        return;
+      }
+      if (isQualificationRequired('twelfth') && (!qualifications.twelfth.file || !qualifications.twelfth.board || !qualifications.twelfth.year || !qualifications.twelfth.roll)) {
+        setError('12th Qualification is mandatory for this post (Board, Year, Roll No, and Document are required)');
+        setLoading(false);
+        return;
+      }
+      if (isQualificationRequired('grad') && (!qualifications.grad.file || !qualifications.grad.board || !qualifications.grad.year || !qualifications.grad.roll)) {
+        setError('Graduation is mandatory for this post (University, Year, Roll No, and Document are required)');
+        setLoading(false);
+        return;
+      }
 
       // Create FormData for file uploads
       const formData = new FormData();
@@ -254,6 +324,7 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
       // Append media files
       formData.append('photo', photo);
       formData.append('signature', signature);
+      formData.append('thumbImpression', thumbImpression);
 
       // Append qualifications data
       Object.entries(qualifications).forEach(([level, data]) => {
@@ -542,6 +613,41 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                   <p>• Dims: 132x57px to 160x68px</p>
                 </div>
               </div>
+
+              <hr className="border-[#32467033]" />
+
+              <div className="space-y-3">
+                <label className="text-sm font-bold text-[#1c1c19] block">Left Thumb Impression <span className="text-[#c80000]">*</span></label>
+                {thumbPreview ? (
+                  <div className="w-full relative">
+                    <img src={thumbPreview} alt="Thumb Preview" className="w-full h-32 object-cover rounded-lg border-2 border-[#324670]" />
+                    <button
+                      type="button"
+                      onClick={clearThumb}
+                      className="absolute top-2 right-2 bg-[#c80000] text-white p-2 rounded-full hover:bg-[#d32f2f] transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-sm">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <label className="w-full h-32 bg-[#e8f4ff] rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-[#324670]/50 cursor-pointer hover:border-[#324670] transition-colors">
+                    <span className="material-symbols-outlined text-3xl text-[#324670] mb-2">fingerprint</span>
+                    <span className="text-xs font-bold text-[#324670] uppercase tracking-wider bg-white px-3 py-1 rounded shadow-sm">Choose File</span>
+                    <input 
+                      type="file" 
+                      accept="image/jpeg, image/png" 
+                      className="hidden" 
+                      required 
+                      onChange={handleThumbChange}
+                    />
+                  </label>
+                )}
+                <div className="text-[10px] text-[#324670] uppercase tracking-wider space-y-1">
+                  <p>• Only JPG, JPEG, PNG</p>
+                  <p>• File size &lt; 500 KB</p>
+                </div>
+              </div>
+
             </div>
           </section>
 
@@ -556,9 +662,9 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
             </div>
 
             <div className="space-y-6">
-              {renderMobileCard('tenth', '10th / Matriculation', true)}
-              {renderMobileCard('twelfth', '12th OR Equivalent', true)}
-              {renderMobileCard('grad', 'Graduation OR Equivalent', true)}
+              {renderMobileCard('tenth', '10th / Matriculation', isQualificationRequired('tenth'))}
+              {renderMobileCard('twelfth', '12th OR Equivalent', isQualificationRequired('twelfth'))}
+              {renderMobileCard('grad', 'Graduation OR Equivalent', isQualificationRequired('grad'))}
               {renderMobileCard('other', '', false)}
             </div>
           </section>
@@ -685,6 +791,43 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                     </div>
                   </div>
 
+                  {/* Thumb Impression Upload */}
+                  <div className="flex-1 space-y-4">
+                    <label className="font-['Inter'] font-semibold text-lg text-[#1c1c19] flex justify-between items-center">
+                      Left Thumb <span className="text-[#c80000]">*</span>
+                    </label>
+                    {thumbPreview ? (
+                      <div className="h-40 bg-white rounded-xl border-2 border-[#324670] overflow-hidden relative group">
+                        <img src={thumbPreview} alt="Thumb Preview" className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={clearThumb}
+                          className="absolute top-3 right-3 bg-[#c80000] text-white p-2 rounded-full hover:bg-[#d32f2f] transition-colors shadow-lg"
+                        >
+                          <span className="material-symbols-outlined text-base">close</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <label className="h-40 bg-[#e8f4ff] rounded-xl flex flex-col items-center justify-center border-2 border-dashed border-[#324670]/50 cursor-pointer hover:bg-white hover:border-[#324670] transition-all group">
+                        <span className="material-symbols-outlined text-4xl text-[#324670] mb-3 group-hover:scale-110 transition-transform">fingerprint</span>
+                        <span className="text-sm font-bold text-[#324670] uppercase tracking-wider bg-white px-6 py-2 rounded-full shadow-sm border border-[#e5e2dd]">Choose File</span>
+                        <input 
+                          type="file" 
+                          accept="image/jpeg, image/png" 
+                          className="hidden" 
+                          required 
+                          onChange={handleThumbChange}
+                        />
+                      </label>
+                    )}
+                    <div className="bg-[#e8f4ff] p-4 rounded-lg mt-[3.25rem]">
+                      <ul className="text-xs text-[#324670] font-medium uppercase tracking-wider space-y-2">
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Allow only JPG, JPEG, PNG</li>
+                        <li className="flex items-center gap-2"><span className="material-symbols-outlined text-sm text-[#9fcb54]">check_circle</span> Size: Less than 500 KB</li>
+                      </ul>
+                    </div>
+                  </div>
+
                 </div>
               </section>
 
@@ -718,9 +861,9 @@ const handleQualChange = (level: QualLevel, field: QualField, value: string | Fi
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#32467033]">
-                      {renderTableRow('tenth', '10th / Equivalent', true)}
-                      {renderTableRow('twelfth', '12th OR Equivalent', true)}
-                      {renderTableRow('grad', 'Graduation OR Equivalent', true)}
+                      {renderTableRow('tenth', '10th / Equivalent', isQualificationRequired('tenth'))}
+                      {renderTableRow('twelfth', '12th OR Equivalent', isQualificationRequired('twelfth'))}
+                      {renderTableRow('grad', 'Graduation OR Equivalent', isQualificationRequired('grad'))}
                       {renderTableRow('other', '', false)}
                     </tbody>
                   </table>
