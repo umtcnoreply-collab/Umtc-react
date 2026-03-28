@@ -199,7 +199,7 @@ function RegistrationPage() {
                   <span className="material-symbols-outlined text-[#9fcb54]">verified</span>
                   <div>
                     <p className="font-medium text-sm">Secure Registration</p>
-                    <p className="text-xs text-[#324670]">Protected by reCAPTCHA verification.</p>
+                    <p className="text-xs text-[#324670]">Protected by reCAPTCHA.</p>
                   </div>
                 </div>
               </div>

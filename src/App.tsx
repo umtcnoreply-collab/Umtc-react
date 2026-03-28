@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import type { RootState } from "./store/store";
 import { apiConfig } from "./config/apiConfig";
 import RegistrationPage from "./pages/RegistrationPage";
@@ -227,7 +226,6 @@ function AppContent() {
 
 export default function App() {
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}>
       <Router basename="/career/registration">
         <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-[#f0f8ff] text-[#324670] selection:bg-[#9fcb54] selection:text-white">
@@ -236,7 +234,6 @@ export default function App() {
           <BottomNav />
         </div>
       </Router>
-    </GoogleReCaptchaProvider>
   );
 }
 
