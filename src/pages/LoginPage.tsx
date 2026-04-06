@@ -221,7 +221,7 @@ function LoginPage() {
                 </div>
               </form>
               <div className="mt-8 text-center space-y-3">
-                <p className="text-xs text-[#324670]">Don't have an account? <Link className="text-[#324670] font-semibold underline underline-offset-4 hover:text-[#9fcb54]" to="/registration">Register as New Candidate</Link></p>
+                
                 <p className="text-xs text-[#324670]"><Link className="text-[#0172b9] font-semibold underline underline-offset-4 hover:text-[#324670]" to="/forgot-password">Forgot Password?</Link></p>
               </div>
             </div>
