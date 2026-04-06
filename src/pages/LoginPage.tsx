@@ -144,9 +144,7 @@ function LoginPage() {
               </button>
             </form>
             <div className="flex justify-center items-center gap-4 pt-2">
-              <Link to="/registration" className="text-xs font-bold text-[#0172b9] border-b border-[#9fcb54] hover:text-[#324670] transition-colors">
-                BACK TO REGISTRATION
-              </Link>
+              
               <span className="text-[#324670]">•</span>
               <Link to="/forgot-password" className="text-xs font-bold text-[#0172b9] border-b border-[#9fcb54] hover:text-[#324670] transition-colors">
                 FORGOT PASSWORD?
